@@ -33,7 +33,7 @@ topics:
   savunma:
     title: "Savunma, İHA ve insansız sistemler"
     desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"
-    max_items: 5
+    max_items: 7
 
 feeds:
   # --- .NET, yazılım ve çapraz platform ---
@@ -73,7 +73,33 @@ feeds:
   # --- Savunma, İHA ve insansız sistemler ---
   - {name: "SavunmaSanayiST", topic: savunma, url: "https://www.savunmasanayist.com/feed/"}
   # "Air – Unmanned Systems Technology" bu akışın alt kümesi olduğu için ayrıca eklenmedi.
-  - {name: "Unmanned Systems Technology", topic: savunma, url: "https://www.unmannedsystemstechnology.com/feed/"}
+  # Unmanned Systems Technology: GitHub Actions'tan 403 (bot engeli) döndüğü için kapalı.
+  - {name: "Unmanned Systems Technology", topic: savunma, enabled: false, url: "https://www.unmannedsystemstechnology.com/feed/"}
+
+  # Aşağıdaki akışlar, elcuman.github.io/Bulten'in kaynakça bağlantılarından türetilen ADAY akışlardır.
+  # Adresler (çoğu WordPress /feed/) bu oturumda doğrulanamadı: ilk çalıştırmadan sonra sayfa altlığındaki
+  # "N kaynak okunamadı" uyarısına bakın; okunamayanı kapatın (enabled: false) veya adresini düzeltin.
+  - {name: "Air & Space Forces Magazine", topic: savunma, url: "https://www.airandspaceforces.com/feed/"}
+  - {name: "Soldier Systems Daily", topic: savunma, url: "https://soldiersystems.net/feed/"}
+  - {name: "Naval News", topic: savunma, url: "https://www.navalnews.com/feed/"}
+  - {name: "European Security & Defence", topic: savunma, url: "https://euro-sd.com/feed/"}
+  - {name: "Defence Industry Europe", topic: savunma, url: "https://defence-industry.eu/feed/"}
+  - {name: "UAS Weekly", topic: savunma, url: "https://uasweekly.com/feed/"}
+  - {name: "UAS Vision", topic: savunma, url: "https://www.uasvision.com/feed/"}
+  - {name: "Quwa (Türk savunma)", topic: savunma, url: "https://quwa.org/feed/"}
+  # Derleme bültenleri: yazının kendisi değil, içindeki makale bağlantıları aday olur.
+  - name: "Defense Tech Daily"
+    topic: savunma
+    roundup: true
+    min_links: 3
+    cap: 30
+    url: "https://buttondown.com/defensetech/rss"
+  - name: "5Side Dual-Use Digest"
+    topic: savunma
+    roundup: true
+    min_links: 3
+    cap: 30
+    url: "https://5sidestrategy.substack.com/feed"
 
 # --- Sonraki dalga (şimdilik kapalı): bilim, teknoloji ve gündem kaynakları ---
 # Konu eklemek için: topics altına yeni bir blok açın, buraya akışlarını yazın.
