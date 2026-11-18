@@ -68,9 +68,10 @@ jobs:
           git add data
           if ! git diff --cached --quiet; then
             git commit -m "Sayı: $(date -u +%F)"
-            # Çalışma sırasında main'e başka push geldiyse yeniden dene (data/ dosyaları çakışmaz)
+            # Çalışma sırasında main'e başka push geldiyse yeniden dene (aynı gün yeniden çalışırsa bu çalışmanın data/ dosyası kazanır)
             for i in 1 2 3; do
-              git pull --rebase origin main && git push && break
+              git pull --rebase -X theirs origin main && git push && break
+              git rebase --abort 2>/dev/null || true
               sleep 5
             done
           fi
