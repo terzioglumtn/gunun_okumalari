@@ -1,0 +1,180 @@
+{
+ "date": "2026-11-18",
+ "issue_no": 1,
+ "generated_at": "2026-11-18T16:06:18.467123+00:00",
+ "backend": "mock",
+ "items": [
+  {
+   "id": "46c2ced4",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 5,
+   "source": ".NET Blog",
+   "url": "https://devblogs.microsoft.com/dotnet/nuget-staged-publishing/",
+   "title_orig": "Introducing staged publishing on NuGet.org",
+   "title_tr": "[TR] Introducing staged publishing on NuGet.org",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-17T21:00:00+00:00"
+  },
+  {
+   "id": "8c490f85",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 5,
+   "source": "Morning Dew",
+   "url": "https://alvinashcraft.com/2026/11/18/dew-drop-november-18-2026-4795/",
+   "title_orig": "Dew Drop - November 18, 2026 (#4795)",
+   "title_tr": "[TR] Dew Drop - November 18, 2026 (#4795)",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-18T11:34:42+00:00"
+  },
+  {
+   "id": "1e6b15e0",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 4,
+   "source": "Martin Fowler",
+   "url": "https://martinfowler.com/articles/data-contracts.html",
+   "title_orig": "Data Contracts",
+   "title_tr": "[TR] Data Contracts",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-18T14:02:00+00:00"
+  },
+  {
+   "id": "dfa52e89",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 4,
+   "source": "The GitHub Blog",
+   "url": "https://github.blog/open-source/maintainers/maintainers-dont-need-more-ai-bug-reports-they-need-fixes/",
+   "title_orig": "Maintainers don’t need more AI bug reports. They need fixes.",
+   "title_tr": "[TR] Maintainers don’t need more AI bug reports. They need fixes.",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-17T18:29:29+00:00"
+  },
+  {
+   "id": "db253b67",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "Hacker News",
+   "url": "https://www.inside-db.com/",
+   "title_orig": "Deutsche Bank",
+   "title_tr": "[TR] Deutsche Bank",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-18T15:38:33+00:00"
+  },
+  {
+   "id": "c1b057a5",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "The Practical Developer",
+   "url": "https://dev.to/alanwest/mai-code-2-vs-claude-opus-55-vs-gpt-61-sol-5-of-the-cost-is-a-promo-price-4o4b",
+   "title_orig": "MAI Code 2 vs Claude Opus 5.5 vs GPT-6.1 Sol: \"5% of the Cost\" Is a Promo Price",
+   "title_tr": "[TR] MAI Code 2 vs Claude Opus 5.5 vs GPT-6.1 Sol: \"5% of the Cost\" Is a Promo Price",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-18T16:00:02+00:00"
+  },
+  {
+   "id": "af5dddab",
+   "topic": "dotnet",
+   "kind": "qa",
+   "score": 2,
+   "source": "Stack Overflow: winforms",
+   "url": "https://stackoverflow.com/questions/80017305/vs-2026-c-sharp-winforms-trying-to-save-forms-return-the-error-popup-value-c",
+   "title_orig": "VS 2026 C# WinForms - Trying to save forms return the error popup: \"Value cannot be null. Parameter name: value.\"",
+   "title_tr": "[TR] VS 2026 C# WinForms - Trying to save forms return the error popup: \"Value cannot be null. Parameter name: value.\"",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-18T00:03:05+00:00"
+  },
+  {
+   "id": "9f44b8cf",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 5,
+   "source": "SavunmaSanayiST",
+   "url": "https://www.savunmasanayist.com/msbye-dev-butce-1-trilyon-532-milyar-tl/",
+   "title_orig": "MSB’ye Dev Bütçe: 1 Trilyon 532 Milyar TL",
+   "title_tr": "[TR] MSB’ye Dev Bütçe: 1 Trilyon 532 Milyar TL",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-18T10:20:04+00:00"
+  },
+  {
+   "id": "016d5db3",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 5,
+   "source": "SavunmaSanayiST",
+   "url": "https://www.savunmasanayist.com/f-16lar-somaliden-bandirmaya-inis-yapmadan-uctu/",
+   "title_orig": "F-16’lar Somali’den Bandırma’ya İniş Yapmadan Uçtu!",
+   "title_tr": "[TR] F-16’lar Somali’den Bandırma’ya İniş Yapmadan Uçtu!",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-17T16:46:42+00:00"
+  },
+  {
+   "id": "f40162ff",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 4,
+   "source": "SavunmaSanayiST",
+   "url": "https://www.savunmasanayist.com/nato-edge-26-izmirde-turk-savunma-sanayii-nato-vitrininde/",
+   "title_orig": "NATO EDGE 26 İzmir’de: Türk Savunma Sanayii NATO Vitrininde",
+   "title_tr": "[TR] NATO EDGE 26 İzmir’de: Türk Savunma Sanayii NATO Vitrininde",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-17T11:45:45+00:00"
+  },
+  {
+   "id": "1b4f0259",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 4,
+   "source": "SavunmaSanayiST",
+   "url": "https://www.savunmasanayist.com/11-trilyon-dolar-nereye-gidiyor-abdnin-yeni-savunma-plani/",
+   "title_orig": "1,1 Trilyon Dolar Nereye Gidiyor? ABD’nin Yeni Savunma Planı",
+   "title_tr": "[TR] 1,1 Trilyon Dolar Nereye Gidiyor? ABD’nin Yeni Savunma Planı",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-17T10:25:54+00:00"
+  },
+  {
+   "id": "e0cff03b",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 3,
+   "source": "SavunmaSanayiST",
+   "url": "https://www.savunmasanayist.com/romanyadan-rheinmetalle-87-milyon-euroluk-ceza/",
+   "title_orig": "Romanya’dan Rheinmetall’e 8,7 Milyon Euroluk Ceza",
+   "title_tr": "[TR] Romanya’dan Rheinmetall’e 8,7 Milyon Euroluk Ceza",
+   "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
+   "why_tr": "Sahte gerekçe.",
+   "published": "2026-11-17T08:11:13+00:00"
+  }
+ ],
+ "top_ids": [
+  "46c2ced4",
+  "8c490f85",
+  "9f44b8cf"
+ ],
+ "stats": {
+  "feeds": 15,
+  "feed_errors": [
+   "Unmanned Systems Technology: 403 Client Error: Forbidden for url: https://www.unmannedsystemstechnology.com/feed/"
+  ],
+  "candidates": {
+   "dotnet": 39,
+   "savunma": 5
+  },
+  "selected": 12
+ }
+}
