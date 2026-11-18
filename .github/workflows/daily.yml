@@ -66,7 +66,14 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data
-          git diff --cached --quiet || (git commit -m "Sayı: $(date -u +%F)" && git push)
+          if ! git diff --cached --quiet; then
+            git commit -m "Sayı: $(date -u +%F)"
+            # Çalışma sırasında main'e başka push geldiyse yeniden dene (data/ dosyaları çakışmaz)
+            for i in 1 2 3; do
+              git pull --rebase origin main && git push && break
+              sleep 5
+            done
+          fi
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
