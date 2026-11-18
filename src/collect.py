@@ -97,7 +97,9 @@ def expand_roundup(feed: dict, entry, post_published) -> list[Item]:
         skip.add(_domain(entry["link"]))  # derlemenin kendi sitesine giden bağlantılar aday olmaz
     soup = BeautifulSoup(_entry_html(entry), "html.parser")
     via = feed.get("via") or feed["name"]
+    skip_sections = [x.lower() for x in feed.get("skip_sections", [])]
     section = ""
+    skipping = False
     seen: set[str] = set()
     out: list[Item] = []
     for node in soup.descendants:
@@ -105,8 +107,9 @@ def expand_roundup(feed: dict, entry, post_published) -> list[Item]:
             continue
         if _is_heading(node):
             section = node.get_text(" ", strip=True)
+            skipping = any(x in section.lower() for x in skip_sections)
             continue
-        if node.name != "a":
+        if node.name != "a" or skipping:
             continue
         href = (node.get("href") or "").strip()
         text = re.sub(r"\s+", " ", node.get_text(" ", strip=True))
@@ -127,6 +130,29 @@ def expand_roundup(feed: dict, entry, post_published) -> list[Item]:
     return out
 
 
+def _section_of(item: Item) -> str:
+    m = re.match(r"Bölüm: (.*?)(?:\. Yazar: .*)?$", item.snippet)
+    return m.group(1) if m else ""
+
+
+def _section_counts(items: list[Item]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for i in items:
+        counts[_section_of(i)] = counts.get(_section_of(i), 0) + 1
+    return counts
+
+
+def spread_by_section(items: list[Item]) -> list[Item]:
+    """Bölümleri sırayla karıştırır; cap uygulanınca sondaki bölümler (ör. .NET, Web) kesilmesin."""
+    groups: dict[str, list[Item]] = {}
+    for i in items:
+        groups.setdefault(_section_of(i), []).append(i)
+    out: list[Item] = []
+    for k in range(max((len(g) for g in groups.values()), default=0)):
+        out += [g[k] for g in groups.values() if k < len(g)]
+    return out
+
+
 def fetch_feed(feed: dict) -> list[Item]:
     parsed = feedparser.parse(_read(feed["url"]))
     if parsed.bozo and not parsed.entries:
@@ -140,9 +166,9 @@ def fetch_feed(feed: dict) -> list[Item]:
                 continue
             found = expand_roundup(feed, e, published)
             print(f'roundup "{feed["name"]}": {len(found)} bağlantı, '
-                  f'bölümler: {sorted({i.snippet.split(".")[0] for i in found})[:12]}',
+                  f'bölümler: {_section_counts(found)}',
                   file=sys.stderr)
-            if len(found) < 5:
+            if len(found) < feed.get("min_links", 5):
                 raise ValueError(
                     f"derleme ayrıştırılamadı ({len(found)} bağlantı, içerik "
                     f"{len(_entry_html(e))} karakter); akışın içerik yapısını kontrol edin")
@@ -177,6 +203,8 @@ def collect(cfg: dict, now: dt.datetime, seen_urls: set[str]):
                  if (i.published is None or i.published >= since)
                  and canon_url(i.url) not in seen_urls]
         fresh.sort(key=lambda i: i.published or now, reverse=True)
+        if feed.get("roundup"):
+            fresh = spread_by_section(fresh)
         cap = feed.get("cap", run["per_feed_cap"])  # derleme akışları için daha yüksek olabilir
         per_topic.setdefault(feed["topic"], []).append(fresh[:cap])
 

@@ -181,3 +181,21 @@ def test_roundup_item_carries_via_into_issue(monkeypatch):
     cands, _, _ = collect(cfg, NOW, set())
     items = pipeline.run_topic(LLM("mock", "a", "b"), cfg["topics"]["dotnet"], cands["dotnet"], "ilgi", 3)
     assert items and all(i["via"] == "Morning Dew" for i in items)
+
+
+def test_roundup_skip_sections_drops_noise_sections():
+    cfg = roundup_cfg(ROUNDUP)
+    cfg["feeds"][0]["skip_sections"] = ["Source Code"]
+    cfg["feeds"][0]["min_links"] = 1
+    cands, _, _ = collect(cfg, NOW, set())
+    assert not any("github.com/example/tool" in i.url for i in cands["dotnet"])
+    assert len(cands["dotnet"]) == 4
+
+
+def test_roundup_cap_keeps_every_section_represented():
+    cfg = roundup_cfg(ROUNDUP)
+    cfg["feeds"][0]["cap"] = 3
+    cands, _, _ = collect(cfg, NOW, set())
+    sections = {i.snippet.split(".")[0] for i in cands["dotnet"]}
+    # cap 3 olsa da son bölümler (Web & Cloud, Source Code) ilk bölüm tarafından ezilmez
+    assert len(sections) == 3
