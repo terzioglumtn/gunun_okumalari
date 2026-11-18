@@ -1,7 +1,7 @@
 {
  "date": "2026-11-18",
  "issue_no": 1,
- "generated_at": "2026-11-18T16:06:18.467123+00:00",
+ "generated_at": "2026-11-18T19:52:55.979721+00:00",
  "backend": "mock",
  "items": [
   {
@@ -10,6 +10,7 @@
    "kind": "article",
    "score": 5,
    "source": ".NET Blog",
+   "via": "",
    "url": "https://devblogs.microsoft.com/dotnet/nuget-staged-publishing/",
    "title_orig": "Introducing staged publishing on NuGet.org",
    "title_tr": "[TR] Introducing staged publishing on NuGet.org",
@@ -18,14 +19,15 @@
    "published": "2026-11-17T21:00:00+00:00"
   },
   {
-   "id": "8c490f85",
+   "id": "111d09e6",
    "topic": "dotnet",
    "kind": "article",
    "score": 5,
-   "source": "Morning Dew",
-   "url": "https://alvinashcraft.com/2026/11/18/dew-drop-november-18-2026-4795/",
-   "title_orig": "Dew Drop - November 18, 2026 (#4795)",
-   "title_tr": "[TR] Dew Drop - November 18, 2026 (#4795)",
+   "source": "devblogs.microsoft.com",
+   "via": "Morning Dew",
+   "url": "https://devblogs.microsoft.com/aspire/whats-new-aspire-17/",
+   "title_orig": "Aspire 17 is ready for primetime",
+   "title_tr": "[TR] Aspire 17 is ready for primetime",
    "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
    "why_tr": "Sahte gerekçe.",
    "published": "2026-11-18T11:34:42+00:00"
@@ -36,6 +38,7 @@
    "kind": "article",
    "score": 4,
    "source": "Martin Fowler",
+   "via": "",
    "url": "https://martinfowler.com/articles/data-contracts.html",
    "title_orig": "Data Contracts",
    "title_tr": "[TR] Data Contracts",
@@ -49,6 +52,7 @@
    "kind": "article",
    "score": 4,
    "source": "The GitHub Blog",
+   "via": "",
    "url": "https://github.blog/open-source/maintainers/maintainers-dont-need-more-ai-bug-reports-they-need-fixes/",
    "title_orig": "Maintainers don’t need more AI bug reports. They need fixes.",
    "title_tr": "[TR] Maintainers don’t need more AI bug reports. They need fixes.",
@@ -57,30 +61,32 @@
    "published": "2026-11-17T18:29:29+00:00"
   },
   {
-   "id": "db253b67",
+   "id": "abe03c17",
    "topic": "dotnet",
    "kind": "article",
    "score": 3,
    "source": "Hacker News",
-   "url": "https://www.inside-db.com/",
-   "title_orig": "Deutsche Bank",
-   "title_tr": "[TR] Deutsche Bank",
+   "via": "",
+   "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/genie-4-now-available-project-genie/",
+   "title_orig": "Genie 4 is now available",
+   "title_tr": "[TR] Genie 4 is now available",
    "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
    "why_tr": "Sahte gerekçe.",
-   "published": "2026-11-18T15:38:33+00:00"
+   "published": "2026-11-18T18:49:51+00:00"
   },
   {
-   "id": "c1b057a5",
+   "id": "26d72849",
    "topic": "dotnet",
    "kind": "article",
    "score": 3,
    "source": "The Practical Developer",
-   "url": "https://dev.to/alanwest/mai-code-2-vs-claude-opus-55-vs-gpt-61-sol-5-of-the-cost-is-a-promo-price-4o4b",
-   "title_orig": "MAI Code 2 vs Claude Opus 5.5 vs GPT-6.1 Sol: \"5% of the Cost\" Is a Promo Price",
-   "title_tr": "[TR] MAI Code 2 vs Claude Opus 5.5 vs GPT-6.1 Sol: \"5% of the Cost\" Is a Promo Price",
+   "via": "",
+   "url": "https://dev.to/angojay/how-to-add-dark-mode-to-your-web-app-easily-14f8",
+   "title_orig": "How to Add Dark Mode to Your Web App Easily",
+   "title_tr": "[TR] How to Add Dark Mode to Your Web App Easily",
    "summary_tr": "Bu bir sahte özettir; gerçek çalıştırmada kaynak metne dayanır.",
    "why_tr": "Sahte gerekçe.",
-   "published": "2026-11-18T16:00:02+00:00"
+   "published": "2026-11-18T19:48:16+00:00"
   },
   {
    "id": "af5dddab",
@@ -88,6 +94,7 @@
    "kind": "qa",
    "score": 2,
    "source": "Stack Overflow: winforms",
+   "via": "",
    "url": "https://stackoverflow.com/questions/80017305/vs-2026-c-sharp-winforms-trying-to-save-forms-return-the-error-popup-value-c",
    "title_orig": "VS 2026 C# WinForms - Trying to save forms return the error popup: \"Value cannot be null. Parameter name: value.\"",
    "title_tr": "[TR] VS 2026 C# WinForms - Trying to save forms return the error popup: \"Value cannot be null. Parameter name: value.\"",
@@ -101,6 +108,7 @@
    "kind": "article",
    "score": 5,
    "source": "SavunmaSanayiST",
+   "via": "",
    "url": "https://www.savunmasanayist.com/msbye-dev-butce-1-trilyon-532-milyar-tl/",
    "title_orig": "MSB’ye Dev Bütçe: 1 Trilyon 532 Milyar TL",
    "title_tr": "[TR] MSB’ye Dev Bütçe: 1 Trilyon 532 Milyar TL",
@@ -114,6 +122,7 @@
    "kind": "article",
    "score": 5,
    "source": "SavunmaSanayiST",
+   "via": "",
    "url": "https://www.savunmasanayist.com/f-16lar-somaliden-bandirmaya-inis-yapmadan-uctu/",
    "title_orig": "F-16’lar Somali’den Bandırma’ya İniş Yapmadan Uçtu!",
    "title_tr": "[TR] F-16’lar Somali’den Bandırma’ya İniş Yapmadan Uçtu!",
@@ -127,6 +136,7 @@
    "kind": "article",
    "score": 4,
    "source": "SavunmaSanayiST",
+   "via": "",
    "url": "https://www.savunmasanayist.com/nato-edge-26-izmirde-turk-savunma-sanayii-nato-vitrininde/",
    "title_orig": "NATO EDGE 26 İzmir’de: Türk Savunma Sanayii NATO Vitrininde",
    "title_tr": "[TR] NATO EDGE 26 İzmir’de: Türk Savunma Sanayii NATO Vitrininde",
@@ -140,6 +150,7 @@
    "kind": "article",
    "score": 4,
    "source": "SavunmaSanayiST",
+   "via": "",
    "url": "https://www.savunmasanayist.com/11-trilyon-dolar-nereye-gidiyor-abdnin-yeni-savunma-plani/",
    "title_orig": "1,1 Trilyon Dolar Nereye Gidiyor? ABD’nin Yeni Savunma Planı",
    "title_tr": "[TR] 1,1 Trilyon Dolar Nereye Gidiyor? ABD’nin Yeni Savunma Planı",
@@ -153,6 +164,7 @@
    "kind": "article",
    "score": 3,
    "source": "SavunmaSanayiST",
+   "via": "",
    "url": "https://www.savunmasanayist.com/romanyadan-rheinmetalle-87-milyon-euroluk-ceza/",
    "title_orig": "Romanya’dan Rheinmetall’e 8,7 Milyon Euroluk Ceza",
    "title_tr": "[TR] Romanya’dan Rheinmetall’e 8,7 Milyon Euroluk Ceza",
@@ -163,7 +175,7 @@
  ],
  "top_ids": [
   "46c2ced4",
-  "8c490f85",
+  "111d09e6",
   "9f44b8cf"
  ],
  "stats": {
@@ -172,7 +184,7 @@
    "Unmanned Systems Technology: 403 Client Error: Forbidden for url: https://www.unmannedsystemstechnology.com/feed/"
   ],
   "candidates": {
-   "dotnet": 39,
+   "dotnet": 114,
    "savunma": 5
   },
   "selected": 12
