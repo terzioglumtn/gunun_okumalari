@@ -86,16 +86,18 @@ feeds:
   - {name: "Defence Industry Europe", topic: savunma, url: "https://defence-industry.eu/feed/"}
   - {name: "UAS Weekly", topic: savunma, url: "https://uasweekly.com/feed/"}
   - {name: "UAS Vision", topic: savunma, url: "https://www.uasvision.com/feed/"}
-  - {name: "Quwa (Türk savunma)", topic: savunma, url: "https://quwa.org/feed/"}
+  - {name: "Quwa (Türk savunma)", topic: savunma, enabled: false, url: "https://quwa.org/feed/"}
   # Derleme bültenleri: yazının kendisi değil, içindeki makale bağlantıları aday olur.
   - name: "Defense Tech Daily"
     topic: savunma
     roundup: true
-    min_links: 3
+    min_links: 1   # metin ağırlıklı bülten: yazı başına yalnızca 1-3 dış bağlantı var
     cap: 30
     url: "https://buttondown.com/defensetech/rss"
+  # Quwa ve 5Side GitHub Actions'tan 403 (bot engeli) verdiği için kapalı.
   - name: "5Side Dual-Use Digest"
     topic: savunma
+    enabled: false
     roundup: true
     min_links: 3
     cap: 30
