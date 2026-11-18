@@ -1,0 +1,76 @@
+name: Günlük sayı
+
+on:
+  schedule:
+    # 04:00 UTC = 07:00 İstanbul (UTC+3, yaz saati yok).
+    # Actions zamanlayıcısı gecikebildiği için sayfa 08:00'de hazır olsun diye erken çalışır.
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: daily
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Bağımlılıklar
+        run: pip install -r requirements.txt
+
+      # Varsayılan backend: Claude Code CLI (abonelik token'ı).
+      # API'ye geçmek için: Settings > Variables > LLM_BACKEND = anthropic_api
+      # Sınama için: LLM_BACKEND = mock
+      - name: Node (claude_cli için)
+        if: ${{ vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock' }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Claude Code CLI
+        if: ${{ vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock' }}
+        run: npm install -g @anthropic-ai/claude-code
+
+      - name: Sayıyı üret (API)
+        if: ${{ vars.LLM_BACKEND == 'anthropic_api' }}
+        env:
+          LLM_BACKEND: anthropic_api
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python -m src.run
+
+      # Bu adımda ANTHROPIC_API_KEY bilerek tanımlı değil: tanımlı olsaydı CLI aboneliğiniz yerine API anahtarını kullanırdı.
+      - name: Sayıyı üret (abonelik veya mock)
+        if: ${{ vars.LLM_BACKEND != 'anthropic_api' }}
+        env:
+          LLM_BACKEND: ${{ vars.LLM_BACKEND }}
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+        run: python -m src.run
+
+      - name: Veriyi depoya işle
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data
+          git diff --cached --quiet || (git commit -m "Sayı: $(date -u +%F)" && git push)
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4

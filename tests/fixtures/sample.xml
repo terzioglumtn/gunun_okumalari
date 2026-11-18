@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Örnek Akış</title>
+    <link>https://example.com/</link>
+    <description>Test akışı</description>
+    <item>
+      <title>Avalonia 12 yayınlandı</title>
+      <link>https://example.com/a?utm_source=rss</link>
+      <pubDate>Wed, 18 Nov 2026 03:00:00 GMT</pubDate>
+      <description>&lt;p&gt;Avalonia yeni sürümüyle &lt;b&gt;çapraz platform&lt;/b&gt; masaüstü arayüz desteğini genişletti.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Avalonia 12 yayınlandı</title>
+      <link>https://example.com/a</link>
+      <pubDate>Wed, 18 Nov 2026 03:05:00 GMT</pubDate>
+      <description>Aynı haberin ikinci kopyası.</description>
+    </item>
+    <item>
+      <title>Eski haber</title>
+      <link>https://example.com/old</link>
+      <pubDate>Tue, 10 Nov 2026 03:00:00 GMT</pubDate>
+      <description>Zaman penceresinin dışında.</description>
+    </item>
+    <item>
+      <title>Kötü bağlantı</title>
+      <link>javascript:alert(1)</link>
+      <pubDate>Tue, 17 Nov 2026 20:00:00 GMT</pubDate>
+      <description>Bu madde atılmalı.</description>
+    </item>
+    <item>
+      <title>HTML içeren başlık &lt;img src=x onerror=alert(1)&gt;</title>
+      <link>https://example.com/x</link>
+      <pubDate>Tue, 17 Nov 2026 20:00:00 GMT</pubDate>
+      <description>Başlıktaki HTML kaçışlanmalı.</description>
+    </item>
+    <item>
+      <title>Ayrı bir konu: WPF performans ipuçları</title>
+      <link>https://example.com/wpf</link>
+      <pubDate>Tue, 17 Nov 2026 22:00:00 GMT</pubDate>
+      <description>Bellek sızıntılarını bulma yöntemleri.</description>
+    </item>
+  </channel>
+</rss>

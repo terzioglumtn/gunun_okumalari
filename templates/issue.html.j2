@@ -1,0 +1,51 @@
+{% extends "layout.html.j2" %}
+{% block title %}{{ v.date_tr }} · {{ site.title }}{% endblock %}
+{% block desc %}{{ v.count }} maddelik günlük okuma listesi, Sayı {{ v.issue_no }}.{% endblock %}
+
+{% macro card(it) %}
+<article class="item">
+  <h3><a href="{{ it.url|safe_url }}" target="_blank" rel="noopener">{{ it.title_tr }}</a></h3>
+  <p class="meta">{{ it.source }}{% if it.kind == "qa" %} · <span class="tag">Soru-cevap</span>{% endif %}</p>
+  {% if it.title_orig and it.title_orig != it.title_tr %}
+  <p class="orig">Orijinal: {{ it.title_orig }}</p>
+  {% endif %}
+  <p>{{ it.summary_tr }}</p>
+  {% if it.why_tr %}<p class="why"><b>Neden önemli:</b> {{ it.why_tr }}</p>{% endif %}
+</article>
+{% endmacro %}
+
+{% block header %}
+<p class="label">{{ v.weekday }} · Sayı {{ v.issue_no }}</p>
+<h1>{{ v.date_tr }}</h1>
+<p class="sub">{{ site.subtitle }}</p>
+{% endblock %}
+
+{% block content %}
+{% if v.top %}
+<section class="brief">
+  <h2>Önce bunlar</h2>
+  <p class="lede">Vaktiniz kısaysa yalnızca bu {{ v.top|length }} maddeyi okuyun.</p>
+  {% for it in v.top %}{{ card(it) }}{% endfor %}
+</section>
+{% endif %}
+
+{% for g in v.groups %}
+<section>
+  <h2>{{ g.title }}</h2>
+  {% for it in g.entries %}{% if it.id not in v.raw.top_ids %}{{ card(it) }}{% endif %}{% endfor %}
+</section>
+{% endfor %}
+
+{% if not v.groups %}
+<p>Bugün seçilecek yeterince değerli madde bulunamadı.</p>
+{% endif %}
+
+<nav class="pager">
+  {% if older %}<a href="{{ base }}arsiv/{{ older.date }}.html">← {{ older.date_tr }}</a>{% else %}<span></span>{% endif %}
+  {% if newer %}<a href="{{ base }}arsiv/{{ newer.date }}.html">{{ newer.date_tr }} →</a>{% endif %}
+</nav>
+{% endblock %}
+
+{% block footer %}
+<p class="stamp">Son üretim: {{ v.generated }}{% if v.feed_errors %} · {{ v.feed_errors }} kaynak okunamadı{% endif %}</p>
+{% endblock %}

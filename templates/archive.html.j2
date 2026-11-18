@@ -1,0 +1,18 @@
+{% extends "layout.html.j2" %}
+{% block title %}Arşiv · {{ site.title }}{% endblock %}
+{% block header %}
+<h1>Arşiv</h1>
+<p class="sub">Önceki sayılar</p>
+{% endblock %}
+{% block content %}
+{% if views %}
+<ul class="archive">
+  {% for v in views %}
+  <li><a href="{{ base }}arsiv/{{ v.date }}.html">{{ v.date_tr }}</a>
+      <span class="meta">Sayı {{ v.issue_no }} · {{ v.count }} madde</span></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>Henüz yayınlanmış sayı yok. İlk sayı bir sonraki sabah burada olacak.</p>
+{% endif %}
+{% endblock %}

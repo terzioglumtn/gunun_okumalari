@@ -1,0 +1,70 @@
+# Günün Okumaları — yapılandırma
+# Akışları eklemek/çıkarmak için yalnızca bu dosyayı düzenleyin.
+
+site:
+  title: "Günün Okumaları"
+  subtitle: "Her sabah, seçilmiş kaynaklardan Türkçe okuma listesi"
+  base_url: "https://terzioglumtn.github.io/gunun_okumalari/"
+  timezone: "Europe/Istanbul"
+
+run:
+  lookback_hours: 48        # kaçırılan bir gün olursa öğe kaybolmasın diye geniş tutulur
+  seen_days: 7              # son 7 günde yayınlanan bağlantılar tekrar seçilmez
+  per_feed_cap: 20          # bir akıştan en fazla bu kadar yeni öğe adaya girer
+  candidates_per_topic: 80  # LLM'e giden aday üst sınırı (maliyeti sınırlar)
+  top_n: 3                  # "Önce bunlar" bölümü (minimum sürüm)
+  max_qa: 3                 # soru-cevap (Stack Overflow) türünden en fazla kaç madde
+  max_feed_failure_ratio: 0.5   # akışların yarısından fazlası okunamazsa iş başarısız olur (uyarı e-postası)
+
+llm:
+  # backend: ortam değişkeni LLM_BACKEND ile de verilebilir.
+  #   claude_cli    -> Claude Code, abonelik token'ı (CLAUDE_CODE_OAUTH_TOKEN)
+  #   anthropic_api -> Anthropic API (ANTHROPIC_API_KEY)
+  #   mock          -> LLM çağırmaz, hattı ücretsiz sınamak içindir
+  backend: claude_cli
+  select_model: claude-haiku-5-5      # eleme aşaması: ucuz model yeterli
+  summarize_model: claude-sonnet-5-5  # özetleme aşaması
+
+topics:
+  dotnet:
+    title: ".NET, yazılım ve çapraz platform"
+    desc: ".NET, C#, WPF/WinForms, Avalonia, Visual Studio, yazılım mimarisi, Git, geliştirici araçları ve yapay zekâ destekli geliştirme"
+    max_items: 7
+  savunma:
+    title: "Savunma, İHA ve insansız sistemler"
+    desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"
+    max_items: 5
+
+feeds:
+  # --- .NET, yazılım ve çapraz platform ---
+  - {name: ".NET Blog", topic: dotnet, url: "https://devblogs.microsoft.com/dotnet/feed/"}
+  - {name: "Visual Studio Blog", topic: dotnet, url: "https://devblogs.microsoft.com/visualstudio/feed/"}
+  - {name: "Morning Dew", topic: dotnet, url: "https://feeds2.feedburner.com/alvinashcraft"}
+  - {name: "Martin Fowler", topic: dotnet, url: "https://martinfowler.com/feed.atom"}
+  - {name: "The GitHub Blog", topic: dotnet, url: "https://github.blog/feed/"}
+  - {name: "Hacker News", topic: dotnet, url: "https://news.ycombinator.com/rss"}
+  - {name: "The Practical Developer", topic: dotnet, url: "https://dev.to/feed"}
+
+  # --- Stack Overflow etiketleri ("MTN_Anlık"): soru-cevap, en fazla max_qa madde ---
+  # Etiket başına akış adresi: https://stackoverflow.com/feeds/tag/<etiket>  (ilk çalıştırmada doğrulayın)
+  - {name: "Stack Overflow: avalonia", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/avalonia"}
+  - {name: "Stack Overflow: avaloniaui", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/avaloniaui"}
+  - {name: "Stack Overflow: wpf", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/wpf"}
+  - {name: "Stack Overflow: winforms", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/winforms"}
+  - {name: "Stack Overflow: entity-framework", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/entity-framework"}
+  - {name: "Stack Overflow: visual-studio", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/visual-studio"}
+  # Çok genel etiketler: günde yüzlerce yeni soru gelir, varsayılan olarak kapalı.
+  - {name: "Stack Overflow: c#", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/c%23"}
+  - {name: "Stack Overflow: .net-framework-version", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/.net-framework-version"}
+  - {name: "Stack Overflow: user-interface", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/user-interface"}
+  - {name: "Stack Overflow: lambda", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/lambda"}
+  - {name: "Stack Overflow: version-control", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/version-control"}
+  - {name: "Stack Overflow: git-commit", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/git-commit"}
+
+  # --- Savunma, İHA ve insansız sistemler ---
+  - {name: "SavunmaSanayiST", topic: savunma, url: "https://www.savunmasanayist.com/feed/"}
+  # "Air – Unmanned Systems Technology" bu akışın alt kümesi olduğu için ayrıca eklenmedi.
+  - {name: "Unmanned Systems Technology", topic: savunma, url: "https://www.unmannedsystemstechnology.com/feed/"}
+
+# --- Sonraki dalga (şimdilik kapalı): bilim, teknoloji ve gündem kaynakları ---
+# Konu eklemek için: topics altına yeni bir blok açın, buraya akışlarını yazın.

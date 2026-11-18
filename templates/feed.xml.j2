@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="tr">
+  <title>{{ site.title }}</title>
+  <subtitle>{{ site.subtitle }}</subtitle>
+  <id>{{ site.base_url }}</id>
+  <link href="{{ site.base_url }}"/>
+  <link rel="self" href="{{ site.base_url }}feed.xml"/>
+  <updated>{{ updated }}</updated>
+{% for v in views %}
+  <entry>
+    <title>{{ v.date_tr }} · Sayı {{ v.issue_no }}</title>
+    <id>{{ site.base_url }}arsiv/{{ v.date }}.html</id>
+    <link href="{{ site.base_url }}arsiv/{{ v.date }}.html"/>
+    <updated>{{ v.raw.generated_at }}</updated>
+    <content type="text">{% for it in v.top or v.raw["items"][:5] %}• {{ it.title_tr }}: {{ it.summary_tr }}
+{% endfor %}</content>
+  </entry>
+{% endfor %}
+</feed>
