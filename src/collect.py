@@ -1,20 +1,29 @@
 """Akışları toplar, tekilleştirir ve konu başına aday listesi üretir."""
 from __future__ import annotations
 
+import calendar
 import datetime as dt
 import difflib
 import re
-import time
+import sys
 from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlsplit
 
 import feedparser
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, NavigableString, Tag
 
 from .util import canon_url, is_http_url, item_id
 
 UA = "gunun-okumalari/0.1 (+https://github.com/terzioglumtn/gunun_okumalari)"
+
+# Derleme (roundup) yazılarında asıl makale olmayan, gürültü bağlantı alanları.
+DEFAULT_SKIP_DOMAINS = {
+    "twitter.com", "x.com", "facebook.com", "linkedin.com", "instagram.com",
+    "feedburner.com", "feeds.feedburner.com", "t.co", "bit.ly", "mailto",
+}
+MIN_LINK_TEXT = 15  # "here", "read more" gibi kısa bağlantı metinlerini ele
 
 
 @dataclass
@@ -27,6 +36,7 @@ class Item:
     title: str
     snippet: str
     published: dt.datetime | None
+    via: str = ""   # derleme kaynağı (ör. "Morning Dew"); boşsa doğrudan kaynak
 
 
 def _text(html: str, limit: int) -> str:
@@ -43,26 +53,109 @@ def _read(url: str) -> bytes:
     return r.content
 
 
+def _published(entry) -> dt.datetime | None:
+    ts = entry.get("published_parsed") or entry.get("updated_parsed")
+    # feedparser UTC döndürür; mktime yerel saat varsayar, timegm doğru dönüşümdür.
+    return dt.datetime.fromtimestamp(calendar.timegm(ts), dt.timezone.utc) if ts else None
+
+
+def _entry_html(entry) -> str:
+    if entry.get("content"):
+        return entry["content"][0].get("value", "")
+    return entry.get("summary") or ""
+
+
+def _domain(url: str) -> str:
+    host = urlsplit(url).netloc.lower()
+    return host[4:] if host.startswith("www.") else host
+
+
+def _skipped(url: str, skip: set[str]) -> bool:
+    d = _domain(url)
+    return any(d == s or d.endswith("." + s) for s in skip)
+
+
+def _is_heading(tag: Tag) -> bool:
+    """Başlık etiketi ya da yalnızca kalın metin içeren, bağlantısız paragraf."""
+    if tag.name in ("h1", "h2", "h3", "h4", "h5", "h6"):
+        return True
+    if tag.name in ("p", "div") and not tag.find("a"):
+        bold = tag.find(["strong", "b"])
+        text = tag.get_text(" ", strip=True)
+        return bool(bold) and bold.get_text(" ", strip=True) == text and len(text) < 80
+    return False
+
+
+def expand_roundup(feed: dict, entry, post_published) -> list[Item]:
+    """Bir derleme yazısındaki (ör. Dew Drop) dış bağlantıları ayrı aday maddelere çevirir.
+
+    Derlemenin kendisi aday OLMAZ; içindeki asıl makaleler olur. Bağlantı metni başlık,
+    en yakın üst başlık bölüm, bağlantıyı izleyen '(Yazar)' ise yazar olarak alınır.
+    """
+    skip = DEFAULT_SKIP_DOMAINS | set(feed.get("skip_domains", []))
+    if entry.get("link"):
+        skip.add(_domain(entry["link"]))  # derlemenin kendi sitesine giden bağlantılar aday olmaz
+    soup = BeautifulSoup(_entry_html(entry), "html.parser")
+    via = feed.get("via") or feed["name"]
+    section = ""
+    seen: set[str] = set()
+    out: list[Item] = []
+    for node in soup.descendants:
+        if not isinstance(node, Tag):
+            continue
+        if _is_heading(node):
+            section = node.get_text(" ", strip=True)
+            continue
+        if node.name != "a":
+            continue
+        href = (node.get("href") or "").strip()
+        text = re.sub(r"\s+", " ", node.get_text(" ", strip=True))
+        if (not is_http_url(href) or _skipped(href, skip) or len(text) < MIN_LINK_TEXT
+                or canon_url(href) in seen):
+            continue
+        seen.add(canon_url(href))
+        author = ""
+        nxt = node.next_sibling
+        if isinstance(nxt, NavigableString):
+            m = re.match(r"\s*\(([^)]{2,60})\)", str(nxt))
+            author = m.group(1).strip() if m else ""
+        parts = [f"Bölüm: {section}" if section else "", f"Yazar: {author}" if author else ""]
+        out.append(Item(
+            id=item_id(href), topic=feed["topic"], source=_domain(href),
+            kind=feed.get("kind", "article"), url=href, title=text,
+            snippet=". ".join(p for p in parts if p), published=post_published, via=via))
+    return out
+
+
 def fetch_feed(feed: dict) -> list[Item]:
     parsed = feedparser.parse(_read(feed["url"]))
     if parsed.bozo and not parsed.entries:
         raise ValueError(f"akış okunamadı: {parsed.bozo_exception}")
     items: list[Item] = []
     for e in parsed.entries:
+        published = _published(e)
+        if feed.get("roundup"):
+            # Yalnızca zaman penceresine giren yazıları aç (gereksiz ayrıştırma olmasın).
+            if feed.get("_since") and published and published < feed["_since"]:
+                continue
+            found = expand_roundup(feed, e, published)
+            print(f'roundup "{feed["name"]}": {len(found)} bağlantı, '
+                  f'bölümler: {sorted({i.snippet.split(".")[0] for i in found})[:12]}',
+                  file=sys.stderr)
+            if len(found) < 5:
+                raise ValueError(
+                    f"derleme ayrıştırılamadı ({len(found)} bağlantı, içerik "
+                    f"{len(_entry_html(e))} karakter); akışın içerik yapısını kontrol edin")
+            items += found
+            continue
         link = e.get("link") or ""
         title = (e.get("title") or "").strip()
         if not title or not is_http_url(link):
             continue
-        ts = e.get("published_parsed") or e.get("updated_parsed")
-        published = (dt.datetime.fromtimestamp(time.mktime(ts), dt.timezone.utc)
-                     if ts else None)
-        summary = e.get("summary") or ""
-        if not summary and e.get("content"):
-            summary = e["content"][0].get("value", "")
         items.append(Item(
             id=item_id(link), topic=feed["topic"], source=feed["name"],
             kind=feed.get("kind", "article"), url=link, title=title,
-            snippet=_text(summary, 300), published=published))
+            snippet=_text(_entry_html(e), 300), published=published))
     return items
 
 
@@ -76,7 +169,7 @@ def collect(cfg: dict, now: dt.datetime, seen_urls: set[str]):
 
     for feed in feeds:
         try:
-            items = fetch_feed(feed)
+            items = fetch_feed({**feed, "_since": since})
         except Exception as exc:  # tek akışın hatası tüm hattı durdurmasın
             errors.append(f'{feed["name"]}: {exc}')
             continue
@@ -84,7 +177,8 @@ def collect(cfg: dict, now: dt.datetime, seen_urls: set[str]):
                  if (i.published is None or i.published >= since)
                  and canon_url(i.url) not in seen_urls]
         fresh.sort(key=lambda i: i.published or now, reverse=True)
-        per_topic.setdefault(feed["topic"], []).append(fresh[:run["per_feed_cap"]])
+        cap = feed.get("cap", run["per_feed_cap"])  # derleme akışları için daha yüksek olabilir
+        per_topic.setdefault(feed["topic"], []).append(fresh[:cap])
 
     candidates: dict[str, list[Item]] = {}
     for topic, lists in per_topic.items():

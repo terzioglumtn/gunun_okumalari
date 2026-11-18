@@ -94,7 +94,7 @@ def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
         s = summaries.get(it.id, {})
         out.append({
             "id": it.id, "topic": it.topic, "kind": it.kind, "score": p["score"],
-            "source": it.source, "url": it.url, "title_orig": it.title,
+            "source": it.source, "via": it.via, "url": it.url, "title_orig": it.title,
             "title_tr": s.get("baslik_tr") or it.title,
             "summary_tr": s.get("ozet_tr") or "Özet üretilemedi; asıl kaynağa bakın.",
             "why_tr": s.get("neden_onemli") or p["neden"],

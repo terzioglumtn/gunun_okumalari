@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>Morning Dew (test)</title>
+    <link>https://alvinashcraft.example/</link>
+    <description>Derleme test akışı</description>
+    <item>
+      <title>Dew Drop - November 18, 2026 (#9999)</title>
+      <link>https://alvinashcraft.example/2026/11/18/dew-drop-november-18-2026-9999/</link>
+      <pubDate>Wed, 18 Nov 2026 02:00:00 GMT</pubDate>
+      <content:encoded><![CDATA[
+        <h3>Top Links</h3>
+        <ul>
+          <li><a href="https://devblogs.microsoft.com/dotnet/avalonia-ve-dotnet-11?utm_source=dew">Avalonia and .NET 11: what changes for desktop</a> (Jane Doe)</li>
+          <li><a href="https://martinfowler.com/articles/modular-design.html">Modular design in long-lived systems</a> (Martin Example)</li>
+          <li><a href="https://alvinashcraft.example/2026/11/17/dew-drop-november-17-2026-9998/">Yesterday's Dew Drop archive entry</a></li>
+          <li><a href="https://twitter.com/someone/status/1">Follow this very long social media thread now</a></li>
+          <li><a href="https://example.com/here">here</a></li>
+        </ul>
+        <p><strong>Web &amp; Cloud Development</strong></p>
+        <ul>
+          <li><a href="https://example.org/realtime-grpc-streaming">Low-latency streaming with gRPC in production</a> (Sam Sample)</li>
+          <li><a href="javascript:alert(1)">A malicious javascript link with long text</a> (Evil)</li>
+          <li><a href="https://example.net/wpf-memory">Finding memory leaks in WPF applications</a></li>
+        </ul>
+        <h3>Source Code</h3>
+        <ul>
+          <li><a href="https://github.com/example/tool">example/tool: a handy developer utility</a> (Dev Person)</li>
+        </ul>
+      ]]></content:encoded>
+    </item>
+  </channel>
+</rss>

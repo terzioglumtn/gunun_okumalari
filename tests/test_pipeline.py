@@ -132,3 +132,52 @@ def test_run_dedupes_items_across_topics(tmp_path, monkeypatch):
     ids = [i["id"] for i in issue["items"]]
     assert len(ids) == len(set(ids))
     assert len(issue["top_ids"]) == len(set(issue["top_ids"]))
+
+
+ROUNDUP = Path(__file__).parent / "fixtures" / "roundup.xml"
+ROUNDUP_EMPTY = Path(__file__).parent / "fixtures" / "roundup_empty.xml"
+
+
+def roundup_cfg(path):
+    cfg = make_cfg()
+    cfg["feeds"] = [{"name": "Morning Dew", "topic": "dotnet", "roundup": True, "cap": 80,
+                     "url": f"file://{path}", "skip_domains": ["alvinashcraft.example"]}]
+    return cfg
+
+
+def test_roundup_expands_links_and_drops_the_roundup_itself():
+    cands, errors, _ = collect(roundup_cfg(ROUNDUP), NOW, set())
+    assert errors == []
+    items = cands["dotnet"]
+    urls = [i.url for i in items]
+    titles = [i.title for i in items]
+    # Derlemenin kendisi ve kendi sitesine giden bağlantılar aday olmamalı
+    assert not any("dew-drop" in u for u in urls)
+    # Sosyal medya, çok kısa metin ve javascript: bağlantıları elenmeli
+    assert not any("twitter.com" in u for u in urls)
+    assert "here" not in titles
+    assert not any(u.startswith("javascript:") for u in urls)
+    # Asıl makaleler kaldı ve kaynak olarak alan adı, derleme adı "via" olarak işlendi
+    by_url = {i.url: i for i in items}
+    first = by_url["https://devblogs.microsoft.com/dotnet/avalonia-ve-dotnet-11?utm_source=dew"]
+    assert first.source == "devblogs.microsoft.com" and first.via == "Morning Dew"
+    assert "Bölüm: Top Links" in first.snippet and "Yazar: Jane Doe" in first.snippet
+    # Kalın paragraf ve h3 bölüm başlığı olarak tanındı
+    grpc = by_url["https://example.org/realtime-grpc-streaming"]
+    assert "Bölüm: Web & Cloud Development" in grpc.snippet and "Yazar: Sam Sample" in grpc.snippet
+    gh = by_url["https://github.com/example/tool"]
+    assert "Bölüm: Source Code" in gh.snippet
+    assert len(items) == 5
+
+
+def test_roundup_unparseable_is_reported_not_silent():
+    _, errors, _ = collect(roundup_cfg(ROUNDUP_EMPTY), NOW, set())
+    assert len(errors) == 1 and "derleme ayrıştırılamadı" in errors[0]
+
+
+def test_roundup_item_carries_via_into_issue(monkeypatch):
+    monkeypatch.setattr(pipeline, "fetch_article_text", lambda url, fb, limit=6000: fb)
+    cfg = roundup_cfg(ROUNDUP)
+    cands, _, _ = collect(cfg, NOW, set())
+    items = pipeline.run_topic(LLM("mock", "a", "b"), cfg["topics"]["dotnet"], cands["dotnet"], "ilgi", 3)
+    assert items and all(i["via"] == "Morning Dew" for i in items)

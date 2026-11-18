@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Boş derleme</title>
+    <link>https://alvinashcraft.example/</link>
+    <description>İçeriği olmayan derleme</description>
+    <item>
+      <title>Dew Drop - November 18, 2026</title>
+      <link>https://alvinashcraft.example/2026/11/18/dew-drop/</link>
+      <pubDate>Wed, 18 Nov 2026 02:00:00 GMT</pubDate>
+      <description>Loading…</description>
+    </item>
+  </channel>
+</rss>
