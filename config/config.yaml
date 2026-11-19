@@ -53,7 +53,8 @@ topics:
 
 feeds:
   # --- İş ve liderlik (günde 1 madde) ---
-  # Inc. Türkiye: /feed 404 verdi. Yazı adresleri öğrenilince HTML ayrıştırıcı ya da sitemap ile eklenecek.
+  # Inc. Türkiye (abonelikli): RSS adresi sayfa kaynağından bulundu; ön izlemeye dayalı kısa özet (kind: preview).
+  - {name: "Inc. Türkiye", topic: liderlik, kind: preview, url: "https://incturkiye.com/story-feeds"}
   - {name: "Harvard Business Review", topic: liderlik, url: "https://feeds.hbr.org/harvardbusiness"}
   - {name: "MIT Sloan Management Review", topic: liderlik, url: "https://sloanreview.mit.edu/feed/"}
   - {name: "Inc.", topic: liderlik, url: "https://www.inc.com/rss"}

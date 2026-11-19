@@ -33,7 +33,7 @@ PAYWALL_MARKERS = ("subscribe to", "subscription", "unlock", "paywall", "sign in
 
 def has_full_text(item: Item, text: str) -> bool:
     """Sayfa metni özet için yeterli mi? Kısa metin veya abonelik duvarı belirtisi 'hayır'dır."""
-    need = MIN_TEXT_SHORT if item.kind in ("repo", "qa", "medium") else MIN_TEXT
+    need = MIN_TEXT_SHORT if item.kind in ("repo", "qa", "medium", "preview") else MIN_TEXT
     if len(text) < need:
         return False
     if len(text) < 1500 and any(m in text.lower() for m in PAYWALL_MARKERS):
@@ -115,8 +115,8 @@ def summarize(llm: LLM, items: list[Item], tags: list[str] | None = None,
     for i in items:
         entry = {"id": i.id, "source": i.source, "title": i.title,
                  "text": (texts or {}).get(i.id) or fetch_article_text(i.url, i.snippet)}
-        if i.kind == "medium":
-            entry["not"] = "Medium ön izlemesi (tam metin üyelere özel olabilir): ozet_tr en fazla 2 cümle."
+        if i.kind in ("medium", "preview"):
+            entry["not"] = "Kaynak ön izlemesi (tam metin üyelere özel olabilir): ozet_tr en fazla 2 cümle."
         if tags and _section_of(i):
             entry["bolum_ipucu"] = _section_of(i)   # derleme kaynağındaki bölüm adı (ipucu)
         payload.append(entry)
@@ -175,7 +175,7 @@ def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
 
     # Soru-cevap türünü sınırla (sıra korunur)
     ordered, used = [], {"qa": 0, "medium": 0}
-    limits = {"qa": max_qa, "medium": max_medium}
+    limits = {"qa": max_qa, "medium": max_medium, "preview": max_medium}
     for p in picks:
         k = by_id[p["id"]].kind
         if k in limits:
