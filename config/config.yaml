@@ -29,9 +29,18 @@ llm:
 topics:
   dotnet:
     title: "Yazılım"
+    tags:   # her maddeye bunlardan 1-2 etiket verilir (LLM), uymazsa "Diğer"
+      - Web and Cloud Development
+      - Windows Development
+      - ".NET and Visual Studio"
+      - AI
+      - Python
+      - "Design, DevOps and Methodology"
+      - Mobile and Game Development
+      - Screencasts and Videos
     repo_slots: 1   # GitHub Trending (haftalık) listesinden her gün 1 depo ZORUNLU seçilir (makale kontenjanına ek)
     desc: "Yazılım geliştirme: .NET, C#, WPF/WinForms, Avalonia, Visual Studio, web ve bulut, Python, mobil ve oyun, DevOps ve metodoloji, yazılım mimarisi, Git, geliştirici araçları ve yapay zekâ destekli geliştirme"
-    max_items: 7
+    max_items: 10
   savunma:
     title: "Savunma, İHA ve insansız sistemler"
     desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"

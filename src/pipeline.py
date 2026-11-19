@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 
-from .collect import Item, fetch_article_text
+from .collect import Item, _section_of, fetch_article_text
 from .llm import LLM
 
 SYSTEM = (
@@ -67,14 +67,23 @@ def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
     return out[:n]
 
 
-def summarize(llm: LLM, items: list[Item]) -> dict[str, dict]:
+def summarize(llm: LLM, items: list[Item], tags: list[str] | None = None) -> dict[str, dict]:
     """Seçilen maddelerin sayfa metnini okuyup Türkçe özetletir."""
     if not items:
         return {}
     payload = []
     for i in items:
-        payload.append({"id": i.id, "source": i.source, "title": i.title,
-                        "text": fetch_article_text(i.url, i.snippet)})
+        entry = {"id": i.id, "source": i.source, "title": i.title,
+                 "text": fetch_article_text(i.url, i.snippet)}
+        if tags and _section_of(i):
+            entry["bolum_ipucu"] = _section_of(i)   # derleme kaynağındaki bölüm adı (ipucu)
+        payload.append(entry)
+    tag_rule = tag_fmt = ""
+    if tags:
+        tag_rule = ("- etiketler: şu listeden içeriğe en uygun 1, en fazla 2 etiket seç; listede olmayan "
+                    f"etiket yazma: {json.dumps(tags, ensure_ascii=False)}. Hiçbiri uymuyorsa [\"Diğer\"]. "
+                    "'bolum_ipucu' varsa dikkate al ama kararı içeriğe göre ver.\n")
+        tag_fmt = ', "etiketler": ["..."]'
     prompt = (
         "## Görev\nHer madde için Türkçe bir özet hazırla.\n"
         "Kurallar:\n"
@@ -84,12 +93,26 @@ def summarize(llm: LLM, items: list[Item]) -> dict[str, dict]:
         "- baslik_tr: doğal Türkçe başlık. Teknik terimleri ve ürün adlarını çevirme.\n"
         "- ozet_tr: 2-3 cümle, olgu odaklı.\n"
         "- neden_onemli: bir mühendis için neden önemli, tek cümle; abartma.\n"
+        f"{tag_rule}"
         'Çıktı biçimi: [{"id": "...", "baslik_tr": "...", "ozet_tr": "...", '
-        '"neden_onemli": "..."}]\n\n'
+        f'"neden_onemli": "..."{tag_fmt}}}]\n\n'
         f"## Maddeler\n{json.dumps(payload, ensure_ascii=False)}"
     )
     result = llm.json("summarize", SYSTEM, prompt)
     return {r["id"]: r for r in result if isinstance(r, dict) and "id" in r}
+
+
+def _clean_tags(raw, allowed: list[str] | None) -> list[str]:
+    """LLM'in etiketlerini yapılandırmadaki listeye indirger (en fazla 2); geçerli yoksa 'Diğer'."""
+    if not allowed:
+        return []
+    canon = {a.lower(): a for a in allowed}
+    got: list[str] = []
+    for t in raw if isinstance(raw, list) else []:
+        a = canon.get(str(t).strip().lower())
+        if a and a not in got:
+            got.append(a)
+    return got[:2] or ["Diğer"]
 
 
 def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
@@ -124,7 +147,8 @@ def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
                            "neden": "Haftalık Trending listesinin en üst sıradaki deposu."}]
         kept += repo_picks
 
-    summaries = summarize(llm, [by_id[p["id"]] for p in kept])
+    tags = topic_cfg.get("tags")
+    summaries = summarize(llm, [by_id[p["id"]] for p in kept], tags)
     out = []
     for p in kept:
         it = by_id[p["id"]]
@@ -136,5 +160,6 @@ def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
             "summary_tr": s.get("ozet_tr") or "Özet üretilemedi; asıl kaynağa bakın.",
             "why_tr": s.get("neden_onemli") or p["neden"],
             "published": it.published.isoformat() if it.published else None,
+            "tags": _clean_tags(s.get("etiketler"), tags),
         })
     return out

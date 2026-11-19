@@ -323,3 +323,45 @@ def test_repo_slot_adds_on_top_of_article_quota(monkeypatch):
     kinds = sorted(i["kind"] for i in out)
     assert kinds == ["article", "article", "repo"]
 
+
+
+def test_summary_prompt_asks_for_tags_and_output_is_normalized(monkeypatch):
+    monkeypatch.setattr(pipeline, "fetch_article_text", lambda url, fb, limit=6000: fb)
+    seen = {}
+
+    class TagLLM:
+        def json(self, stage, system, prompt):
+            if stage == "select":
+                return [{"id": "0000000a", "score": 4, "neden": "x"}]
+            seen["prompt"] = prompt
+            return [{"id": "0000000a", "baslik_tr": "b", "ozet_tr": "o", "neden_onemli": "n",
+                     "etiketler": ["python", "ai", "Uydurma", "Web and Cloud Development"]}]
+
+    it = pipeline.Item(id="0000000a", topic="dotnet", source="Blog", kind="article",
+                       url="https://x.example/a-long", title="t", snippet="Bölüm: Python. Yazar: A",
+                       published=None, via="Morning Dew")
+    cfg = {"title": "T", "desc": "D", "max_items": 5, "tags": ["Python", "AI", "Web and Cloud Development"]}
+    out = pipeline.run_topic(TagLLM(), cfg, [it], "ilgi", 3)
+    assert out[0]["tags"] == ["Python", "AI"]                 # kanonik yazım, en fazla 2, uydurma elenir
+    assert '"etiketler"' in seen["prompt"] and '"bolum_ipucu": "Python"' in seen["prompt"]
+    assert pipeline._clean_tags(["yok"], cfg["tags"]) == ["Diğer"]
+    assert pipeline._clean_tags(["AI"], None) == []
+
+
+def test_tags_render_on_page(tmp_path):
+    from src.render import render_all
+    import json as _json
+    data = tmp_path / "data"; data.mkdir()
+    (data / "2026-11-19.json").write_text(_json.dumps({
+        "date": "2026-11-19", "issue_no": 1, "generated_at": "2026-11-19T03:30:00+00:00",
+        "feed_errors": [], "feeds_total": 1, "top_ids": [],
+        "items": [{"id": "0000000a", "topic": "dotnet", "kind": "article", "score": 4,
+                   "source": "Blog", "via": "", "url": "https://x.example/a", "title_orig": "t",
+                   "title_tr": "başlık", "summary_tr": "özet", "why_tr": "neden", "published": None,
+                   "tags": ["Python", "AI"]}]}), encoding="utf-8")
+    cfg = make_cfg()
+    cfg["topics"] = {"dotnet": {"title": "Yazılım", "desc": "d", "max_items": 5}}
+    out = tmp_path / "site"
+    render_all(cfg, data, out)
+    html = (out / "index.html").read_text(encoding="utf-8")
+    assert '<span class="tag">Python</span>' in html and '<span class="tag">AI</span>' in html
