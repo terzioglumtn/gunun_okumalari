@@ -174,7 +174,7 @@ def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
     picks = select(llm, topic_cfg, pool, interests, n + max_qa + max_medium + SPARE, recent)
 
     # Soru-cevap türünü sınırla (sıra korunur)
-    ordered, used = [], {"qa": 0, "medium": 0}
+    ordered, used = [], {"qa": 0, "medium": 0, "preview": 0}
     limits = {"qa": max_qa, "medium": max_medium, "preview": max_medium}
     for p in picks:
         k = by_id[p["id"]].kind
