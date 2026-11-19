@@ -31,6 +31,20 @@ def load_seen(data_dir: Path, today: dt.date, days: int) -> set[str]:
     return seen
 
 
+def load_recent_titles(data_dir: Path, today: dt.date, days: int) -> dict[str, list[str]]:
+    """Son N günde yayımlanan Türkçe başlıklar (konuya göre); tekrar eden olayları elemek için."""
+    out: dict[str, list[str]] = {}
+    for p in sorted(data_dir.glob("20??-??-??.json"), reverse=True):
+        d = dt.date.fromisoformat(p.stem)
+        if d == today or (today - d).days > days:
+            continue
+        for item in json.loads(p.read_text(encoding="utf-8")).get("items", []):
+            title = item.get("title_tr") or item.get("title_orig")
+            if title:
+                out.setdefault(item.get("topic", ""), []).append(f"{title} ({item.get('source', '')})")
+    return out
+
+
 def next_issue_no(data_dir: Path, today: dt.date) -> int:
     today_file = data_dir / f"{today}.json"
     if today_file.exists():
@@ -60,9 +74,11 @@ def main() -> int:
     backend = os.environ.get("LLM_BACKEND") or cfg["llm"]["backend"]
     llm = LLM(backend, cfg["llm"]["select_model"], cfg["llm"]["summarize_model"])
 
+    recent = load_recent_titles(data_dir, today, run["seen_days"])
     items: list[dict] = []
     for key, tcfg in cfg["topics"].items():
-        items += run_topic(llm, tcfg, candidates.get(key, []), interests, run["max_qa"])
+        items += run_topic(llm, tcfg, candidates.get(key, []), interests, run["max_qa"],
+                           recent.get(key, []))
 
     # Aynı haber iki konuda çıkarsa yalnızca en yüksek puanlı kopya kalır.
     best: dict[str, dict] = {}

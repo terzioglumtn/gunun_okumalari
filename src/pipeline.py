@@ -14,19 +14,28 @@ SYSTEM = (
 
 
 def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
-           n: int) -> list[dict]:
+           n: int, recent: list[str] | None = None) -> list[dict]:
     """Adaylar arasından en değerli en fazla n maddeyi seçer."""
     if not items:
         return []
     cands = [{"id": i.id, "kaynak": i.source, "tur": i.kind, "baslik": i.title,
               "ozet": i.snippet} for i in items]
+    recent_block = ""
+    if recent:
+        recent_block = (
+            "## Son günlerde ZATEN yayımlanan haberler\n"
+            + "\n".join(f"- {t}" for t in recent[:80]) + "\n\n")
     prompt = (
         f"## İlgi profili\n{interests}\n\n"
         f"## Konu\n{topic_cfg['title']}: {topic_cfg['desc']}\n\n"
+        f"{recent_block}"
         f"## Görev\nAşağıdaki adaylardan okunmaya en değerli olanları seç. EN FAZLA {n} madde seç; "
         "yeterince iyi madde yoksa daha azını seç, boş liste de geçerlidir.\n"
         "Kurallar:\n"
         "- Aynı olayı anlatan birden çok aday varsa yalnızca en birincil kaynağı seç.\n"
+        "- 'Zaten yayımlanan haberler' listesindeki bir olayı, farklı bir sitede veya farklı "
+        "kelimelerle anlatan adayı SEÇME; yalnızca olayda önemli yeni bir gelişme varsa "
+        "(yeni sözleşme, yeni sayı, yeni sonuç) seç ve nedeni açıkla.\n"
         "- Pazarlama, listeler ve başlangıç öğreticilerini ele.\n"
         "- score: 1-5 (5 = bugün mutlaka bilinmeli).\n"
         "- neden: tek kısa Türkçe cümle.\n"
@@ -71,10 +80,10 @@ def summarize(llm: LLM, items: list[Item]) -> dict[str, dict]:
 
 
 def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
-              max_qa: int) -> list[dict]:
+              max_qa: int, recent: list[str] | None = None) -> list[dict]:
     """Bir konu için yayınlanacak madde sözlüklerini döndürür."""
     n = topic_cfg["max_items"]
-    picks = select(llm, topic_cfg, items, interests, n + max_qa)
+    picks = select(llm, topic_cfg, items, interests, n + max_qa, recent)
     by_id = {i.id: i for i in items}
 
     # Soru-cevap türünü sınırla

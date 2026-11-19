@@ -199,3 +199,23 @@ def test_roundup_cap_keeps_every_section_represented():
     sections = {i.snippet.split(".")[0] for i in cands["dotnet"]}
     # cap 3 olsa da son bölümler (Web & Cloud, Source Code) ilk bölüm tarafından ezilmez
     assert len(sections) == 3
+
+
+def test_select_prompt_lists_recently_published_titles_to_avoid_repeats():
+    captured = {}
+
+    class FakeLLM:
+        def json(self, stage, system, prompt):
+            captured["prompt"] = prompt
+            return []
+
+    items = [pipeline.Item(id="a", topic="savunma", source="uasvision.com", kind="article",
+                           url="https://uasvision.com/x-long-enough", title="Aselsan neutralizes 51 drones",
+                           snippet="", published=None)]
+    pipeline.select(FakeLLM(), {"title": "T", "desc": "D"}, items, "ilgi", 3,
+                    recent=["ASELSAN Ejderha HPEM sistemi (euro-sd.com)"])
+    p = captured["prompt"]
+    assert "ZATEN yayımlanan" in p and "ASELSAN Ejderha HPEM sistemi (euro-sd.com)" in p
+    # liste yoksa bölüm hiç eklenmez
+    pipeline.select(FakeLLM(), {"title": "T", "desc": "D"}, items, "ilgi", 3)
+    assert "ZATEN yayımlanan" not in captured["prompt"]
