@@ -287,11 +287,11 @@ def pipeline_parse(html):
     return parse_trending({"name": "GH", "topic": "dotnet"}, html)
 
 
-def test_repo_slot_always_yields_exactly_one_repo(monkeypatch):
+def test_repo_slot_skipped_when_no_suitable_repo(monkeypatch):
     monkeypatch.setattr(pipeline, "fetch_article_text", lambda url, fb, limit=6000: fb)
     prompts = []
 
-    class EmptyLLM:  # hiçbir şey seçmeyen LLM: zorunlu depo yine de çıkmalı
+    class EmptyLLM:  # hiçbir şey seçmeyen LLM: uygun depo yoksa depo eklenmez
         def json(self, stage, system, prompt):
             prompts.append(prompt)
             return []
@@ -302,7 +302,7 @@ def test_repo_slot_always_yields_exactly_one_repo(monkeypatch):
     items = [mk(1), mk(2), mk(3), mk(9, "article")]
     out = pipeline.run_topic(EmptyLLM(), {"title": "T", "desc": "D", "max_items": 7, "repo_slots": 1},
                              items, "ilgi", 3)
-    assert [i["kind"] for i in out] == ["repo"] and out[0]["id"] == "i1"
+    assert out == []
     select_prompts = [p for p in prompts if "## Adaylar" in p]
     assert len(select_prompts) == 2
     assert "Boş liste DÖNDÜRME" in select_prompts[1] and '"tur": "repo"' in select_prompts[1]

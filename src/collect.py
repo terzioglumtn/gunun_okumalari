@@ -16,6 +16,8 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 
 from .util import canon_url, is_http_url, item_id
 
+BROWSER_UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
+              "Chrome/124.0 Safari/537.36")
 UA = "gunun-okumalari/0.1 (+https://github.com/terzioglumtn/gunun_okumalari)"
 
 # Derleme (roundup) yazılarında asıl makale olmayan, gürültü bağlantı alanları.
@@ -48,9 +50,20 @@ def _text(html: str, limit: int) -> str:
 def _read(url: str) -> bytes:
     if url.startswith("file://"):
         return Path(url[7:]).read_bytes()
-    r = requests.get(url, headers={"User-Agent": UA}, timeout=20)
-    r.raise_for_status()
-    return r.content
+    # Bazı siteler bot imzasında bağlantıyı yarıda keser ("Response ended prematurely"):
+    # önce kendi UA'mızla, olmazsa tarayıcı benzeri başlıklarla bir kez daha dener.
+    attempts = [{"User-Agent": UA},
+                {"User-Agent": BROWSER_UA, "Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+                 "Accept-Language": "tr,en;q=0.8"}]
+    last: Exception | None = None
+    for h in attempts:
+        try:
+            r = requests.get(url, headers=h, timeout=20)
+            r.raise_for_status()
+            return r.content
+        except Exception as e:  # noqa: BLE001 - son hata aşağıda yeniden fırlatılır
+            last = e
+    raise last  # type: ignore[misc]
 
 
 def _published(entry) -> dt.datetime | None:
