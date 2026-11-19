@@ -104,15 +104,16 @@ feeds:
   - {name: "UAS Weekly", topic: savunma, url: "https://uasweekly.com/feed/"}
   - {name: "UAS Vision", topic: savunma, url: "https://www.uasvision.com/feed/"}
   # Bülten'in 19 Kasım kaynakçasından eklenenler (adresler doğrulanmadı; ilk çalıştırma log'una bakın).
+  # Kapalı: The Defense Post (akış XML'i bozuk), Military & Aerospace Electronics (404, adres bulunamadı).
   - {name: "Breaking Defense", topic: savunma, url: "https://breakingdefense.com/feed/"}
   - {name: "The War Zone", topic: savunma, url: "https://www.twz.com/feed"}
   - {name: "Defense News", topic: savunma, url: "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml"}
   - {name: "DefenseScoop", topic: savunma, url: "https://defensescoop.com/feed/"}
-  - {name: "The Defense Post", topic: savunma, url: "https://thedefensepost.com/feed/"}
+  - {name: "The Defense Post", topic: savunma, enabled: false, url: "https://thedefensepost.com/feed/"}
   - {name: "DroneXL", topic: savunma, url: "https://dronexl.co/feed/"}
   - {name: "DroneLife", topic: savunma, url: "https://dronelife.com/feed/"}
   - {name: "Naval Today", topic: savunma, url: "https://www.navaltoday.com/feed/"}
-  - {name: "Military & Aerospace Electronics", topic: savunma, url: "https://www.militaryaerospace.com/rss"}
+  - {name: "Military & Aerospace Electronics", topic: savunma, enabled: false, url: "https://www.militaryaerospace.com/rss"}
   - {name: "Euromaidan Press", topic: savunma, url: "https://euromaidanpress.com/feed/"}
   - {name: "Quwa (Türk savunma)", topic: savunma, enabled: false, url: "https://quwa.org/feed/"}
   # Derleme bültenleri: yazının kendisi değil, içindeki makale bağlantıları aday olur.
