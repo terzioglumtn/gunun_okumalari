@@ -80,7 +80,7 @@ def main() -> int:
     items: list[dict] = []
     for key, tcfg in cfg["topics"].items():
         items += run_topic(llm, tcfg, candidates.get(key, []), interests, run["max_qa"],
-                           recent.get(key, []))
+                           recent.get(key, []), run.get("max_medium", 3))
 
     # Aynı haber iki konuda çıkarsa yalnızca en yüksek puanlı kopya kalır.
     best: dict[str, dict] = {}
