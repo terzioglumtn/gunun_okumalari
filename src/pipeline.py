@@ -13,9 +13,17 @@ SYSTEM = (
 )
 
 
+REPO_RULES = (
+    "- Bu adaylar GitHub Trending haftalık listesindendir. Yazılım mühendisi için gerçek değeri olanı seç: "
+    "net bir sorunu çözen, aktif ve olgun, öğrenilecek bir fikri veya tasarımı olan depolar.\n"
+    "- 'awesome' listeleri, ders/kurs/mülakat koleksiyonları, kripto/moda ürünleri ve tek dosyalık "
+    "oyuncakları düşük puanla.\n"
+)
+
+
 def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
-           n: int, recent: list[str] | None = None) -> list[dict]:
-    """Adaylar arasından en değerli en fazla n maddeyi seçer."""
+           n: int, recent: list[str] | None = None, must: bool = False) -> list[dict]:
+    """Adaylar arasından en değerli en fazla n maddeyi seçer (must=True: tam n madde zorunlu)."""
     if not items:
         return []
     cands = [{"id": i.id, "kaynak": i.source, "tur": i.kind, "baslik": i.title,
@@ -29,9 +37,14 @@ def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
         f"## İlgi profili\n{interests}\n\n"
         f"## Konu\n{topic_cfg['title']}: {topic_cfg['desc']}\n\n"
         f"{recent_block}"
-        f"## Görev\nAşağıdaki adaylardan okunmaya en değerli olanları seç. EN FAZLA {n} madde seç; "
-        "yeterince iyi madde yoksa daha azını seç, boş liste de geçerlidir.\n"
-        "Kurallar:\n"
+        + (f"## Görev\nAşağıdaki adaylar arasından bugünün EN GÜÇLÜ {n} maddesini seç. Boş liste DÖNDÜRME: "
+           "adaylar zayıf olsa bile en iyisini seç ve score'unu dürüstçe ver.\n"
+           if must else
+           f"## Görev\nAşağıdaki adaylardan okunmaya en değerli olanları seç. EN FAZLA {n} madde seç; "
+           "yeterince iyi madde yoksa daha azını seç, boş liste de geçerlidir.\n")
+        + "Kurallar:\n"
+        + (REPO_RULES if must else "")
+        + 
         "- Aynı olayı anlatan birden çok aday varsa yalnızca en birincil kaynağı seç.\n"
         "- 'Zaten yayımlanan haberler' listesindeki bir olayı, farklı bir sitede veya farklı "
         "kelimelerle anlatan adayı SEÇME; yalnızca olayda önemli yeni bir gelişme varsa "
@@ -80,27 +93,36 @@ def summarize(llm: LLM, items: list[Item]) -> dict[str, dict]:
 
 
 def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
-              max_qa: int, recent: list[str] | None = None,
-              max_repo: int = 99) -> list[dict]:
-    """Bir konu için yayınlanacak madde sözlüklerini döndürür."""
+              max_qa: int, recent: list[str] | None = None) -> list[dict]:
+    """Bir konu için yayınlanacak madde sözlüklerini döndürür.
+
+    topic_cfg["repo_slots"] > 0 ise "repo" türündeki adaylar (GitHub Trending) makalelerle yarışmaz:
+    ayrı bir seçimle her gün o kadar depo ZORUNLU seçilir (makale kontenjanına ek olarak).
+    """
     n = topic_cfg["max_items"]
-    picks = select(llm, topic_cfg, items, interests, n + max_qa + max_repo, recent)
+    slots = int(topic_cfg.get("repo_slots", 0))
+    repos = [i for i in items if i.kind == "repo"] if slots else []
+    pool = [i for i in items if i not in repos] if slots else items
     by_id = {i.id: i for i in items}
 
+    picks = select(llm, topic_cfg, pool, interests, n + max_qa, recent)
+
     # Soru-cevap türünü sınırla
-    kept, qa, repo = [], 0, 0
+    kept, qa = [], 0
     for p in picks:
-        kind = by_id[p["id"]].kind
-        if kind == "qa":
+        if by_id[p["id"]].kind == "qa":
             if qa >= max_qa:
                 continue
             qa += 1
-        elif kind == "repo":
-            if repo >= max_repo:
-                continue
-            repo += 1
         kept.append(p)
     kept = kept[:n]
+
+    if repos:
+        repo_picks = select(llm, topic_cfg, repos, interests, slots, recent, must=True)[:slots]
+        if not repo_picks:  # LLM boş döndürdüyse listenin en üst sıradaki deposu (düşük puanla)
+            repo_picks = [{"id": repos[0].id, "score": 2,
+                           "neden": "Haftalık Trending listesinin en üst sıradaki deposu."}]
+        kept += repo_picks
 
     summaries = summarize(llm, [by_id[p["id"]] for p in kept])
     out = []

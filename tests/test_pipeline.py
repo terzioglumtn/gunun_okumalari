@@ -287,11 +287,39 @@ def pipeline_parse(html):
     return parse_trending({"name": "GH", "topic": "dotnet"}, html)
 
 
-def test_run_topic_caps_repo_items_per_day(monkeypatch):
+def test_repo_slot_always_yields_exactly_one_repo(monkeypatch):
     monkeypatch.setattr(pipeline, "fetch_article_text", lambda url, fb, limit=6000: fb)
-    mk = lambda n: pipeline.Item(id=f"r{n}", topic="dotnet", source="GitHub Trending", kind="repo",
-                                 url=f"https://github.com/o/r{n}", title=f"o/r{n}", snippet="d", published=None)
-    items = [mk(n) for n in range(6)]
-    out = pipeline.run_topic(LLM("mock", "a", "b"), {"title": "T", "desc": "D", "max_items": 7},
-                             items, "ilgi", 3, None, 2)
-    assert sum(1 for i in out if i["kind"] == "repo") <= 2
+    prompts = []
+
+    class EmptyLLM:  # hiçbir şey seçmeyen LLM: zorunlu depo yine de çıkmalı
+        def json(self, stage, system, prompt):
+            prompts.append(prompt)
+            return []
+
+    mk = lambda n, kind="repo": pipeline.Item(
+        id=f"i{n}", topic="dotnet", source="GitHub Trending" if kind == "repo" else "Blog", kind=kind,
+        url=f"https://github.com/o/r{n}", title=f"o/r{n}", snippet="d", published=None)
+    items = [mk(1), mk(2), mk(3), mk(9, "article")]
+    out = pipeline.run_topic(EmptyLLM(), {"title": "T", "desc": "D", "max_items": 7, "repo_slots": 1},
+                             items, "ilgi", 3)
+    assert [i["kind"] for i in out] == ["repo"] and out[0]["id"] == "i1"
+    select_prompts = [p for p in prompts if "## Adaylar" in p]
+    assert len(select_prompts) == 2
+    assert "Boş liste DÖNDÜRME" in select_prompts[1] and '"tur": "repo"' in select_prompts[1]
+    assert '"tur": "repo"' not in select_prompts[0]   # depolar makale yarışına girmez
+
+
+def test_repo_slot_adds_on_top_of_article_quota(monkeypatch):
+    monkeypatch.setattr(pipeline, "fetch_article_text", lambda url, fb, limit=6000: fb)
+    out = pipeline.run_topic(LLM("mock", "a", "b"),
+                             {"title": "T", "desc": "D", "max_items": 2, "repo_slots": 1},
+                             [pipeline.Item(id=f"0000000{n}", topic="dotnet", source="B", kind="article",
+                                            url=f"https://x.example/{n}-long", title=f"t{n}",
+                                            snippet="s", published=None) for n in range(4)]
+                             + [pipeline.Item(id="000000ff", topic="dotnet", source="GH", kind="repo",
+                                              url="https://github.com/o/r1", title="o/r1",
+                                              snippet="d", published=None)],
+                             "ilgi", 3)
+    kinds = sorted(i["kind"] for i in out)
+    assert kinds == ["article", "article", "repo"]
+

@@ -14,7 +14,6 @@ run:
   per_feed_cap: 20          # bir akıştan en fazla bu kadar yeni öğe adaya girer
   candidates_per_topic: 160 # LLM'e giden aday üst sınırı (maliyeti sınırlar)
   top_n: 3                  # "Önce bunlar" bölümü (minimum sürüm)
-  max_repo: 2               # GitHub Trending gibi depo türünden günde en fazla kaç madde
   max_qa: 3                 # soru-cevap (Stack Overflow) türünden en fazla kaç madde
   max_feed_failure_ratio: 0.5   # akışların yarısından fazlası okunamazsa iş başarısız olur (uyarı e-postası)
 
@@ -30,6 +29,7 @@ llm:
 topics:
   dotnet:
     title: "Yazılım"
+    repo_slots: 1   # GitHub Trending (haftalık) listesinden her gün 1 depo ZORUNLU seçilir (makale kontenjanına ek)
     desc: "Yazılım geliştirme: .NET, C#, WPF/WinForms, Avalonia, Visual Studio, web ve bulut, Python, mobil ve oyun, DevOps ve metodoloji, yazılım mimarisi, Git, geliştirici araçları ve yapay zekâ destekli geliştirme"
     max_items: 7
   savunma:

@@ -68,7 +68,7 @@ def _mock(stage: str, prompt: str) -> str:
     """Hattı uçtan uca sınamak için sahte yanıt."""
     if stage == "select":
         ids = re.findall(r'"id":\s*"([0-9a-f]{8})"', prompt)
-        n = int(re.search(r"EN FAZLA (\d+)", prompt).group(1))
+        n = int(re.search(r"EN (?:FAZLA|GÜÇLÜ) (\d+)", prompt).group(1))
         picks = [{"id": i, "score": max(1, 5 - k // 2), "neden": "sahte eleme"}
                  for k, i in enumerate(ids[:n])]
         return json.dumps(picks, ensure_ascii=False)
