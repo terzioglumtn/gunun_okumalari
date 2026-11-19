@@ -88,7 +88,7 @@ feeds:
   # GitHub Trending (haftalık liste): resmî RSS/API yok, sayfa HTML'i ayrıştırılır (günde 2 istek). Depo adayları "repo" türündedir.
   # Sayfa yapısı değişirse "trending sayfası ayrıştırılamadı" hatası görünür (sessiz kalmaz).
   - {name: "GitHub Trending", topic: dotnet, html: trending, kind: repo, cap: 12, seen_days: 30, url: "https://github.com/trending?since=weekly"}
-  - {name: "GitHub Trending: C#", topic: dotnet, html: trending, kind: repo, cap: 8, seen_days: 30, url: "https://github.com/trending/c%23?since=weekly"}
+  - {name: "GitHub Trending: C#", topic: dotnet, enabled: false, html: trending, kind: repo, cap: 8, seen_days: 30, url: "https://github.com/trending/c%23?since=weekly"}
   - {name: "The Practical Developer", topic: dotnet, url: "https://dev.to/feed"}
 
   # --- Medium (takip ettiğim yayınlar/yazarlar): RSS yalnızca ön izleme verir; maddeler kısa tutulur ---
