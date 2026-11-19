@@ -56,3 +56,4 @@ details.compact[open] .teaser{display:none}
 .search input,.search select{font:inherit;padding:10px 12px;border:1px solid var(--line);
   border-radius:10px;background:var(--panel);color:var(--ink)}
 @media (min-width:640px){.search{grid-template-columns:2fr 1fr 1fr}}
+h2 .count{font:600 16px system-ui,sans-serif;color:var(--muted);margin-left:4px}

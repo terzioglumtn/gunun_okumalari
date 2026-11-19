@@ -43,7 +43,7 @@
 
 {% for g in v.groups %}
 <section>
-  <h2>{{ g.title }}</h2>
+  <h2>{{ g.title }} <span class="count">({{ g.entries|length }})</span></h2>
   {% for it in g.entries %}{% if it.id not in v.raw.top_ids %}{{ compact(it) }}{% endif %}{% endfor %}
 </section>
 {% endfor %}

@@ -393,6 +393,7 @@ def test_site_has_search_and_compact(tmp_path):
                                                     "top_ids": ["abcdef00"], "items": items, "stats": {}}), encoding="utf-8")
     out = tmp_path / "site"; render_all(cfg, d, out)
     html = (out / "index.html").read_text(encoding="utf-8")
+    assert '<span class="count">(5)</span>' in html
     assert html.count('<details class="item compact"') == 4 and "Ilk cümle." in html
     rows = json.loads((out / "search.json").read_text(encoding="utf-8"))
     assert len(rows) == 5 and rows[0]["tags"] == ["AI"]
