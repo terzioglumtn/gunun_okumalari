@@ -11,7 +11,7 @@ run:
   lookback_hours: 48        # kaçırılan bir gün olursa öğe kaybolmasın diye geniş tutulur
   seen_days: 7              # son 7 günde yayınlanan bağlantılar tekrar seçilmez
   per_feed_cap: 20          # bir akıştan en fazla bu kadar yeni öğe adaya girer
-  candidates_per_topic: 120 # LLM'e giden aday üst sınırı (maliyeti sınırlar)
+  candidates_per_topic: 160 # LLM'e giden aday üst sınırı (maliyeti sınırlar)
   top_n: 3                  # "Önce bunlar" bölümü (minimum sürüm)
   max_qa: 3                 # soru-cevap (Stack Overflow) türünden en fazla kaç madde
   max_feed_failure_ratio: 0.5   # akışların yarısından fazlası okunamazsa iş başarısız olur (uyarı e-postası)
@@ -86,6 +86,17 @@ feeds:
   - {name: "Defence Industry Europe", topic: savunma, url: "https://defence-industry.eu/feed/"}
   - {name: "UAS Weekly", topic: savunma, url: "https://uasweekly.com/feed/"}
   - {name: "UAS Vision", topic: savunma, url: "https://www.uasvision.com/feed/"}
+  # Bülten'in 19 Kasım kaynakçasından eklenenler (adresler doğrulanmadı; ilk çalıştırma log'una bakın).
+  - {name: "Breaking Defense", topic: savunma, url: "https://breakingdefense.com/feed/"}
+  - {name: "The War Zone", topic: savunma, url: "https://www.twz.com/feed"}
+  - {name: "Defense News", topic: savunma, url: "https://www.defensenews.com/arc/outboundfeeds/rss/?outputType=xml"}
+  - {name: "DefenseScoop", topic: savunma, url: "https://defensescoop.com/feed/"}
+  - {name: "The Defense Post", topic: savunma, url: "https://thedefensepost.com/feed/"}
+  - {name: "DroneXL", topic: savunma, url: "https://dronexl.co/feed/"}
+  - {name: "DroneLife", topic: savunma, url: "https://dronelife.com/feed/"}
+  - {name: "Naval Today", topic: savunma, url: "https://www.navaltoday.com/feed/"}
+  - {name: "Military & Aerospace Electronics", topic: savunma, url: "https://www.militaryaerospace.com/rss"}
+  - {name: "Euromaidan Press", topic: savunma, url: "https://euromaidanpress.com/feed/"}
   - {name: "Quwa (Türk savunma)", topic: savunma, enabled: false, url: "https://quwa.org/feed/"}
   # Derleme bültenleri: yazının kendisi değil, içindeki makale bağlantıları aday olur.
   - name: "Defense Tech Daily"
