@@ -45,7 +45,7 @@ topics:
   savunma:
     title: "Savunma, İHA ve insansız sistemler"
     desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"
-    max_items: 7
+    max_items: 10
   liderlik:
     title: "İş ve liderlik"
     desc: "Liderlik, ekip yönetimi, strateji, kurumsal kültür, karar verme, girişimcilik ve inovasyon yönetimi; somut örnek, araştırma veya uygulanabilir çerçeve içeren yazılar"
