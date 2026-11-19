@@ -261,3 +261,37 @@ def test_trending_excludes_repos_already_published_and_reports_layout_change(tmp
     bad.write_text("<html><body>Sign in to GitHub</body></html>", encoding="utf-8")
     _, errors, _ = collect(trending_cfg(bad), NOW, set())
     assert len(errors) == 1 and "ayrıştırılamadı" in errors[0]
+
+
+def test_per_feed_seen_days_keeps_repos_out_for_longer():
+    from src.util import canon_url
+    url = "https://github.com/acme/fast-parser"
+    seen = {canon_url(url): 12}          # 12 gün önce yayımlandı
+    cfg = trending_cfg(TRENDING, seen_days=30)
+    cands, _, _ = collect(cfg, NOW, seen)
+    assert "acme/fast-parser" not in [i.title for i in cands["dotnet"]]
+    cfg2 = trending_cfg(TRENDING)          # varsayılan 7 gün: 12 gün önceki tekrar aday olabilir
+    cfg2["run"]["seen_days"] = 7
+    cands2, _, _ = collect(cfg2, NOW, seen)
+    assert "acme/fast-parser" in [i.title for i in cands2["dotnet"]]
+
+
+def test_trending_snippet_uses_period_label():
+    html = TRENDING.read_text(encoding="utf-8").replace("stars today", "stars this week")
+    items = pipeline_parse(html)
+    assert "Bu hafta 1,234 yıldız" in items[0].snippet
+
+
+def pipeline_parse(html):
+    from src.collect import parse_trending
+    return parse_trending({"name": "GH", "topic": "dotnet"}, html)
+
+
+def test_run_topic_caps_repo_items_per_day(monkeypatch):
+    monkeypatch.setattr(pipeline, "fetch_article_text", lambda url, fb, limit=6000: fb)
+    mk = lambda n: pipeline.Item(id=f"r{n}", topic="dotnet", source="GitHub Trending", kind="repo",
+                                 url=f"https://github.com/o/r{n}", title=f"o/r{n}", snippet="d", published=None)
+    items = [mk(n) for n in range(6)]
+    out = pipeline.run_topic(LLM("mock", "a", "b"), {"title": "T", "desc": "D", "max_items": 7},
+                             items, "ilgi", 3, None, 2)
+    assert sum(1 for i in out if i["kind"] == "repo") <= 2

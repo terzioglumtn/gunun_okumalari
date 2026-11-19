@@ -173,7 +173,8 @@ def parse_trending(feed: dict, html: str) -> list[Item]:
         lang = lang_tag.get_text(strip=True) if lang_tag else ""
         row_text = re.sub(r"\s+", " ", row.get_text(" ", strip=True))
         m = re.search(r"([\d,.]+)\s+stars?\s+(today|this week|this month)", row_text)
-        today = f"Bugün {m.group(1)} yıldız. " if m else ""
+        period = {"today": "Bugün", "this week": "Bu hafta", "this month": "Bu ay"}
+        today = f"{period[m.group(2)]} {m.group(1)} yıldız. " if m else ""
         parts = [f"Depo: {desc}." if desc else "Depo (açıklama yok).",
                  f"Dil: {lang}." if lang else "", today]
         out.append(Item(
@@ -222,7 +223,15 @@ def fetch_feed(feed: dict) -> list[Item]:
     return items
 
 
-def collect(cfg: dict, now: dt.datetime, seen_urls: set[str]):
+def _is_seen(url: str, seen, days: int) -> bool:
+    """seen: {kanonik url: kaç gün önce yayımlandı} sözlüğü (veya eski kullanım: url kümesi)."""
+    key = canon_url(url)
+    if isinstance(seen, dict):
+        return key in seen and seen[key] <= days
+    return key in seen
+
+
+def collect(cfg: dict, now: dt.datetime, seen_urls):
     """Konu -> aday listesi ve hata listesini döndürür."""
     run = cfg["run"]
     since = now - dt.timedelta(hours=run["lookback_hours"])
@@ -236,9 +245,10 @@ def collect(cfg: dict, now: dt.datetime, seen_urls: set[str]):
         except Exception as exc:  # tek akışın hatası tüm hattı durdurmasın
             errors.append(f'{feed["name"]}: {exc}')
             continue
+        days = feed.get("seen_days", run["seen_days"])
         fresh = [i for i in items
                  if (i.published is None or i.published >= since)
-                 and canon_url(i.url) not in seen_urls]
+                 and not _is_seen(i.url, seen_urls, days)]
         fresh.sort(key=lambda i: i.published or now, reverse=True)
         if feed.get("roundup"):
             fresh = spread_by_section(fresh)

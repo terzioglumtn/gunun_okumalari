@@ -19,15 +19,17 @@ from .util import canon_url
 ROOT = Path(__file__).resolve().parent.parent
 
 
-def load_seen(data_dir: Path, today: dt.date, days: int) -> set[str]:
-    """Son N günde yayınlanan bağlantılar (bugünün dosyası hariç: yeniden çalıştırma güvenli)."""
-    seen: set[str] = set()
+def load_seen(data_dir: Path, today: dt.date, days: int) -> dict[str, int]:
+    """Son N günde yayınlanan bağlantılar -> kaç gün önce (bugünün dosyası hariç: yeniden çalıştırma güvenli)."""
+    seen: dict[str, int] = {}
     for p in data_dir.glob("20??-??-??.json"):
         d = dt.date.fromisoformat(p.stem)
-        if d == today or (today - d).days > days:
+        age = (today - d).days
+        if d == today or age > days:
             continue
         for item in json.loads(p.read_text(encoding="utf-8")).get("items", []):
-            seen.add(canon_url(item["url"]))
+            key = canon_url(item["url"])
+            seen[key] = min(age, seen.get(key, age))
     return seen
 
 
@@ -64,7 +66,7 @@ def main() -> int:
     today = now.astimezone(ZoneInfo(cfg["site"]["timezone"])).date()
     run = cfg["run"]
 
-    candidates, errors, n_feeds = collect(cfg, now, load_seen(data_dir, today, run["seen_days"]))
+    candidates, errors, n_feeds = collect(cfg, now, load_seen(data_dir, today, run.get("seen_days_max", 30)))
     for e in errors:
         print(f"UYARI okunamayan akış: {e}", file=sys.stderr)
     if n_feeds and len(errors) / n_feeds > run["max_feed_failure_ratio"]:
@@ -78,7 +80,7 @@ def main() -> int:
     items: list[dict] = []
     for key, tcfg in cfg["topics"].items():
         items += run_topic(llm, tcfg, candidates.get(key, []), interests, run["max_qa"],
-                           recent.get(key, []))
+                           recent.get(key, []), run.get("max_repo", 2))
 
     # Aynı haber iki konuda çıkarsa yalnızca en yüksek puanlı kopya kalır.
     best: dict[str, dict] = {}

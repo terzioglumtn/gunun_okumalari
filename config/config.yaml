@@ -9,10 +9,12 @@ site:
 
 run:
   lookback_hours: 48        # kaçırılan bir gün olursa öğe kaybolmasın diye geniş tutulur
-  seen_days: 7              # son 7 günde yayınlanan bağlantılar tekrar seçilmez
+  seen_days: 7              # son 7 günde yayınlanan bağlantılar tekrar seçilmez (kaynak başına seen_days ile değiştirilebilir)
+  seen_days_max: 30         # geçmiş taraması: en uzun seen_days bunu aşamaz
   per_feed_cap: 20          # bir akıştan en fazla bu kadar yeni öğe adaya girer
   candidates_per_topic: 160 # LLM'e giden aday üst sınırı (maliyeti sınırlar)
   top_n: 3                  # "Önce bunlar" bölümü (minimum sürüm)
+  max_repo: 2               # GitHub Trending gibi depo türünden günde en fazla kaç madde
   max_qa: 3                 # soru-cevap (Stack Overflow) türünden en fazla kaç madde
   max_feed_failure_ratio: 0.5   # akışların yarısından fazlası okunamazsa iş başarısız olur (uyarı e-postası)
 
@@ -64,8 +66,8 @@ feeds:
   - {name: "Hacker News", topic: dotnet, url: "https://news.ycombinator.com/rss"}
   # GitHub Trending (haftalık liste): resmî RSS/API yok, sayfa HTML'i ayrıştırılır (günde 2 istek). Depo adayları "repo" türündedir.
   # Sayfa yapısı değişirse "trending sayfası ayrıştırılamadı" hatası görünür (sessiz kalmaz).
-  - {name: "GitHub Trending", topic: dotnet, html: trending, kind: repo, cap: 12, url: "https://github.com/trending?since=weekly"}
-  - {name: "GitHub Trending: C#", topic: dotnet, html: trending, kind: repo, cap: 8, url: "https://github.com/trending/c%23?since=weekly"}
+  - {name: "GitHub Trending", topic: dotnet, html: trending, kind: repo, cap: 12, seen_days: 30, url: "https://github.com/trending?since=weekly"}
+  - {name: "GitHub Trending: C#", topic: dotnet, html: trending, kind: repo, cap: 8, seen_days: 30, url: "https://github.com/trending/c%23?since=weekly"}
   - {name: "The Practical Developer", topic: dotnet, url: "https://dev.to/feed"}
 
   # --- Stack Overflow etiketleri ("MTN_Anlık"): soru-cevap, en fazla max_qa madde ---

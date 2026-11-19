@@ -80,19 +80,25 @@ def summarize(llm: LLM, items: list[Item]) -> dict[str, dict]:
 
 
 def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
-              max_qa: int, recent: list[str] | None = None) -> list[dict]:
+              max_qa: int, recent: list[str] | None = None,
+              max_repo: int = 99) -> list[dict]:
     """Bir konu için yayınlanacak madde sözlüklerini döndürür."""
     n = topic_cfg["max_items"]
-    picks = select(llm, topic_cfg, items, interests, n + max_qa, recent)
+    picks = select(llm, topic_cfg, items, interests, n + max_qa + max_repo, recent)
     by_id = {i.id: i for i in items}
 
     # Soru-cevap türünü sınırla
-    kept, qa = [], 0
+    kept, qa, repo = [], 0, 0
     for p in picks:
-        if by_id[p["id"]].kind == "qa":
+        kind = by_id[p["id"]].kind
+        if kind == "qa":
             if qa >= max_qa:
                 continue
             qa += 1
+        elif kind == "repo":
+            if repo >= max_repo:
+                continue
+            repo += 1
         kept.append(p)
     kept = kept[:n]
 
