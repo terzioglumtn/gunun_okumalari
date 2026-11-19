@@ -229,3 +229,35 @@ def test_roundup_only_sections_is_an_exact_allowlist():
     urls = {i.url for i in cands["dotnet"]}
     assert urls == {"https://example.org/realtime-grpc-streaming", "https://example.net/wpf-memory",
                     "https://github.com/example/tool"}
+
+
+TRENDING = Path(__file__).parent / "fixtures" / "trending.html"
+
+
+def trending_cfg(path, **extra):
+    cfg = make_cfg()
+    cfg["feeds"] = [{"name": "GitHub Trending", "topic": "dotnet", "html": "trending",
+                     "url": f"file://{path}", **extra}]
+    return cfg
+
+
+def test_trending_parses_repos_and_ignores_foreign_links():
+    cands, errors, _ = collect(trending_cfg(TRENDING), NOW, set())
+    assert errors == []
+    items = cands["dotnet"]
+    assert [i.title for i in items] == ["acme/fast-parser", "someone/agent-kit", "org/no-desc"]
+    first = items[0]
+    assert first.url == "https://github.com/acme/fast-parser" and first.kind == "repo"
+    assert "Dil: C#." in first.snippet and "Bugün 1,234 yıldız" in first.snippet
+    assert "very fast incremental parser" in first.snippet
+
+
+def test_trending_excludes_repos_already_published_and_reports_layout_change(tmp_path):
+    from src.util import canon_url
+    seen = {canon_url("https://github.com/acme/fast-parser")}
+    cands, _, _ = collect(trending_cfg(TRENDING), NOW, seen)
+    assert "acme/fast-parser" not in [i.title for i in cands["dotnet"]]
+    bad = tmp_path / "t.html"
+    bad.write_text("<html><body>Sign in to GitHub</body></html>", encoding="utf-8")
+    _, errors, _ = collect(trending_cfg(bad), NOW, set())
+    assert len(errors) == 1 and "ayrıştırılamadı" in errors[0]

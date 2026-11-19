@@ -157,7 +157,40 @@ def spread_by_section(items: list[Item]) -> list[Item]:
     return out
 
 
+def parse_trending(feed: dict, html: str) -> list[Item]:
+    """github.com/trending sayfasından depo adaylarını çıkarır (resmî RSS/API yok)."""
+    soup = BeautifulSoup(html, "html.parser")
+    out: list[Item] = []
+    for row in soup.select("article.Box-row"):
+        a = row.select_one("h2 a[href]")
+        href = (a.get("href") or "").strip() if a else ""
+        if not re.fullmatch(r"/[\w.-]+/[\w.-]+", href):
+            continue
+        name = re.sub(r"\s+", "", a.get_text()) or href.strip("/")
+        desc_tag = row.select_one("p")
+        desc = re.sub(r"\s+", " ", desc_tag.get_text(" ", strip=True)) if desc_tag else ""
+        lang_tag = row.select_one('[itemprop="programmingLanguage"]')
+        lang = lang_tag.get_text(strip=True) if lang_tag else ""
+        row_text = re.sub(r"\s+", " ", row.get_text(" ", strip=True))
+        m = re.search(r"([\d,.]+)\s+stars?\s+(today|this week|this month)", row_text)
+        today = f"Bugün {m.group(1)} yıldız. " if m else ""
+        parts = [f"Depo: {desc}." if desc else "Depo (açıklama yok).",
+                 f"Dil: {lang}." if lang else "", today]
+        out.append(Item(
+            id=item_id("https://github.com" + href), topic=feed["topic"], source=feed["name"],
+            kind=feed.get("kind", "repo"), url="https://github.com" + href, title=name,
+            snippet=" ".join(x for x in parts if x).strip(), published=None))
+    print(f'trending "{feed["name"]}": {len(out)} depo', file=sys.stderr)
+    if len(out) < feed.get("min_links", 3):
+        raise ValueError(
+            f"trending sayfası ayrıştırılamadı ({len(out)} depo, sayfa {len(html)} karakter); "
+            "sayfa yapısı değişmiş olabilir")
+    return out
+
+
 def fetch_feed(feed: dict) -> list[Item]:
+    if feed.get("html") == "trending":
+        return parse_trending(feed, _read(feed["url"]).decode("utf-8", errors="replace"))
     parsed = feedparser.parse(_read(feed["url"]))
     if parsed.bozo and not parsed.entries:
         raise ValueError(f"akış okunamadı: {parsed.bozo_exception}")
