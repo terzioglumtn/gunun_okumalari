@@ -49,6 +49,8 @@ feeds:
     skip_domains: [alvinashcraft.com]
     # Yalnızca bu bölümler alınır (tam eşleşme, büyük/küçük harf fark etmez). Yazılım konusunun kapsamı bunlardır.
     only_sections:
+      - Top Links
+      - Database
       - Web and Cloud Development
       - Windows Development
       - ".NET and Visual Studio"
