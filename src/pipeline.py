@@ -24,6 +24,7 @@ REPO_RULES = (
 )
 
 
+MIN_SCORE = 3        # bu puanın altındaki maddeler (repo hariç) yayımlanmaz; konu bazında min_score ile ezilir
 SPARE = 3            # metni yetersiz çıkan maddelerin yerini almak için seçimden ek adaylar
 MIN_TEXT = 500       # makale için yeterli sayfa metni (karakter)
 MIN_TEXT_SHORT = 200 # depo ve soru-cevap türü için
@@ -80,7 +81,8 @@ def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
            "adaylar zayıf olsa bile en iyisini seç ve score'unu dürüstçe ver.\n"
            if must else
            f"## Görev\nAşağıdaki adaylardan okunmaya en değerli olanları seç. EN FAZLA {n} madde seç; "
-           "yeterince iyi madde yoksa daha azını seç, boş liste de geçerlidir.\n")
+           "yeterince iyi madde yoksa daha azını seç, boş liste de geçerlidir. Sayıyı doldurmak için zayıf madde seçme; "
+           "3 ve üzeri puanı yalnızca okunmaya gerçekten değer maddelere ver.\n")
         + "Kurallar:\n"
         + (REPO_RULES if must else "")
         + 
@@ -103,6 +105,9 @@ def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
             seen.add(pid)
             out.append({"id": pid, "score": int(p.get("score", 3)),
                         "neden": str(p.get("neden", ""))})
+    if not must:  # kalite tabanı: zayıf maddeler sayıyı doldurmak için alınmaz
+        floor = int(topic_cfg.get("min_score", MIN_SCORE))
+        out = [o for o in out if o["score"] >= floor]
     return out[:n]
 
 

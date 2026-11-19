@@ -397,3 +397,14 @@ def test_site_has_search_and_compact(tmp_path):
     rows = json.loads((out / "search.json").read_text(encoding="utf-8"))
     assert len(rows) == 5 and rows[0]["tags"] == ["AI"]
     assert "search.json" in (out / "arama.html").read_text(encoding="utf-8")
+
+
+def test_select_drops_low_scores_but_not_for_must():
+    from src.pipeline import select
+    from src.collect import Item
+    class L:
+        def json(self, *_a): return [{"id": "aaaaaaa1", "score": 4, "neden": "x"}, {"id": "aaaaaaa2", "score": 2, "neden": "y"}]
+    its = [Item(id=f"aaaaaaa{k}", topic="t", source="s", kind="article", url=f"https://x/{k}", title="t", snippet="", published=NOW, via=None) for k in (1, 2)]
+    cfg = {"title": "T", "desc": "d"}
+    assert [p["id"] for p in select(L(), cfg, its, "", 5)] == ["aaaaaaa1"]
+    assert len(select(L(), cfg, its, "", 5, must=True)) == 2
