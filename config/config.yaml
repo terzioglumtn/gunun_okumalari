@@ -46,8 +46,18 @@ topics:
     title: "Savunma, İHA ve insansız sistemler"
     desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"
     max_items: 7
+  liderlik:
+    title: "İş ve liderlik"
+    desc: "Liderlik, ekip yönetimi, strateji, kurumsal kültür, karar verme, girişimcilik ve inovasyon yönetimi; somut örnek, araştırma veya uygulanabilir çerçeve içeren yazılar"
+    max_items: 1
 
 feeds:
+  # --- İş ve liderlik (günde 1 madde) ---
+  # Inc. Türkiye: /feed 404 verdi. Yazı adresleri öğrenilince HTML ayrıştırıcı ya da sitemap ile eklenecek.
+  - {name: "Harvard Business Review", topic: liderlik, url: "https://feeds.hbr.org/harvardbusiness"}
+  - {name: "MIT Sloan Management Review", topic: liderlik, url: "https://sloanreview.mit.edu/feed/"}
+  - {name: "Inc.", topic: liderlik, url: "https://www.inc.com/rss"}
+
   # --- .NET, yazılım ve çapraz platform ---
   - {name: ".NET Blog", topic: dotnet, url: "https://devblogs.microsoft.com/dotnet/feed/"}
   - {name: "Visual Studio Blog", topic: dotnet, url: "https://devblogs.microsoft.com/visualstudio/feed/"}

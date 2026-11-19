@@ -13,8 +13,10 @@ yeni olan ve derinlikli içerik ister.
 - Yazılım mimarisi: modüler tasarım, mikroservis, gerçek zamanlı ve düşük gecikmeli veri hatları
 - Geliştirici araçları: Visual Studio, Git, CI/CD, yapay zekâ destekli geliştirme araçları
 - İHA, insansız sistemler, otonomi, İHA karşıtı sistemler; somut program, sözleşme ve teknoloji gelişmeleri
+- İş ve liderlik: teknik ekip yönetimi, karar verme, strateji ve kurumsal kültür; araştırma veya somut örnek içeren yazılar
 
 ## Düşük öncelik veya eleme
+- Motivasyon klişeleri, kişisel marka ve "başarı sırları" tarzı yazılar
 - Tanıtım ve pazarlama metinleri, "en iyi 10" listeleri, ürün incelemeleri
 - Başlangıç düzeyi öğreticiler
 - Kaynağı belirsiz söylentiler ve doğrulanmamış iddialar
