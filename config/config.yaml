@@ -62,10 +62,10 @@ feeds:
   - {name: "Martin Fowler", topic: dotnet, url: "https://martinfowler.com/feed.atom"}
   - {name: "The GitHub Blog", topic: dotnet, url: "https://github.blog/feed/"}
   - {name: "Hacker News", topic: dotnet, url: "https://news.ycombinator.com/rss"}
-  # GitHub Trending: resmî RSS/API yok, sayfa HTML'i ayrıştırılır (günde 1-2 istek). Depo adayları "repo" türündedir.
+  # GitHub Trending (haftalık liste): resmî RSS/API yok, sayfa HTML'i ayrıştırılır (günde 2 istek). Depo adayları "repo" türündedir.
   # Sayfa yapısı değişirse "trending sayfası ayrıştırılamadı" hatası görünür (sessiz kalmaz).
-  - {name: "GitHub Trending", topic: dotnet, html: trending, kind: repo, cap: 12, url: "https://github.com/trending?since=daily"}
-  - {name: "GitHub Trending: C#", topic: dotnet, html: trending, kind: repo, cap: 8, url: "https://github.com/trending/c%23?since=daily"}
+  - {name: "GitHub Trending", topic: dotnet, html: trending, kind: repo, cap: 12, url: "https://github.com/trending?since=weekly"}
+  - {name: "GitHub Trending: C#", topic: dotnet, html: trending, kind: repo, cap: 8, url: "https://github.com/trending/c%23?since=weekly"}
   - {name: "The Practical Developer", topic: dotnet, url: "https://dev.to/feed"}
 
   # --- Stack Overflow etiketleri ("MTN_Anlık"): soru-cevap, en fazla max_qa madde ---
