@@ -27,8 +27,8 @@ llm:
 
 topics:
   dotnet:
-    title: ".NET, yazılım ve çapraz platform"
-    desc: ".NET, C#, WPF/WinForms, Avalonia, Visual Studio, yazılım mimarisi, Git, geliştirici araçları ve yapay zekâ destekli geliştirme"
+    title: "Yazılım"
+    desc: "Yazılım geliştirme: .NET, C#, WPF/WinForms, Avalonia, Visual Studio, web ve bulut, Python, mobil ve oyun, DevOps ve metodoloji, yazılım mimarisi, Git, geliştirici araçları ve yapay zekâ destekli geliştirme"
     max_items: 7
   savunma:
     title: "Savunma, İHA ve insansız sistemler"
@@ -47,8 +47,16 @@ feeds:
     cap: 80
     url: "https://feeds2.feedburner.com/alvinashcraft"
     skip_domains: [alvinashcraft.com]
-    # Makale olmayan bölümler (sponsorlu kurs, podcast, video, başka derlemeler)
-    skip_sections: [Dometrain, Podcasts, Screencasts, More Link Collections]
+    # Yalnızca bu bölümler alınır (tam eşleşme, büyük/küçük harf fark etmez). Yazılım konusunun kapsamı bunlardır.
+    only_sections:
+      - Web and Cloud Development
+      - Windows Development
+      - ".NET and Visual Studio"
+      - AI
+      - Python
+      - "Design, DevOps and Methodology"
+      - Mobile and Game Development
+      - Screencasts and Videos
   - {name: "Martin Fowler", topic: dotnet, url: "https://martinfowler.com/feed.atom"}
   - {name: "The GitHub Blog", topic: dotnet, url: "https://github.blog/feed/"}
   - {name: "Hacker News", topic: dotnet, url: "https://news.ycombinator.com/rss"}

@@ -219,3 +219,13 @@ def test_select_prompt_lists_recently_published_titles_to_avoid_repeats():
     # liste yoksa bölüm hiç eklenmez
     pipeline.select(FakeLLM(), {"title": "T", "desc": "D"}, items, "ilgi", 3)
     assert "ZATEN yayımlanan" not in captured["prompt"]
+
+
+def test_roundup_only_sections_is_an_exact_allowlist():
+    cfg = roundup_cfg(ROUNDUP)
+    cfg["feeds"][0]["only_sections"] = ["Web & Cloud Development", "source code"]
+    cfg["feeds"][0]["min_links"] = 1
+    cands, _, _ = collect(cfg, NOW, set())
+    urls = {i.url for i in cands["dotnet"]}
+    assert urls == {"https://example.org/realtime-grpc-streaming", "https://example.net/wpf-memory",
+                    "https://github.com/example/tool"}

@@ -98,8 +98,9 @@ def expand_roundup(feed: dict, entry, post_published) -> list[Item]:
     soup = BeautifulSoup(_entry_html(entry), "html.parser")
     via = feed.get("via") or feed["name"]
     skip_sections = [x.lower() for x in feed.get("skip_sections", [])]
+    only_sections = {x.lower() for x in feed.get("only_sections", [])}  # tam eşleşme; verilirse yalnızca bunlar
     section = ""
-    skipping = False
+    skipping = bool(only_sections)  # ilk bölüm başlığına kadar olan giriş metni, izin listesinde sayılmaz
     seen: set[str] = set()
     out: list[Item] = []
     for node in soup.descendants:
@@ -107,7 +108,10 @@ def expand_roundup(feed: dict, entry, post_published) -> list[Item]:
             continue
         if _is_heading(node):
             section = node.get_text(" ", strip=True)
-            skipping = any(x in section.lower() for x in skip_sections)
+            if only_sections:
+                skipping = section.lower() not in only_sections
+            else:
+                skipping = any(x in section.lower() for x in skip_sections)
             continue
         if node.name != "a" or skipping:
             continue
