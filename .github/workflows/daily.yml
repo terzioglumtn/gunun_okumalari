@@ -2,9 +2,10 @@ name: Günlük sayı
 
 on:
   schedule:
-    # 04:00 UTC = 07:00 İstanbul (UTC+3, yaz saati yok).
-    # Actions zamanlayıcısı gecikebildiği için sayfa 08:00'de hazır olsun diye erken çalışır.
-    - cron: "0 4 * * *"
+    # 03:23 UTC = 06:23 İstanbul (UTC+3, yaz saati yok).
+    # Actions zamanlayıcısı best-effort: tam saat başlarında (dakika 0) çalıştırmaları geciktirir/atlar,
+    # bu yüzden dakika 23 seçildi ve sayfanın 08:00'de hazır olması için 1,5 saatlik pay bırakıldı.
+    - cron: "23 3 * * *"
   workflow_dispatch:
 
 permissions:
