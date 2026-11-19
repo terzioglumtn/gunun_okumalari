@@ -55,9 +55,9 @@ feeds:
   # --- İş ve liderlik (günde 1 madde) ---
   # Inc. Türkiye (abonelikli): RSS adresi sayfa kaynağından bulundu; ön izlemeye dayalı kısa özet (kind: preview).
   - {name: "Inc. Türkiye", topic: liderlik, kind: preview, url: "https://incturkiye.com/story-feeds"}
-  - {name: "Harvard Business Review", topic: liderlik, url: "https://feeds.hbr.org/harvardbusiness"}
-  - {name: "MIT Sloan Management Review", topic: liderlik, url: "https://sloanreview.mit.edu/feed/"}
-  - {name: "Inc.", topic: liderlik, url: "https://www.inc.com/rss"}
+  - {name: "Harvard Business Review", topic: liderlik, enabled: false, url: "https://feeds.hbr.org/harvardbusiness"}
+  - {name: "MIT Sloan Management Review", topic: liderlik, enabled: false, url: "https://sloanreview.mit.edu/feed/"}
+  - {name: "Inc.", topic: liderlik, enabled: false, url: "https://www.inc.com/rss"}
 
   # --- .NET, yazılım ve çapraz platform ---
   - {name: ".NET Blog", topic: dotnet, url: "https://devblogs.microsoft.com/dotnet/feed/"}
