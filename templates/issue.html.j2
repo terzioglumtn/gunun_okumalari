@@ -41,14 +41,22 @@
 </section>
 {% endif %}
 
+{% if v.repo %}
+<section class="repo-box">
+  <h2>Bugünün deposu</h2>
+  <p class="lede">GitHub Trending (haftalık) listesinden günün seçimi.</p>
+  {{ card(v.repo) }}
+</section>
+{% endif %}
+
 {% for g in v.groups %}
 <section>
   <h2>{{ g.title }} <span class="count">({{ g.entries|length }})</span></h2>
-  {% for it in g.entries %}{% if it.id not in v.raw.top_ids %}{{ compact(it) }}{% endif %}{% endfor %}
+  {% for it in g.entries %}{% if it.id not in v.top_ids %}{{ compact(it) }}{% endif %}{% endfor %}
 </section>
 {% endfor %}
 
-{% if not v.groups %}
+{% if not v.groups and not v.repo %}
 <p>Bugün seçilecek yeterince değerli madde bulunamadı.</p>
 {% endif %}
 

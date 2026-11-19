@@ -200,10 +200,12 @@ def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
         rtexts = fetch_texts([by_id[p["id"]] for p in repo_picks])
         texts.update(rtexts)
         rgood = {i.id for i in keep_with_full_text([by_id[p["id"]] for p in repo_picks], rtexts, slots)}
-        floor = int(topic_cfg.get("min_score", MIN_SCORE))
-        # Depo yalnızca uygunsa girer (puan tabanı); uygun yoksa bölüm yalnızca makalelerle çıkar.
-        repo_picks = [p for p in repo_picks if p["id"] in rgood and p["score"] >= floor][:slots]
-        kept += repo_picks
+        # Her gün en az bir depo ZORUNLU: metni yeterli olanlar arasından en iyisi; hiçbiri yoksa listenin en üstteki deposu.
+        ok = [p for p in repo_picks if p["id"] in rgood][:slots]
+        if not ok:
+            ok = [{"id": repos[0].id, "score": 2,
+                   "neden": "Haftalık Trending listesinin en üst sıradaki deposu."}]
+        kept += ok
 
     tags = topic_cfg.get("tags")
     summaries = summarize(llm, [by_id[p["id"]] for p in kept], tags, texts)

@@ -66,17 +66,25 @@ def _view(issue: dict, cfg: dict, tz: ZoneInfo) -> dict:
     """Şablona verilecek, konulara göre gruplanmış görünüm."""
     date = dt.date.fromisoformat(issue["date"])
     by_id = {i["id"]: i for i in issue["items"]}
-    top = [by_id[i] for i in issue.get("top_ids", []) if i in by_id]
+    repo = next((i for i in sorted(issue["items"], key=lambda i: -i["score"]) if i.get("kind") == "repo"), None)
+    top_ids = [i for i in issue.get("top_ids", []) if i in by_id and (not repo or i != repo["id"])]
+    want = len(issue.get("top_ids", []))
+    for it in sorted(issue["items"], key=lambda i: -i["score"]):   # depo çıkarılınca boşalan yeri doldur
+        if len(top_ids) >= want:
+            break
+        if it["id"] not in top_ids and it is not repo:
+            top_ids.append(it["id"])
+    top = [by_id[i] for i in top_ids]
     groups = []
     for key, tcfg in cfg["topics"].items():
-        items = sorted((i for i in issue["items"] if i["topic"] == key),
+        items = sorted((i for i in issue["items"] if i["topic"] == key and i is not repo),
                        key=lambda i: -i["score"])
         if items:
             groups.append({"key": key, "title": tcfg["title"], "entries": items})
     return {
         "date": date, "date_tr": tr_date(date), "weekday": tr_weekday(date),
         "issue_no": issue["issue_no"], "generated": _local(issue["generated_at"], tz),
-        "top": top, "groups": groups, "count": len(issue["items"]),
+        "top": top, "top_ids": top_ids, "repo": repo, "groups": groups, "count": len(issue["items"]),
         "feed_errors": len(issue.get("stats", {}).get("feed_errors", [])),
         "raw": issue,
     }

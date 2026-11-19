@@ -287,11 +287,11 @@ def pipeline_parse(html):
     return parse_trending({"name": "GH", "topic": "dotnet"}, html)
 
 
-def test_repo_slot_skipped_when_no_suitable_repo(monkeypatch):
+def test_repo_slot_always_yields_exactly_one_repo(monkeypatch):
     monkeypatch.setattr(pipeline, "fetch_article_text", lambda url, fb, limit=6000: fb)
     prompts = []
 
-    class EmptyLLM:  # hiçbir şey seçmeyen LLM: uygun depo yoksa depo eklenmez
+    class EmptyLLM:  # hiçbir şey seçmeyen LLM: zorunlu depo yine de çıkmalı
         def json(self, stage, system, prompt):
             prompts.append(prompt)
             return []
@@ -302,7 +302,7 @@ def test_repo_slot_skipped_when_no_suitable_repo(monkeypatch):
     items = [mk(1), mk(2), mk(3), mk(9, "article")]
     out = pipeline.run_topic(EmptyLLM(), {"title": "T", "desc": "D", "max_items": 7, "repo_slots": 1},
                              items, "ilgi", 3)
-    assert out == []
+    assert [i["kind"] for i in out] == ["repo"] and out[0]["id"] == "i1"
     select_prompts = [p for p in prompts if "## Adaylar" in p]
     assert len(select_prompts) == 2
     assert "Boş liste DÖNDÜRME" in select_prompts[1] and '"tur": "repo"' in select_prompts[1]
@@ -409,3 +409,21 @@ def test_select_drops_low_scores_but_not_for_must():
     cfg = {"title": "T", "desc": "d"}
     assert [p["id"] for p in select(L(), cfg, its, "", 5)] == ["aaaaaaa1"]
     assert len(select(L(), cfg, its, "", 5, must=True)) == 2
+
+
+def test_repo_box_is_separate_and_top_stays_full(tmp_path):
+    import json, yaml
+    from src.render import render_all, ROOT
+    cfg = yaml.safe_load((ROOT / "config" / "config.yaml").read_text(encoding="utf-8"))
+    d = tmp_path / "data"; d.mkdir()
+    mk = lambda i, kind, sc: {"id": f"abcdef0{i}", "topic": "dotnet", "kind": kind, "score": sc, "source": "S", "via": None,
+                              "url": f"https://e.com/{i}", "title_orig": "T", "title_tr": f"Başlık {i}", "summary_tr": "Ilk. Ikinci.",
+                              "why_tr": "n", "published": "2026-11-19T00:00:00+00:00", "tags": []}
+    items = [mk(0, "repo", 5)] + [mk(i, "article", 5 - i % 3) for i in range(1, 6)]
+    (d / "2026-11-19.json").write_text(json.dumps({"date": "2026-11-19", "issue_no": 1, "generated_at": "2026-11-19T03:00:00+00:00",
+                                                    "top_ids": ["abcdef00", "abcdef01", "abcdef02"], "items": items, "stats": {}}), encoding="utf-8")
+    out = tmp_path / "site"; render_all(cfg, d, out)
+    html = (out / "index.html").read_text(encoding="utf-8")
+    assert "Bugünün deposu" in html and html.count("Başlık 0") == 1
+    assert html.split("Önce bunlar")[1].split("</section>")[0].count("<article") == 3
+    assert '<span class="count">(5)</span>' in html

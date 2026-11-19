@@ -57,3 +57,5 @@ details.compact[open] .teaser{display:none}
   border-radius:10px;background:var(--panel);color:var(--ink)}
 @media (min-width:640px){.search{grid-template-columns:2fr 1fr 1fr}}
 h2 .count{font:600 16px system-ui,sans-serif;color:var(--muted);margin-left:4px}
+.repo-box{background:var(--panel);border-radius:14px;padding:6px 24px 14px;margin-top:32px}
+.repo-box h2{margin-top:20px}
