@@ -14,6 +14,18 @@
 </article>
 {% endmacro %}
 
+{% macro compact(it) %}
+<details class="item compact" id="m-{{ it.id }}">
+  <summary><span class="t">{{ it.title_tr }}</span>
+    <span class="meta">{{ it.source }}{% for t in it.get("tags", []) %} · <span class="tag">{{ t }}</span>{% endfor %}</span>
+    <span class="teaser">{{ it.summary_tr|teaser }}</span></summary>
+  <p><a href="{{ it.url|safe_url }}" target="_blank" rel="noopener">Kaynağa git →</a>{% if it.kind == "qa" %} · <span class="tag">Soru-cevap</span>{% elif it.kind == "repo" %} · <span class="tag">Depo</span>{% endif %}</p>
+  {% if it.title_orig and it.title_orig != it.title_tr %}<p class="orig">Orijinal: {{ it.title_orig }}</p>{% endif %}
+  <p>{{ it.summary_tr }}</p>
+  {% if it.why_tr %}<p class="why"><b>Neden önemli:</b> {{ it.why_tr }}</p>{% endif %}
+</details>
+{% endmacro %}
+
 {% block header %}
 <p class="label">{{ v.weekday }} · Sayı {{ v.issue_no }}</p>
 <h1>{{ v.date_tr }}</h1>
@@ -32,7 +44,7 @@
 {% for g in v.groups %}
 <section>
   <h2>{{ g.title }}</h2>
-  {% for it in g.entries %}{% if it.id not in v.raw.top_ids %}{{ card(it) }}{% endif %}{% endfor %}
+  {% for it in g.entries %}{% if it.id not in v.raw.top_ids %}{{ compact(it) }}{% endif %}{% endfor %}
 </section>
 {% endfor %}
 

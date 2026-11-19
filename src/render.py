@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import datetime as dt
 import json
+import re
 import shutil
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -16,6 +17,29 @@ from jinja2 import Environment, FileSystemLoader
 from .util import safe_url, tr_date, tr_weekday
 
 ROOT = Path(__file__).resolve().parent.parent
+
+
+def teaser(text: str, limit: int = 160) -> str:
+    """Özetin ilk cümlesi (uzunsa kelime sınırında kısaltılır)."""
+    text = (text or "").strip()
+    m = re.match(r"(.+?[.!?])(\s|$)", text)
+    first = m.group(1) if m else text
+    if len(first) > limit:
+        first = first[:limit].rsplit(" ", 1)[0].rstrip(",;:") + "…"
+    return first
+
+
+def search_index(issues: list[dict], cfg: dict) -> list[dict]:
+    """Arama sayfasının kullandığı düz kayıt listesi (yeniden eskiye)."""
+    titles = {k: t["title"] for k, t in cfg["topics"].items()}
+    rows = []
+    for iss in issues:
+        for it in iss["items"]:
+            rows.append({"d": iss["date"], "t": it["title_tr"], "o": it.get("title_orig", ""),
+                         "s": it["summary_tr"], "u": it["url"], "src": it["source"],
+                         "k": it["topic"], "kt": titles.get(it["topic"], it["topic"]),
+                         "tags": it.get("tags", []), "sc": it["score"]})
+    return rows
 
 
 def load_issues(data_dir: Path) -> list[dict]:
@@ -29,6 +53,7 @@ def _env() -> Environment:
     env = Environment(loader=FileSystemLoader(ROOT / "templates"), autoescape=True,
                       trim_blocks=True, lstrip_blocks=True)
     env.filters["safe_url"] = safe_url
+    env.filters["teaser"] = teaser
     return env
 
 
@@ -72,6 +97,10 @@ def render_all(cfg: dict, data_dir: Path, out_dir: Path) -> None:
     issue_t = env.get_template("issue.html.j2")
     archive_t = env.get_template("archive.html.j2")
     feed_t = env.get_template("feed.xml.j2")
+    search_t = env.get_template("search.html.j2")
+    (out_dir / "search.json").write_text(
+        json.dumps(search_index(issues, cfg), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    (out_dir / "arama.html").write_text(search_t.render(site=cfg["site"], base=""), encoding="utf-8")
 
     for n, v in enumerate(views):
         newer = views[n - 1] if n > 0 else None

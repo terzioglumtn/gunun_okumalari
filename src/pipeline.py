@@ -2,6 +2,9 @@
 from __future__ import annotations
 
 import json
+import re
+import sys
+from concurrent.futures import ThreadPoolExecutor
 
 from .collect import Item, _section_of, fetch_article_text
 from .llm import LLM
@@ -19,6 +22,42 @@ REPO_RULES = (
     "- 'awesome' listeleri, ders/kurs/mülakat koleksiyonları, kripto/moda ürünleri ve tek dosyalık "
     "oyuncakları düşük puanla.\n"
 )
+
+
+SPARE = 3            # metni yetersiz çıkan maddelerin yerini almak için seçimden ek adaylar
+MIN_TEXT = 500       # makale için yeterli sayfa metni (karakter)
+MIN_TEXT_SHORT = 200 # depo ve soru-cevap türü için
+PAYWALL_MARKERS = ("subscribe to", "subscription", "unlock", "paywall", "sign in to read",
+                   "sign in to continue", "become a member", "members only", "abone ol", "üyelik")
+
+
+def has_full_text(item: Item, text: str) -> bool:
+    """Sayfa metni özet için yeterli mi? Kısa metin veya abonelik duvarı belirtisi 'hayır'dır."""
+    need = MIN_TEXT_SHORT if item.kind in ("repo", "qa") else MIN_TEXT
+    if len(text) < need:
+        return False
+    if len(text) < 1500 and any(m in text.lower() for m in PAYWALL_MARKERS):
+        return False
+    return True
+
+
+def fetch_texts(items: list[Item]) -> dict[str, str]:
+    """Maddelerin sayfa metinlerini paralel çeker (sıra korunmaz, id ile eşlenir)."""
+    if not items:
+        return {}
+    with ThreadPoolExecutor(max_workers=min(8, len(items))) as ex:
+        texts = list(ex.map(lambda i: fetch_article_text(i.url, i.snippet), items))
+    return {i.id: t for i, t in zip(items, texts)}
+
+
+def keep_with_full_text(items: list[Item], texts: dict[str, str], n: int) -> list[Item]:
+    """İlk n yeterli-metinli maddeyi sırayla alır. Hiçbirinin metni yoksa (ağ sorunu olabilir) ilk n'i döndürür."""
+    good = [i for i in items if has_full_text(i, texts.get(i.id, ""))]
+    skipped = [i for i in items if i not in good]
+    if skipped and good:
+        print(f"metni yetersiz {len(skipped)} madde atlandı: "
+              + "; ".join(f"{i.source}: {i.title[:50]}" for i in skipped), file=sys.stderr)
+    return (good or items)[:n]
 
 
 def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
@@ -67,14 +106,15 @@ def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
     return out[:n]
 
 
-def summarize(llm: LLM, items: list[Item], tags: list[str] | None = None) -> dict[str, dict]:
+def summarize(llm: LLM, items: list[Item], tags: list[str] | None = None,
+              texts: dict[str, str] | None = None) -> dict[str, dict]:
     """Seçilen maddelerin sayfa metnini okuyup Türkçe özetletir."""
     if not items:
         return {}
     payload = []
     for i in items:
         entry = {"id": i.id, "source": i.source, "title": i.title,
-                 "text": fetch_article_text(i.url, i.snippet)}
+                 "text": (texts or {}).get(i.id) or fetch_article_text(i.url, i.snippet)}
         if tags and _section_of(i):
             entry["bolum_ipucu"] = _section_of(i)   # derleme kaynağındaki bölüm adı (ipucu)
         payload.append(entry)
@@ -128,27 +168,36 @@ def run_topic(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
     pool = [i for i in items if i not in repos] if slots else items
     by_id = {i.id: i for i in items}
 
-    picks = select(llm, topic_cfg, pool, interests, n + max_qa, recent)
+    picks = select(llm, topic_cfg, pool, interests, n + max_qa + SPARE, recent)
 
-    # Soru-cevap türünü sınırla
-    kept, qa = [], 0
+    # Soru-cevap türünü sınırla (sıra korunur)
+    ordered, qa = [], 0
     for p in picks:
         if by_id[p["id"]].kind == "qa":
             if qa >= max_qa:
                 continue
             qa += 1
-        kept.append(p)
-    kept = kept[:n]
+        ordered.append(p)
+
+    # Metni yetersiz (kısa/abonelik duvarlı) maddeleri ele, yerlerine sıradaki adayı al
+    cand = ordered[:n + SPARE]
+    texts = fetch_texts([by_id[p["id"]] for p in cand])
+    good_ids = {i.id for i in keep_with_full_text([by_id[p["id"]] for p in cand], texts, n)}
+    kept = [p for p in cand if p["id"] in good_ids][:n]
 
     if repos:
-        repo_picks = select(llm, topic_cfg, repos, interests, slots, recent, must=True)[:slots]
+        repo_picks = select(llm, topic_cfg, repos, interests, slots + 2, recent, must=True)
+        rtexts = fetch_texts([by_id[p["id"]] for p in repo_picks])
+        texts.update(rtexts)
+        rgood = {i.id for i in keep_with_full_text([by_id[p["id"]] for p in repo_picks], rtexts, slots)}
+        repo_picks = [p for p in repo_picks if p["id"] in rgood][:slots]
         if not repo_picks:  # LLM boş döndürdüyse listenin en üst sıradaki deposu (düşük puanla)
             repo_picks = [{"id": repos[0].id, "score": 2,
                            "neden": "Haftalık Trending listesinin en üst sıradaki deposu."}]
         kept += repo_picks
 
     tags = topic_cfg.get("tags")
-    summaries = summarize(llm, [by_id[p["id"]] for p in kept], tags)
+    summaries = summarize(llm, [by_id[p["id"]] for p in kept], tags, texts)
     out = []
     for p in kept:
         it = by_id[p["id"]]

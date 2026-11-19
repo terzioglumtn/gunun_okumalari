@@ -1,0 +1,54 @@
+{% extends "layout.html.j2" %}
+{% block title %}Ara · {{ site.title }}{% endblock %}
+{% block desc %}Geçmiş sayılarda başlık, özet ve etikete göre arama.{% endblock %}
+{% block header %}
+<p class="label">Bilgi birikimi</p>
+<h1>Ara</h1>
+<p class="sub">Tüm sayılardaki başlık, özet ve etiketlerde arayın.</p>
+{% endblock %}
+{% block content %}
+<form class="search" onsubmit="return false">
+  <input id="q" type="search" placeholder="Örn. Avalonia, İHA, Task.Run" autocomplete="off" aria-label="Ara">
+  <select id="topic" aria-label="Konu"><option value="">Tüm konular</option></select>
+  <select id="tag" aria-label="Etiket"><option value="">Tüm etiketler</option></select>
+</form>
+<p id="count" class="meta"></p>
+<div id="results"></div>
+<noscript><p>Arama için JavaScript gerekir; <a href="{{ base }}arsiv/index.html">arşive</a> göz atabilirsiniz.</p></noscript>
+<script>
+(function(){
+  var data=[], q=document.getElementById("q"), tp=document.getElementById("topic"),
+      tg=document.getElementById("tag"), out=document.getElementById("results"),
+      cnt=document.getElementById("count");
+  function norm(s){return (s||"").toLocaleLowerCase("tr").normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/ı/g,"i");}
+  function el(n,t,c){var e=document.createElement(n); if(t!=null)e.textContent=t; if(c)e.className=c; return e;}
+  function fill(sel,vals){vals.forEach(function(v){var o=el("option",v[1]);o.value=v[0];sel.appendChild(o);});}
+  function safe(u){return /^https?:\/\//i.test(u)?u:"#";}
+  function render(){
+    var terms=norm(q.value).split(/\s+/).filter(Boolean), res=data.filter(function(r){
+      if(tp.value&&r.k!==tp.value)return false;
+      if(tg.value&&r.tags.indexOf(tg.value)<0)return false;
+      return terms.every(function(t){return r._h.indexOf(t)>=0;});
+    }).slice(0,100);
+    out.textContent="";
+    cnt.textContent=res.length+" sonuç"+(res.length===100?" (ilk 100)":"");
+    res.forEach(function(r){
+      var a=el("article",null,"item"), h=el("h3"), l=el("a",r.t);
+      l.href=safe(r.u); l.target="_blank"; l.rel="noopener"; h.appendChild(l); a.appendChild(h);
+      var m=el("p",null,"meta"); m.appendChild(document.createTextNode(r.d+" · "+r.src+" · "+r.kt));
+      r.tags.forEach(function(t){m.appendChild(document.createTextNode(" · "));m.appendChild(el("span",t,"tag"));});
+      a.appendChild(m); a.appendChild(el("p",r.s)); out.appendChild(a);
+    });
+  }
+  fetch("search.json").then(function(r){return r.json();}).then(function(d){
+    data=d; var tags={}, tops={};
+    d.forEach(function(r){r._h=norm([r.t,r.o,r.s,r.src,r.tags.join(" ")].join(" ")); tops[r.k]=r.kt; r.tags.forEach(function(t){tags[t]=1;});});
+    fill(tp,Object.keys(tops).map(function(k){return [k,tops[k]];}));
+    fill(tg,Object.keys(tags).sort().map(function(t){return [t,t];}));
+    var p=new URLSearchParams(location.search).get("q"); if(p)q.value=p;
+    render();
+  }).catch(function(){cnt.textContent="Arama dizini yüklenemedi.";});
+  [q,tp,tg].forEach(function(e){e.addEventListener("input",render);});
+})();
+</script>
+{% endblock %}

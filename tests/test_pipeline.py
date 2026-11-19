@@ -365,3 +365,35 @@ def test_tags_render_on_page(tmp_path):
     render_all(cfg, data, out)
     html = (out / "index.html").read_text(encoding="utf-8")
     assert '<span class="tag">Python</span>' in html and '<span class="tag">AI</span>' in html
+
+
+def test_has_full_text_and_filter():
+    from src.pipeline import has_full_text, keep_with_full_text
+    from src.collect import Item
+    def mk(i, kind="article"):
+        return Item(id=i, topic="t", source="s", kind=kind, url="https://x/"+i, title=i, snippet="", published=NOW, via=None)
+    a, b, c = mk("aaaaaaa1"), mk("aaaaaaa2"), mk("aaaaaaa3")
+    texts = {a.id: "Bu kaynağı açmak için subscribe to " + "x" * 600, b.id: "kısa", c.id: "y" * 800}
+    assert not has_full_text(a, texts[a.id]) and not has_full_text(b, texts[b.id]) and has_full_text(c, texts[c.id])
+    assert keep_with_full_text([a, b, c], texts, 2) == [c]
+    assert keep_with_full_text([a, b], texts, 2) == [a, b]  # hepsi yetersizse düşmez
+
+
+def test_site_has_search_and_compact(tmp_path):
+    import json, yaml
+    from pathlib import Path
+    from src.render import render_all, teaser, ROOT
+    assert teaser("Birinci cümle. İkinci cümle.") == "Birinci cümle."
+    cfg = yaml.safe_load((ROOT / "config" / "config.yaml").read_text(encoding="utf-8"))
+    d = tmp_path / "data"; d.mkdir()
+    items = [{"id": f"abcdef0{i}", "topic": "dotnet", "kind": "article", "score": 5 - i, "source": "S", "via": None,
+              "url": "https://e.com/%d" % i, "title_orig": "T", "title_tr": f"Başlık {i}",
+              "summary_tr": "Ilk cümle. Devamı.", "why_tr": "n", "published": "2026-11-19T00:00:00+00:00", "tags": ["AI"]} for i in range(5)]
+    (d / "2026-11-19.json").write_text(json.dumps({"date": "2026-11-19", "issue_no": 1, "generated_at": "2026-11-19T03:00:00+00:00",
+                                                    "top_ids": ["abcdef00"], "items": items, "stats": {}}), encoding="utf-8")
+    out = tmp_path / "site"; render_all(cfg, d, out)
+    html = (out / "index.html").read_text(encoding="utf-8")
+    assert html.count('<details class="item compact"') == 4 and "Ilk cümle." in html
+    rows = json.loads((out / "search.json").read_text(encoding="utf-8"))
+    assert len(rows) == 5 and rows[0]["tags"] == ["AI"]
+    assert "search.json" in (out / "arama.html").read_text(encoding="utf-8")
