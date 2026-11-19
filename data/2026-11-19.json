@@ -1,9 +1,43 @@
 {
  "date": "2026-11-19",
  "issue_no": 2,
- "generated_at": "2026-11-19T09:48:08.747776+00:00",
+ "generated_at": "2026-11-19T10:32:10.626308+00:00",
  "backend": "claude_cli",
  "items": [
+  {
+   "id": "764b373c",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 4,
+   "source": "infoq.com",
+   "via": "Morning Dew",
+   "url": "https://www.infoq.com/news/2026/11/dotnet-11-release/",
+   "title_orig": "Microsoft Releases .NET 11: C# 15 Union Types, Native AOT CLI Host, and CoreCLR by Default in MAUI",
+   "title_tr": ".NET 11 yayımlandı: C# 15 union türleri, Native AOT CLI ana makinesi ve MAUI'de varsayılan CoreCLR",
+   "summary_tr": "Microsoft, C# 15, F# 11, ASP.NET Core 11, .NET MAUI ve EF Core 11 ile birlikte .NET 11'i yayımladı. Sürüm iki yıl desteklenecek bir STS sürümü. Yenilikler arasında union türleri, Native AOT ile başlayan CLI, MAUI'de varsayılan CoreCLR, OpenAPI 3.2 çıktısı ve EF Core 11'in .NET 11 gerektirmesi var. Aynı gün .NET 8 ve .NET 9'un desteği sona erdi, uzun dönem destekli sürüm .NET 10 olarak kalıyor.",
+   "why_tr": "Destek takvimi, varsayılan OpenAPI sürümü ve MAUI çalışma zamanı gibi değişiklikler yükseltme planlarını doğrudan etkiler.",
+   "published": "2026-11-18T11:34:42+00:00",
+   "tags": [
+    ".NET and Visual Studio"
+   ]
+  },
+  {
+   "id": "481bdeac",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 4,
+   "source": "planetgeek.ch",
+   "via": "Morning Dew",
+   "url": "https://www.planetgeek.ch/2026/11/17/the-lambda-that-allocates-every-time/",
+   "title_orig": "The lambda that allocates every time",
+   "title_tr": "Her çağrıda bellek ayıran lambda: closure ve delegate maliyeti",
+   "summary_tr": "Yazar, Azure .NET SDK ve NServiceBus üzerindeki performans çalışmalarında sık gördüğü bir sorunu anlatıyor: durum yakalayan lambdalar her çağrıda delegate ve gizli sınıf nesnesi oluşturabiliyor. Çözüm olarak durumu açıkça parametre geçmek, static lambda kullanmak ve delegate'i bir alanda saklamak anlatılıyor. ConcurrentDictionary.GetOrAdd örneğinde süre 45,8 ns ve 64 bayttan 13,4 ns ve sıfır ayırmaya düştü. Metin sonda kesildiği için Service Bus örneğinin ayrıntıları eksik.",
+   "why_tr": "Yoğun çalışan yollarda gizli bellek ayırmaları profil çıkarmadan fark edilmez ve bunları azaltmak doğrudan verime yansır.",
+   "published": "2026-11-18T11:34:42+00:00",
+   "tags": [
+    ".NET and Visual Studio"
+   ]
+  },
   {
    "id": "e8f59eed",
    "topic": "dotnet",
@@ -13,52 +47,14 @@
    "via": "Morning Dew",
    "url": "https://asibackbone.github.io/Learning/articles/2026/task-run-does-not-make-aspnet-core-work-durable.html",
    "title_orig": "Task.Run Does Not Make ASP.NET Core Work Durable",
-   "title_tr": "Task.Run ASP.NET Core'da işi kalıcı yapmaz",
-   "summary_tr": "Makale, bir endpoint'in 202 Accepted döndürüp işi sahipsiz bir Task olarak çalıştırmasının, süreç yeniden başladığında istek kaybına yol açtığını varsayımsal bir ay sonu raporlama olayıyla anlatıyor. Task.Run yalnızca işin nasıl zamanlandığını değiştirir. İşin sahipliğini değiştirmez; hatalar da gözlenmeden kalır. Yazı, 202 döndürmeden önce üç garantiden birini bilinçli seçmeyi öneriyor: istek içinde bitirmek, host tarafından yönetilmek veya kalıcı olarak kaydedilmek. Sınırlı bellek içi kuyruk, durum kaynağı ve kalıcı iş saklama gibi çözümleri ele alıyor. Verilen metin makalenin başıyla sınırlı olduğundan çözüm ayrıntıları eksik.",
-   "why_tr": "202 Accepted döndüren ve arka planda işi unutan endpoint'ler dağıtım sırasında sessizce iş kaybettirebilir; bu yüzden hangi garantiyi verdiğinizi bilmek gerekir.",
-   "published": "2026-11-18T11:34:42+00:00"
-  },
-  {
-   "id": "985b06d7",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 4,
-   "source": "The Practical Developer",
-   "via": "",
-   "url": "https://dev.to/faizydroid/your-void-promises-in-nextjs-route-handlers-are-being-dropped-on-vercel-1827",
-   "title_orig": "Your void promises in Next.js route handlers are being dropped on Vercel",
-   "title_tr": "Next.js route handler'larındaki await edilmeyen promise'ler Vercel'de kayboluyor",
-   "summary_tr": "Yazarlar, `void` ile başlatılan yazma işlemlerinin sunucusuz ortamda yanıt döndükten sonra askıya alınan veya geri dönüştürülen instance içinde yarım kalabildiğini gözlemlemiş. Bu yüzden AI maliyet kayıtları günlerce veritabanına düşmemiş, hata ya da log da oluşmamış. Çözüm olarak Next.js'in `after()` fonksiyonu (Vercel'de `waitUntil` ile çalışır) kullanılmış. Çağıran noktaları değiştirmek yerine e-posta, uyarı, audit ve maliyet yazan yardımcı fonksiyonlar düzeltilmiş.",
-   "why_tr": "Sunucusuz ortamda await edilmeyen arka plan işleri sessizce kaybolabilir; `after()`/`waitUntil` bu işlerin tamamlanmasını güvence altına alır.",
-   "published": "2026-11-19T09:42:08+00:00"
-  },
-  {
-   "id": "1e6b15e0",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 4,
-   "source": "Martin Fowler",
-   "via": "",
-   "url": "https://martinfowler.com/articles/data-contracts.html",
-   "title_orig": "Data Contracts",
-   "title_tr": "Data Contracts: veri setleri için sözleşme yaklaşımı",
-   "summary_tr": "Yazı, veri sözleşmelerini API tasarımı pratiklerinin veriye uygulanması olarak tanıtıyor. Sözleşme, bir veri setinin şemasını, kalite kurallarını ve servis seviyelerini tanımlıyor. Örnekler, Linux Foundation altındaki Bitol projesinin yönettiği Open Data Contract Standard (ODCS) ile veriliyor. Yazarlar, kendi başına karar veremeyen ve her değeri doğru kabul eden yapay zekâ ajanlarının açık metadata'ya ihtiyaç duyduğunu, bunun da sözleşmeleri benimsemek için önemli bir neden olduğunu savunuyor. Metin yarıda kesildiği için bölümlerin ayrıntısı eksik.",
-   "why_tr": "Birden çok kaynaktan veri toplayan sistemlerde, şema ve kalite garantilerini açıkça tanımlamak hem insanlar hem ajanlar için veriye güveni artırır.",
-   "published": "2026-11-18T14:02:00+00:00"
-  },
-  {
-   "id": "e08c0282",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 4,
-   "source": "developers.googleblog.com",
-   "via": "Morning Dew",
-   "url": "https://developers.googleblog.com/accelerating-development-for-massive-git-repositories/",
-   "title_orig": "Accelerating development for massive Git repositories",
-   "title_tr": "Devasa Git depoları için geliştirmeyi hızlandırmak: ABFS",
-   "summary_tr": "Google, Android kaynak kodunu getirme ve derleme süresini kısaltmak için geliştirdiği ABFS'i (Another Build File Service) açık kaynak olarak duyurdu. Sistem, içerik adreslemeli sanal bir dosya sistemiyle (CASFS) dosyaları yalnızca derleme dokunduğunda yükler ve derleme çıktılarını önbellekte paylaşır. Android 17 kaynak ağacı 1.084 Git deposu ve 1,62 milyon dosyadan oluşuyor; sistem aynı makinede birden çok paralel çalışma alanını da destekliyor. Benchmark sonuçları metinde yer almadığı için kazanımların boyutu belirtilemiyor.",
-   "why_tr": "Çok büyük monorepo'larda soğuk başlangıç ve önbellek paylaşımı sorunlarına yönelik somut bir mimari ve açık kaynak bir araç sunuyor.",
-   "published": "2026-11-18T11:34:42+00:00"
+   "title_tr": "Task.Run ASP.NET Core'da işi kalıcı hale getirmez",
+   "summary_tr": "Yazı, bir endpoint'in işi Task.Run ile arka plana atıp 202 Accepted döndüğü senaryoyu ele alıyor. Süreç yeniden başladığında bu işler kayboluyor ve hataları kimse görmüyor. Çözüm olarak sınırlı bir bellek içi kuyruk, iş başına scope oluşturma, kapanışta bırakılan işleri raporlama ve gerekirse işi önce kalıcı depoya yazma öneriliyor. Kaynak metin sonda kesik ama ana argüman anlaşılıyor.",
+   "why_tr": "202 yanıtının neyi garanti ettiğini yanlış varsaymak, dağıtım sırasında sessiz veri kaybına yol açabilir.",
+   "published": "2026-11-18T11:34:42+00:00",
+   "tags": [
+    "Web and Cloud Development",
+    ".NET and Visual Studio"
+   ]
   },
   {
    "id": "c60558e9",
@@ -70,9 +66,12 @@
    "url": "https://simonwillison.net/2026/Nov/17/external-sandboxes-for-coding-agents/",
    "title_orig": "External sandboxes for coding agents",
    "title_tr": "Kodlama ajanları için harici sandbox'lar",
-   "summary_tr": "Simon Willison, ajanın kendisinin sandbox dışında, ajanın çalıştırdığı kodun ise ayrı bir sandbox içinde yürütüldüğü bir desen üzerinde Prime Radiant ile çalışmış. Üç sandbox sunucu uygulaması yayımlanmış ve hepsi aynı localhost API'sini sunuyor. Pi, Claude Code veya Codex bu API'ye yönlendirilebiliyor; isteğe bağlı HTTP/HTTPS izin listeli proxy ve gizli bilgiyi ajanla paylaşmadan kimlik doğrulamalı çağrı yapmayı sağlayan bir mekanizma da var.",
-   "why_tr": "Yerel modelleri veya ajanları denerken hatalı eylemlerin ya da prompt injection'ın makineye zarar vermesini sınırlamak için pratik bir izolasyon yaklaşımı sunuyor.",
-   "published": "2026-11-18T11:34:42+00:00"
+   "summary_tr": "Simon Willison, Prime Radiant ile birlikte ajanın kendisinin sandbox dışında, ajanın çalıştırdığı kodun ise ayrı bir sandbox içinde koştuğu bir desen üzerinde çalıştı. Üç sandbox sunucu uygulaması yayımlandı ve hepsi aynı localhost API'sini sunuyor. Pi, Claude Code veya Codex bu sandbox'a yönlendirilebiliyor. İsteğe bağlı HTTP/HTTPS izin listesi vekili ve sırları ajana vermeden kimlik doğrulamalı çağrı yapmayı sağlayan bir mekanizma da var.",
+   "why_tr": "Yerel modelleri veya ajanları, prompt injection riskine karşı makineye zarar veremeyecek şekilde denemek için pratik bir yol sunuyor.",
+   "published": "2026-11-18T11:34:42+00:00",
+   "tags": [
+    "AI"
+   ]
   },
   {
    "id": "1c19446e",
@@ -83,24 +82,121 @@
    "via": "Morning Dew",
    "url": "https://github.com/unoplatform/Uno.microsoft-ui-reactor",
    "title_orig": "Uno Platform port of Microsoft.UI.Reactor",
-   "title_tr": "Microsoft.UI.Reactor'ın Uno Platform portu",
-   "summary_tr": "Bu depo, WinUI 3 arayüzünü XAML olmadan, React benzeri bileşen ve hook'larla C# içinde yazmayı sağlayan Microsoft.UI.Reactor'ın Uno Platform portu. Uno'nun WinUI API'sini masaüstünde, WebAssembly'de, Android'de ve iOS'ta uygulaması sayesinde aynı Reactor kodu bu hedeflerde çalışıyor. Port deneysel ve geliştirilmeye devam ediyor; varsayılan dal `uno`, Microsoft'un son değişiklikleri ise gece çalışan bir senkronizasyonla alınıyor.",
-   "why_tr": "WinUI'ye bildirimsel C# arayüz modeliyle yazmak isteyen ekipler için Windows dışı platformlara açılma ihtimalini gösteriyor, ancak deneysel durumda olduğunu unutmamak gerekir.",
-   "published": "2026-11-18T11:34:42+00:00"
+   "title_tr": "Microsoft.UI.Reactor'un Uno Platform portu",
+   "summary_tr": "Microsoft.UI.Reactor, WinUI 3 arayüzlerini XAML olmadan, React benzeri bileşen ve hook'larla C# içinde yazmaya yarayan deneysel bir çatı. Bu fork, aynı kodu Uno Platform üzerinden masaüstü, WebAssembly, Android ve iOS hedeflerinde çalıştırmayı amaçlıyor. Port henüz çalışma aşamasında. Uno'ya özgü hatalar bu depoya, Reactor'un kendi hataları Microsoft'un deposuna bildirilmeli.",
+   "why_tr": "WinUI'de bildirimsel C# arayüz yazmak isteyen ve Windows dışı hedefleri de düşünen ekipler için deneme değeri taşıyor.",
+   "published": "2026-11-18T11:34:42+00:00",
+   "tags": [
+    "Windows Development",
+    ".NET and Visual Studio"
+   ]
   },
   {
-   "id": "481bdeac",
+   "id": "964aca3f",
    "topic": "dotnet",
    "kind": "article",
    "score": 3,
-   "source": "planetgeek.ch",
+   "source": "The GitHub Blog",
+   "via": "",
+   "url": "https://github.blog/engineering/engineering-principles/building-the-agent-host-protocol-for-sessions-that-continue-across-devices/",
+   "title_orig": "Building the Agent Host Protocol for sessions that continue across devices",
+   "title_tr": "Cihazlar arasında süren oturumlar için Agent Host Protocol",
+   "summary_tr": "GitHub ve VS Code ekibi, ajan oturumlarının pencere kapansa ya da cihaz değişse de devam etmesi için açık bir standart olan Agent Host Protocol'ü (AHP) geliştirdi. Protokol URI ile tanımlanan kanallar ve sunucunun yetkili olduğu reducer tabanlı durum nesnesi üzerine kurulu. VS Code'un uygulaması TypeScript, GitHub'ın uygulaması Rust ile yazıldı. Metin sonda kesik.",
+   "why_tr": "Ajanları kendi araçlarınıza veya istemcilerinize bağlamak isterseniz, tek tek entegrasyon yazmadan ortak bir protokole dayanabilirsiniz.",
+   "published": "2026-11-17T18:20:40+00:00",
+   "tags": [
+    "AI"
+   ]
+  },
+  {
+   "id": "dfa52e89",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "The GitHub Blog",
+   "via": "",
+   "url": "https://github.blog/open-source/maintainers/maintainers-dont-need-more-ai-bug-reports-they-need-fixes/",
+   "title_orig": "Maintainers don’t need more AI bug reports. They need fixes.",
+   "title_tr": "Bakımcılara daha fazla yapay zekâ raporu değil, düzeltme lazım",
+   "summary_tr": "GitHub ve Microsoft, Codename MDASH ile altı açık kaynak projede bir pilot yürüttü. Binlerce olası bulgu, yapay zekâ ön elemesi ve el ile doğrulamanın ardından 99 özel rapora indi ve her biri önerilen düzeltmeyle gönderildi. 15 Kasım itibarıyla 55'i düzeltildi, 14'ü bir sürüme girdi. Yazı, doğrulanmamış ham tarama çıktısının bakımcılara yük olduğunu savunuyor.",
+   "why_tr": "Güvenlik açığı bildirimi gönderen ya da alan herkes için bulgunun doğrulanmış ve düzeltmeyle gelmesi gerektiğini gösteren bir ölçüt sunuyor.",
+   "published": "2026-11-17T18:29:29+00:00",
+   "tags": [
+    "AI",
+    "Design, DevOps and Methodology"
+   ]
+  },
+  {
+   "id": "59bdce58",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "nextjs.org",
    "via": "Morning Dew",
-   "url": "https://www.planetgeek.ch/2026/11/17/the-lambda-that-allocates-every-time/",
-   "title_orig": "The lambda that allocates every time",
-   "title_tr": "Her seferinde bellek ayıran lambda",
-   "summary_tr": "Yazar, closure ile yakalanan durumun, sık çalışan mesajlaşma kodlarında her çağrıda delegate ve display class ayrımına yol açtığını anlatıyor. Çözüm olarak durumu açıkça parametre geçmek ve `static` lambda kullanmak öneriliyor; ConcurrentDictionary.GetOrAdd örneğinde süre 45,8 ns ve 64 byte'tan 13,4 ns ve sıfır ayrıma düşmüş. NServiceBus pipeline'ında benzer değişiklikler 20.000 çalıştırmada 7,1 ms'yi 1,6 ms'ye indirmiş. Yazar daha karmaşık imzaların kendini kanıtlaması gerektiğini de belirtiyor.",
-   "why_tr": "Sıcak yollarda gizli closure ayrımları gereksiz GC baskısı yaratabilir; profil ve static lambda kontrolü ucuz bir iyileştirme sağlar.",
-   "published": "2026-11-18T11:34:42+00:00"
+   "url": "https://nextjs.org/blog/how-were-using-ai-to-make-nextjs-more-secure",
+   "title_orig": "How we're using AI to make Next.js more secure",
+   "title_tr": "Next.js'i daha güvenli yapmak için yapay zekâyı nasıl kullanıyoruz",
+   "summary_tr": "Next.js ekibi, güvenlik duyurularındaki artışı yapay zekânın hata bulmayı kolaylaştırmasına bağlıyor. Bu yıl bulunan 51 açığın %70'i en az bir yıllık koddaydı. Önlem olarak bug bounty, dahili bir bot, Trail of Bits denetimi, yaklaşık aylık duyurulan güvenlik sürümleri ve her pull request'te çalışan Vercel Agent güvenlik incelemesi kullanılıyor. Barındırma katmanları arasındaki uyumsuzlukları azaltmak için Adapters sözleşmesi de geliştiriliyor.",
+   "why_tr": "Next.js kullanan ekipler için güvenlik güncellemelerinin neden sıklaştığını ve sürüm takibini nasıl planlayabileceklerini açıklıyor.",
+   "published": "2026-11-18T11:34:42+00:00",
+   "tags": [
+    "Web and Cloud Development",
+    "AI"
+   ]
+  },
+  {
+   "id": "2ea26d40",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "redbase.app",
+   "via": "Morning Dew",
+   "url": "https://redbase.app/articles/identity-dpop-advisory",
+   "title_orig": "The tests were green, a person found the hole: a vulnerability in our OpenID server, start to finish",
+   "title_tr": "Testler yeşildi ama açığı bir insan buldu: OpenID sunucumuzdaki zafiyetin hikâyesi",
+   "summary_tr": "redb.Identity'de DPoP açıkken, anahtara bağlı token'lar /connect/userinfo ve yönetim API'sinde kanıt (proof) kontrolü yapılmadan düz Bearer olarak kabul ediliyordu. Etkilenen sürümler 1.0.1'den 4.6.1'e kadar, düzeltme 4.6.2'de. Mevcut test yalnızca iyi isteğin geçtiğini doğruladığı için açığı sabitlemişti. Yazar, koruma mekanizmalarında 'reddetmeli' testlerinin de şart olduğunu vurguluyor ve açıklama sürecini tarihleriyle anlatıyor.",
+   "why_tr": "Kimlik doğrulama gibi koruma katmanlarında yalnızca olumlu senaryo testlerine güvenmenin yanıltıcı olabileceğini somut bir olayla gösteriyor.",
+   "published": "2026-11-18T11:34:42+00:00",
+   "tags": [
+    "Web and Cloud Development",
+    ".NET and Visual Studio"
+   ]
+  },
+  {
+   "id": "1e6b15e0",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "Martin Fowler",
+   "via": "",
+   "url": "https://martinfowler.com/articles/data-contracts.html",
+   "title_orig": "Data Contracts",
+   "title_tr": "Data Contracts (veri sözleşmeleri)",
+   "summary_tr": "Yazı, veri kümelerinin içeriğini ve garantilerini API tasarımı yaklaşımıyla tanımlayan veri sözleşmelerini anlatıyor. Örneklerde Open Data Contract Standard (ODCS) kullanılıyor ve şema, kalite kuralları ile servis seviyeleri sözleşmeye ekleniyor. Sözleşmelerin hem insanlar hem de doğrulanmamış veriyi doğru kabul eden yapay zekâ ajanları için güvenilir metadata sağladığı savunuluyor. Metin sonda kesik.",
+   "why_tr": "Büyük veri ortamlarında veriye güveni sürekli ve otomatik doğrulanabilir hale getirmek isteyen mühendisler için temel bir kavram sunuyor.",
+   "published": "2026-11-18T14:02:00+00:00",
+   "tags": [
+    "Design, DevOps and Methodology",
+    "AI"
+   ]
+  },
+  {
+   "id": "bbcc14e1",
+   "topic": "dotnet",
+   "kind": "repo",
+   "score": 4,
+   "source": "GitHub Trending: C#",
+   "via": "",
+   "url": "https://github.com/dotnet/skills",
+   "title_orig": "dotnet/skills",
+   "title_tr": "dotnet/skills: .NET için kodlama ajanı becerileri",
+   "summary_tr": "Depo, .NET ekibinin kodlama ajanları için derlediği taşınabilir skill'leri ve ana makineye özgü özel ajanları içeriyor. Skill'ler agentskills.io standardını izliyor ve VS Code, Cursor ile Codex tarafında eklenti pazaryeri olarak kurulabiliyor. Ayrıca yeniden kullanılabilir GitHub Agentic Workflows yayımlanıyor.",
+   "why_tr": "Ajanlarla .NET ve C# geliştirenler için resmi ekipten gelen hazır skill kümesi sağlıyor.",
+   "published": null,
+   "tags": [
+    "AI",
+    ".NET and Visual Studio"
+   ]
   },
   {
    "id": "8e3f3cf2",
@@ -111,10 +207,11 @@
    "via": "",
    "url": "https://www.savunmasanayist.com/kaanda-100-ucaklik-hedef-teslimat-tarihi-belli-oldu/",
    "title_orig": "KAAN’da 100 Uçaklık Hedef: Teslimat Tarihi Belli Oldu",
-   "title_tr": "Bakan Güler: KAAN'ın 2035'e kadar 100 uçağa ulaşması öngörülüyor",
-   "summary_tr": "Milli Savunma Bakanı Yaşar Güler, TBMM Plan ve Bütçe Komisyonu'nda yaptığı açıklamada Hava Kuvvetleri'ne 2030 sonuna kadar 20, 2035 sonuna kadar 100 KAAN teslim edilmesinin öngörüldüğünü söyledi. Yerli kabiliyetler yeterli seviyeye gelene kadar F-16, F-35 ve C-130J tedariklerinin süreceğini, 2026 sonunda 2 C-130J teslim alınmasının planlandığını belirtti. Güler ayrıca F-35 konusunda CAATSA yaptırımlarının kaldırılmasını beklediklerini, Suudi Arabistan ve Pakistan ile kurumsal savunma iş birliği yapıldığını ve bunun otomatik asker konuşlandırması anlamına gelmediğini ifade etti.",
-   "why_tr": "Türkiye'nin hava gücü planlaması ve savunma sanayisindeki öncelikleri (hava savunma, İHA, milli muharip uçak) takip eden bir mühendis için bağlam sağlıyor.",
-   "published": "2026-11-19T07:37:10+00:00"
+   "title_tr": "Güler: KAAN'ın 2035'e kadar 100 uçaklık teslimat hedefi",
+   "summary_tr": "Milli Savunma Bakanı Yaşar Güler, Hava Kuvvetleri'ne 2030 sonuna kadar 20, 2035 sonuna kadar ise 100 KAAN teslim edilmesinin öngörüldüğünü açıkladı. Geçiş döneminde F-16, F-35 ve C-130J tedariklerinin süreceğini, 2026 sonunda 2 C-130J'nin teslim alınmasının planlandığını belirtti. Güler ayrıca Türkiye için üretilen 6 F-35'in teslimatı konusunda ABD ile temasların sürdüğünü, CAATSA yaptırımlarının kaldırılmasını beklediklerini ve hava savunma ile İHA projelerine öncelik verildiğini söyledi.",
+   "why_tr": "Savunma sanayii ve havacılık yazılımı alanında çalışan bir mühendis için ulusal platform takvimleri ve tedarik önceliklerinin nasıl şekillendiğini gösteriyor.",
+   "published": "2026-11-19T07:37:10+00:00",
+   "tags": []
   },
   {
    "id": "9f44b8cf",
@@ -125,66 +222,26 @@
    "via": "",
    "url": "https://www.savunmasanayist.com/msbye-dev-butce-1-trilyon-532-milyar-tl/",
    "title_orig": "MSB’ye Dev Bütçe: 1 Trilyon 532 Milyar TL",
-   "title_tr": "MSB'nin 2027 bütçe teklifi 1 trilyon 532 milyar TL oldu",
-   "summary_tr": "MSB'nin 2027 bütçe teklifi 1 trilyon 532 milyar lira olarak açıklandı; bu, toplam bütçenin yüzde 6,17'sine denk geliyor ve 2026'daki 822 milyar 930 milyon liralık teklife göre yaklaşık yüzde 86 artış anlamına geliyor. Güler sunumunda MKE'nin 106 ülkeye ihracat yaptığını, ASFAT'ın 2026'nın ilk dokuz ayında 45,3 milyar TL satış yaptığını ve Mekke Ortak Savunma Anlaşması ile Bedir Mutabakat Zaptı gibi iş birliklerini aktardı. KAAN, KIZILELMA, HÜRJET, ALTAY, ÇELİKKUBBE ve deniz platformlarındaki çalışmaların sürdüğü de belirtildi.",
-   "why_tr": "Bütçedeki sert artış, yerli savunma projelerine ayrılacak kaynağın ve sektördeki iş hacminin yönünü gösteriyor.",
-   "published": "2026-11-18T10:20:04+00:00"
+   "title_tr": "MSB'nin 2027 bütçe teklifi 1 trilyon 532 milyar TL",
+   "summary_tr": "MSB'nin 2027 bütçe teklifi 1 trilyon 532 milyar lira olarak açıklandı; bu tutar toplam bütçenin yüzde 6,17'sine denk geliyor ve 2026 teklifine göre yaklaşık yüzde 86 artış anlamına geliyor. Güler sunumunda MKE'nin 106 ülkeye ihracat yaptığını, ASFAT'ın ilk dokuz ayda 45,3 milyar TL satış gerçekleştirdiğini ve Mekke Ortak Savunma Anlaşması ile Bedir Mutabakat Zaptı gibi iş birliklerini anlattı. KAAN, KIZILELMA, HÜRJET, ALTAY ve ÇELİKKUBBE gibi projelerin bütüncül modernizasyonun parçası olduğunu vurguladı.",
+   "why_tr": "Bütçe büyüklüğü ve ihracat verileri, yerli savunma projelerinde iş ve yatırım fırsatlarının ölçeğini anlamak açısından bağlam sağlıyor.",
+   "published": "2026-11-18T10:20:04+00:00",
+   "tags": []
   },
   {
-   "id": "cd713bd3",
+   "id": "5d10b5a4",
    "topic": "savunma",
    "kind": "article",
    "score": 4,
-   "source": "Breaking Defense",
+   "source": "Defense News",
    "via": "",
-   "url": "https://breakingdefense.com/2026/11/a-1-1-trillion-pentagon-budget-sets-up-a-fight-on-capitol-hill/",
-   "title_orig": "A $1.1 trillion Pentagon budget plan sets up a fight on Capitol Hill",
-   "title_tr": "1,1 trilyon dolarlık Pentagon bütçe planı Kongre'de tartışma yaratacak",
-   "summary_tr": "Senato ödenek komitesinin son savunma harcama önerisi, yaklaşık 1 trilyon dolarlık baz bütçeyi korurken Golden Dome, drone girişimleri ve mühimmat için milyarlarca dolar ayırıyor. Bu kaynağı açmak için gemi inşası, F-35 tedariki ve araştırma harcamalarında kesintiler öneriliyor. Kaynak metin kısa bir bölüm tanıtımından ibaret olduğu için ayrıntılar yetersiz.",
-   "why_tr": "ABD savunma bütçesindeki öncelik kaymaları (drone ve mühimmat lehine) savunma teknolojisi pazarının yönünü etkileyebilir; ancak kaynak metin yetersiz.",
-   "published": "2026-11-18T21:48:03+00:00"
-  },
-  {
-   "id": "639facd0",
-   "topic": "savunma",
-   "kind": "article",
-   "score": 4,
-   "source": "Euromaidan Press",
-   "via": "",
-   "url": "https://euromaidanpress.com/2026/11/18/russia-plans-to-throw-20-million-drones-at-ukraine-in-2027-double-this-years-count-says-eus-defense-commissioner/",
-   "title_orig": "Russia plans to throw 20 million drones at Ukraine in 2027, double this year’s count, says EU’s defense commissioner",
-   "title_tr": "AB Komiseri: Rusya 2027'de Ukrayna'ya 20 milyon drone fırlatmayı planlıyor",
-   "summary_tr": "AB Savunma ve Uzay Komiseri Andrius Kubilius'a göre Rusya gelecek yıl Ukrayna'ya 20 milyon drone göndermeyi hazırlıyor; Ukrayna tahminlerine göre bu yıl sayı yaklaşık 10 milyon. Drone'ların Ukrayna'nın silah harcamalarındaki payının gelecek yıl yüzde 62'ye çıkması bekleniyor. AB'nin 60 milyar euroluk savunma kredisinden 2027 için 31,7 milyar euro kaldı ve Ocak 2027'den itibaren drone ile mühimmat için 14,4 milyar euro serbest bırakılması planlanıyor.",
-   "why_tr": "Drone savaşının ölçeği ve finansmanı, karşı-drone ve elektronik harp alanlarındaki ürün ve üretim ihtiyacının büyüklüğüne dair somut bir fikir veriyor.",
-   "published": "2026-11-18T18:41:34+00:00"
-  },
-  {
-   "id": "e9fadfd2",
-   "topic": "savunma",
-   "kind": "article",
-   "score": 4,
-   "source": "Euromaidan Press",
-   "via": "",
-   "url": "https://euromaidanpress.com/2026/11/18/darts-drones/",
-   "title_orig": "Ukrainian units are turning drones built for deep strikes on Russian assault groups near the front. The tactic is spreading",
-   "title_tr": "Ukrayna birlikleri derin vuruş drone'larını cephe hattındaki Rus saldırı gruplarına karşı kullanıyor",
-   "summary_tr": "237. İnsansız Sistemler Taburu, normalde tedarik hatlarına karşı kullanılan sabit kanatlı \"middle strike\" drone'larını, gri bölgeye yaklaşan Rus araçlarına karşı kullanarak yeni bir taktik geliştirdi. Taktik doğuya doğru yayılıyor; 1. Ayrı Hücum Alayı, Darts drone'larıyla Dobropillia yönüne ilerleyen bir kolu vurduğunu, 7 araç, 3 dört tekerlekli motosiklet ve 30 askeri etkisiz bıraktığını iddia etti. Taktiğin arkasında sisli havada FPV'lerin işe yaramaması ve Starshield terminallerinin hız sınırı iddiaları (SpaceX bunu yalanladı) gibi etkenler olabileceği belirtiliyor.",
-   "why_tr": "Maliyet, kamera kabiliyeti, haberleşme kısıtları ve hava koşullarının drone görev tasarımını nasıl şekillendirdiğini gösteren sahadan bir örnek.",
-   "published": "2026-11-17T22:47:58+00:00"
-  },
-  {
-   "id": "de1a49e0",
-   "topic": "savunma",
-   "kind": "article",
-   "score": 4,
-   "source": "Breaking Defense",
-   "via": "",
-   "url": "https://breakingdefense.com/2026/11/army-kicks-off-manufacturing-rodeo-with-focus-on-small-drones/",
-   "title_orig": "Army kicks off ‘manufacturing rodeo’ with focus on small drones",
-   "title_tr": "ABD Ordusu küçük drone'lara odaklanan 'manufacturing rodeo' girişimini başlattı",
-   "summary_tr": "Ordunun ilk \"manufacturing rodeo\" etkinliği, tanesi en fazla 3.000 dolar olan tek yönlü saldırı drone'larını hızla üretip ölçekleyebilen firmaları hedefliyor. Seçilen firmalar, devletin sağladığı batarya, motor, MK118 kitleri ve gövde kitleriyle 1 Mart'a kadar 400 adet Group 1 drone ve 20'şer yer kontrol istasyonu üretecek. Başarılı sistemler Mart'taki Drone Dominance Gauntlet'te yarışacak ve 10.000 drone'a kadar üretim opsiyonlarının kilidini açacak; üretim hatları tedarik kesintisi simülasyonlarına da tabi tutulacak.",
-   "why_tr": "Ucuz ve kitlesel drone üretimine, açık sistem mimarisine ve yurt içi tedarik zincirine verilen önem, bu alandaki gereksinimlerin nereye gittiğini gösteriyor.",
-   "published": "2026-11-17T20:44:33+00:00"
+   "url": "https://www.defensenews.com/newsletters/daily-news-roundup/2026/11/18/us-navy-used-expired-munitions-during-iran-war-cao-says/",
+   "title_orig": "US Navy used expired munitions during Iran war, Cao says",
+   "title_tr": "ABD Donanması İran savaşında 'miadı dolmuş' mühimmat kullandı",
+   "summary_tr": "Donanma Bakanı vekili Hung Cao, Senato Silahlı Hizmetler Komitesi'ndeki oturumda, Epic Fury Operasyonu ve İran savaşında daha önce kullanılamaz olarak sınıflandırılmış bazı mühimmatın yeniden kodlanarak atıldığını söyledi. Bu mühimmat, onarılabilir ancak servis dışı sayılan echo ve foxtrot kodlu malzemelerdi. Haberde Tomahawk stokundaki tükenme endişeleri, 3 milyar dolarlık yenileme talebi ve Raytheon ile yapılan 22,9 milyar dolarlık sözleşme de aktarılıyor; Cao yeniden kodlama sürecinin ayrıntılarını açıklamadı.",
+   "why_tr": "Mühimmat stoku, üretim kapasitesi ve yeniden sertifikasyon süreçleri gibi lojistik kısıtların operasyonel kararları nasıl etkilediğini gösteren bir örnek.",
+   "published": "2026-11-18T21:05:34+00:00",
+   "tags": []
   },
   {
    "id": "3b9a5e59",
@@ -195,27 +252,72 @@
    "via": "",
    "url": "https://www.uasvision.com/2026/11/19/uk-royal-navy-to-trial-northrop-grumman-test-aircraft-on-carrier-in-2027/",
    "title_orig": "UK Royal Navy to Trial Northrop Grumman Test Aircraft on Carrier in 2027",
-   "title_tr": "Birleşik Krallık Kraliyet Donanması, Northrop Grumman Talon IQ'yu 2027'de uçak gemisinde test edecek",
-   "summary_tr": "Kraliyet Donanması, Northrop Grumman'ın Talon IQ otonomi test uçağını 2027'de Queen Elizabeth sınıfı bir uçak gemisinde deneyecek; bu, Collaborative Combat Aircraft programının ilk aşaması ve Project Vanquish kapsamında yürütülüyor. Metne göre bu, jet motorlu büyük bir İHA'nın gemiden ilk kez operasyon yapması olacak. Ayrıca Atlantic Net gözetleme ağının 2027'de faaliyete geçmesi ve 1. Otonom Filo'nun Kraken K3 Scout insansız deniz araçlarına karşı-drone yeteneği eklenmesi planlanıyor.",
-   "why_tr": "Otonom ve insansız platformların donanma operasyonlarına entegrasyonunun somut takvimini gösteriyor.",
-   "published": "2026-11-19T06:45:52+00:00"
+   "title_tr": "Royal Navy, Northrop Grumman Talon IQ'yu 2027'de uçak gemisinde deneyecek",
+   "summary_tr": "Birleşik Krallık Deniz Kuvvetleri, Northrop Grumman'ın Talon IQ otonomi test uçağını 2027'de bir Queen Elizabeth sınıfı uçak gemisinden denemeyi planlıyor. Bu deneme, F-35 ile birlikte çalışacak saldırı dronları öngören Collaborative Combat Aircraft programının ilk aşaması ve Project Vanquish kapsamında yürütülecek. Haberde ayrıca Atlantic Net gözetleme ağının önümüzdeki aylarda faaliyete geçeceği ve 1st Autonomous Squadron'ın Kraken K3 Scout insansız deniz araçlarına karşı-dron kapasitesi entegre edileceği belirtiliyor.",
+   "why_tr": "İnsansız ve otonom platformların mevcut hava kanatlarıyla entegrasyonu, otonomi yazılımı geliştiren mühendisler için sektörün yönünü gösteriyor.",
+   "published": "2026-11-19T06:45:52+00:00",
+   "tags": []
+  },
+  {
+   "id": "74a56239",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 4,
+   "source": "Defence Industry Europe",
+   "via": "",
+   "url": "https://defence-industry.eu/bae-systems-says-new-passive-radar-can-track-drones-and-aircraft-without-revealing-its-position-through-radar-emissions/",
+   "title_orig": "BAE Systems says new passive radar can track drones and aircraft without revealing its position through radar emissions",
+   "title_tr": "BAE Systems'ten sinyal yaymayan pasif radar: dron ve uçakları takip ediyor",
+   "summary_tr": "BAE Systems, mevcut televizyon, radyo ve mobil ağ sinyallerini kullanarak dron ve uçakları takip eden, kendi konumunu ele vermeyen bir pasif radar geliştirdiğini duyurdu. Şirket, sistemin birçok mevcut pasif sisteme göre on kata kadar daha ucuz olduğunu, üç boyutlu hava resmi ürettiğini ve SUV'lardan konuşlandırılabilecek kadar küçük olduğunu söylüyor. Canlı denemeler 2027 boyunca planlanıyor; metnin büyük kısmı ise başka savunma haberlerinin kısa özetlerinden oluşuyor.",
+   "why_tr": "Aktif emisyon yapmadan algılama yaklaşımı, sinyal işleme ve sensör sistemleri üzerinde çalışanlar için hem maliyet hem de tespit edilebilirlik açısından ilginç bir tasarım örneği.",
+   "published": "2026-11-19T06:20:49+00:00",
+   "tags": []
+  },
+  {
+   "id": "594a02c4",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 4,
+   "source": "The War Zone",
+   "via": "",
+   "url": "https://www.twz.com/land/u-s-air-forces-containerized-surface-to-air-missile-program-comes-into-sharper-focus",
+   "title_orig": "U.S. Air Force’s Containerized Surface-To-Air Missile Program Comes Into Sharper Focus",
+   "title_tr": "ABD Hava Kuvvetleri'nin konteynerli yer-hava füzesi programı CAMP netleşiyor",
+   "summary_tr": "ABD Hava Kuvvetleri, Counter-Air Missile Program (CAMP) kapsamında birim maliyeti en fazla 500 bin dolar olan ve yılda en az 1.000 adet üretilebilecek düşük maliyetli bir önleyici füze ile konteynerli fırlatıcılar için sözleşmeler verdi. Sierra Nevada Corporation ve Specter Aerospace 124 milyon dolarlık bir ödül aldı; Castelion iki ayrı sözleşme, Anduril ise fırlatıcı geliştirme anlaşması kazandı. Programın ilk aşamasının yaklaşık 10 ay sürmesi planlanıyor ve tasarımlarda açık mimari, modülerlik ve veri haklarına önem veriliyor; kaynak metin sonda kesilmiş durumda.",
+   "why_tr": "Açık mimari, dijital tasarım araçları ve üretilebilirlik vurgusu, donanım ve yazılım sistemlerinde maliyet odaklı modüler tasarımın savunmada da öne çıktığını gösteriyor.",
+   "published": "2026-11-18T18:45:21+00:00",
+   "tags": []
+  },
+  {
+   "id": "de1a49e0",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 4,
+   "source": "Breaking Defense",
+   "via": "",
+   "url": "https://breakingdefense.com/2026/11/army-kicks-off-manufacturing-rodeo-with-focus-on-small-drones/",
+   "title_orig": "Army kicks off ‘manufacturing rodeo’ with focus on small drones",
+   "title_tr": "Ordu, küçük dronlar odaklı 'manufacturing rodeo' sürecini başlattı",
+   "summary_tr": "ABD Ordusu, birim maliyeti en fazla 3.000 dolar olan tek yönlü saldırı dronlarının hızlı üretimi ve ölçeklenmesini sınayacak ilk 'manufacturing rodeo' için ihale duyurusu yayımladı. Seçilen firmalar, devlet tarafından sağlanan batarya, motor ve çerçeve kitleriyle 1 Mart'a kadar 400 adet Group 1 dron ve 20 yer kontrol istasyonu üretecek; sistemler Mart'taki Drone Dominance Gauntlet etkinliğinde elektronik karıştırma altında yarışacak. Başarılı olanlar için 10.000 dronluk ölçekli üretim opsiyonları açılacak ve tedarik zinciri aksaması tatbikatları yapılacak.",
+   "why_tr": "Açık sistem mimarisi ve yerli tedarik zinciri doğrulaması gibi şartlar, hızlı üretim ve tedarik zinciri dayanıklılığına yönelik yeni gereksinimleri gösteriyor.",
+   "published": "2026-11-17T20:44:33+00:00",
+   "tags": []
   }
  ],
  "top_ids": [
   "8e3f3cf2",
-  "e8f59eed",
-  "985b06d7"
+  "764b373c",
+  "481bdeac"
  ],
  "stats": {
-  "feeds": 36,
+  "feeds": 34,
   "feed_errors": [
-   "The Defense Post: akış okunamadı: <unknown>:70:239: not well-formed (invalid token)",
-   "Military & Aerospace Electronics: 404 Client Error: Not Found for url: https://www.militaryaerospace.com/rss"
+   "UAS Weekly: akış okunamadı: <unknown>:2:119: not well-formed (invalid token)"
   ],
   "candidates": {
    "dotnet": 136,
-   "savunma": 155
+   "savunma": 149
   },
-  "selected": 14
+  "selected": 18
  }
 }
