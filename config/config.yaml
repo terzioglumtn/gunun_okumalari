@@ -65,17 +65,18 @@ feeds:
   - {name: "The Practical Developer", topic: dotnet, url: "https://dev.to/feed"}
 
   # --- Stack Overflow etiketleri ("MTN_Anlık"): soru-cevap, en fazla max_qa madde ---
+  # Her etiketten en fazla 8 aday (cap): sorular adayların çoğunu doldurup blog yazılarını bastırmasın.
   # Etiket başına akış adresi: https://stackoverflow.com/feeds/tag/<etiket>  (ilk çalıştırmada doğrulayın)
-  - {name: "Stack Overflow: avalonia", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/avalonia"}
-  - {name: "Stack Overflow: avaloniaui", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/avaloniaui"}
-  - {name: "Stack Overflow: wpf", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/wpf"}
-  - {name: "Stack Overflow: winforms", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/winforms"}
-  - {name: "Stack Overflow: entity-framework", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/entity-framework"}
-  - {name: "Stack Overflow: visual-studio", topic: dotnet, kind: qa, url: "https://stackoverflow.com/feeds/tag/visual-studio"}
+  - {name: "Stack Overflow: avalonia", topic: dotnet, kind: qa, cap: 8, url: "https://stackoverflow.com/feeds/tag/avalonia"}
+  - {name: "Stack Overflow: avaloniaui", topic: dotnet, kind: qa, cap: 8, url: "https://stackoverflow.com/feeds/tag/avaloniaui"}
+  - {name: "Stack Overflow: wpf", topic: dotnet, kind: qa, cap: 8, url: "https://stackoverflow.com/feeds/tag/wpf"}
+  - {name: "Stack Overflow: winforms", topic: dotnet, kind: qa, cap: 8, url: "https://stackoverflow.com/feeds/tag/winforms"}
+  - {name: "Stack Overflow: entity-framework", topic: dotnet, kind: qa, cap: 8, url: "https://stackoverflow.com/feeds/tag/entity-framework"}
+  - {name: "Stack Overflow: visual-studio", topic: dotnet, kind: qa, cap: 8, url: "https://stackoverflow.com/feeds/tag/visual-studio"}
   # Çok genel etiketler: günde yüzlerce yeni soru gelir, varsayılan olarak kapalı.
   - {name: "Stack Overflow: c#", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/c%23"}
-  - {name: "Stack Overflow: .net-framework-version", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/.net-framework-version"}
-  - {name: "Stack Overflow: user-interface", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/user-interface"}
+  - {name: "Stack Overflow: .net-framework-version", topic: dotnet, kind: qa, cap: 8, url: "https://stackoverflow.com/feeds/tag/.net-framework-version"}
+  - {name: "Stack Overflow: user-interface", topic: dotnet, kind: qa, cap: 8, url: "https://stackoverflow.com/feeds/tag/user-interface"}
   - {name: "Stack Overflow: lambda", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/lambda"}
   - {name: "Stack Overflow: version-control", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/version-control"}
   - {name: "Stack Overflow: git-commit", topic: dotnet, kind: qa, enabled: false, url: "https://stackoverflow.com/feeds/tag/git-commit"}
