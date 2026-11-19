@@ -1,7 +1,7 @@
 {
  "date": "2026-11-19",
  "issue_no": 2,
- "generated_at": "2026-11-19T13:31:54.324876+00:00",
+ "generated_at": "2026-11-19T13:57:08.011051+00:00",
  "backend": "claude_cli",
  "items": [
   {
@@ -13,13 +13,13 @@
    "via": "Morning Dew",
    "url": "https://www.securityweek.com/microsoft-agent-framework-releases-poisoned-with-credential-stealer/",
    "title_orig": "Microsoft Agent Framework Releases Poisoned With Credential Stealer",
-   "title_tr": "Microsoft Agent Framework'ün PyPI paketine kimlik bilgisi çalan zararlı sürümler yüklendi",
-   "summary_tr": "17 Kasım'daki tedarik zinciri saldırısında agent-framework paketinin 1.26.1 ve 1.26.2 sürümleri PyPI'a zararlı kodla yüklendi. Bu kod ortam değişkenlerindeki ve yapılandırma dosyalarındaki gizli bilgileri, Azure yönetilen kimlik token'larını ve Azure DevOps token'larını hedefliyor. İkinci sürüm GitHub Actions'ı da kapsıyor. İki sürüm de karantinaya alındı ve temiz son sürüm 1.26.0 olarak kaldı. Paketlerin nasıl yayımlandığı henüz bilinmiyor.",
-   "why_tr": "Bu paketi geliştirme ortamında, CI/CD hattında veya container imajında kullanıyorsanız etkilenen sürümleri kontrol etmeniz ve olası sızan kimlik bilgilerini yenilemeniz gerekir.",
+   "title_tr": "Microsoft Agent Framework paketinin zehirli sürümleri kimlik bilgisi çaldı",
+   "summary_tr": "PyPI üzerindeki agent-framework paketinin 1.26.1 ve 1.26.2 sürümleri bir tedarik zinciri saldırısıyla yayımlandı ve kimlik bilgisi çalan kod içeriyordu. Kötü amaçlı kod Python yorumlayıcısı her başladığında çalışıyor; ortam değişkenleri, yapılandırma dosyaları, Azure ve Azure DevOps tokenları ile GitHub Actions kimlik bilgilerini hedefliyor. Sürümler PyPI'da karantinaya alındı, temiz son sürüm 1.26.0 ve yayın yöntemi hâlâ bilinmiyor.",
+   "why_tr": "Bu paketi geliştirme ortamında, CI/CD hattında veya container imajında kullanan ekiplerin etkilenen sürümleri kontrol edip kimlik bilgilerini yenilemesi gerekiyor.",
    "published": "2026-11-19T11:39:26+00:00",
    "tags": [
-    "Python",
-    "AI"
+    "AI",
+    "Python"
    ]
   },
   {
@@ -31,11 +31,82 @@
    "via": "Morning Dew",
    "url": "https://since.dev/guides/dotnet-8-end-of-support",
    "title_orig": ".NET 8 and .NET 9 End of Support (Nov 10, 2026)",
-   "title_tr": ".NET 8 ve .NET 9 destek sonu: .NET 10'a geçiş rehberi",
-   "summary_tr": "Microsoft'un destek politikasına göre .NET 8 (LTS) ve .NET 9 (STS) için destek 10 Kasım 2026'da sona erdi. Son yamalar 8.0.34 ve 9.0.23 oldu. Uygulamalar çalışmaya devam ediyor ama güvenlik düzeltmesi ve teknik destek artık yok. Yazı, sürümün birden çok yerde sabitlenmiş olabileceğini anlatıyor ve doğrudan .NET 10'a geçmeyi öneriyor. Ayrıca AWS Lambda'nın dotnet8 çalışma zamanı için kendi tarihlerini ve .NET 11'in aynı gün çıktığını aktarıyor.",
-   "why_tr": "Destek dışı kalan sürümlerde bulunacak yeni açıklar kapanmayacağı için hâlâ .NET 8 veya 9 kullanan ekiplerin geçiş planını hızla çıkarması gerekir.",
+   "title_tr": ".NET 8 ve .NET 9 için destek sona erdi: .NET 10'a geçiş rehberi",
+   "summary_tr": "Hem .NET 8 hem de .NET 9 için destek 10 Kasım 2026'da sona erdi; son yamalar 8.0.34 ve 9.0.23 oldu. Uygulamalar çalışmaya devam ediyor ancak artık güvenlik düzeltmesi veya teknik destek yok. Yazı, sürümün proje dosyası, global.json, imaj ve CI gibi birçok yerde sabitlenmiş olabileceğini belirtip doğrudan .NET 10 LTS'e geçmeyi öneriyor; AWS Lambda'nın dotnet8 çalışma zamanı için de ayrı tarihleri var.",
+   "why_tr": "Desteği biten sürümlerde yeni açıklar kapanmayacağı için .NET 8/9 kullanan ekiplerin geçişi planlaması gerekiyor.",
    "published": "2026-11-19T11:39:26+00:00",
    "tags": [
+    ".NET and Visual Studio"
+   ]
+  },
+  {
+   "id": "f91ec5c8",
+   "topic": "dotnet",
+   "kind": "medium",
+   "score": 4,
+   "source": "Medium: Level Up Coding",
+   "via": "",
+   "url": "https://levelup.gitconnected.com/specguard-when-ai-coding-agents-write-tests-that-approve-bugs-171ca7fb62a1?source=rss----5517fd7b58a6---4",
+   "title_orig": "SpecGuard: When AI Coding Agents Write Tests That Approve Bugs",
+   "title_tr": "SpecGuard: Kodlama ajanları hataları onaylayan testler yazdığında",
+   "summary_tr": "Kaynak metin yetersiz; yalnızca bir ön izleme var. Buna göre, ajanlardan bir gereksinim için kontrol yazmaları istendiğinde çoğu zaman gereksinim yerine mevcut kodun davranışını kopyalıyorlar. SpecGuardBench'te en iyi ajan görevlerin yalnızca %63'ünde sadık bir doğrulama düzeneği yazabildi; referans kod hatalıyken sadakat 19 ila 31 puan düştü.",
+   "why_tr": "Ajanların yazdığı testlerin mevcut hataları da doğrulayabileceğini hatırlatıyor; ancak metin kısa olduğu için ayrıntılar belirsiz.",
+   "published": "2026-11-18T16:27:16+00:00",
+   "tags": [
+    "AI"
+   ]
+  },
+  {
+   "id": "492f4906",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 4,
+   "source": "meziantou.net",
+   "via": "Morning Dew",
+   "url": "https://www.meziantou.net/finding-an-async-deadlock-caused-by-a-synchronizationcontext.htm",
+   "title_orig": "Finding an async deadlock caused by a SynchronizationContext",
+   "title_tr": "SynchronizationContext kaynaklı async deadlock'u bir AI ajanıyla bulmak",
+   "summary_tr": "Yazı, tek iş parçacıklı bir SynchronizationContext kurup async çağrıda .Result ile bekleyen bir konsol uygulamasının neden kilitlendiğini .NET dump analiziyle inceliyor. parallelstacks çıktısında tek bir bloklu thread ve boşta bekleyen havuz thread'leri görünüyor; syncblk çıktısı boş. Boş çıktının da bir bulgu olarak raporlanması gerektiği vurgulanıyor; bu, thread pool starvation'dan ayrımı sağlıyor.",
+   "why_tr": "Hang ama CPU kullanımı sıfır olan bir süreçte monitor tabanlı kilitlenme ile async deadlock'u dump üzerinden ayırt etmeyi gösteriyor.",
+   "published": "2026-11-19T11:39:26+00:00",
+   "tags": [
+    ".NET and Visual Studio",
+    "AI"
+   ]
+  },
+  {
+   "id": "af5dddab",
+   "topic": "dotnet",
+   "kind": "qa",
+   "score": 3,
+   "source": "Stack Overflow: winforms",
+   "via": "",
+   "url": "https://stackoverflow.com/questions/80017305/vs-2026-c-sharp-winforms-trying-to-save-forms-return-the-error-popup-value-c",
+   "title_orig": "VS 2026 C# WinForms - Trying to save forms return the error popup: \"Value cannot be null. Parameter name: value.\"",
+   "title_tr": "VS 2026 WinForms: Form kaydedilirken \"Value cannot be null\" hatası",
+   "summary_tr": "Kaynak metin yetersiz; yalnızca sorunun girişi var. Kullanıcı, uzun süredir sorunsuz açılıp derlenen bir Visual Studio çözümünde bazı formları değiştirmek için açtığında \"Value cannot be null. Parameter name: value.\" hatası aldığını bildiriyor ve bunun belirli bir kodlama sorunu olmadığını söylüyor.",
+   "why_tr": "VS 2026'da WinForms tasarımcısı kaynaklı olabilecek bir soruna işaret ediyor; ancak çözüm metinde yok.",
+   "published": "2026-11-18T00:03:05+00:00",
+   "tags": [
+    "Windows Development",
+    ".NET and Visual Studio"
+   ]
+  },
+  {
+   "id": "431751df",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "s-iguchi09.github.io",
+   "via": "Morning Dew",
+   "url": "https://s-iguchi09.github.io/articles/wpf-master-detail-edit-cancel-selecteditem/",
+   "title_orig": "WPF SelectedItem Master-Detail: Canceling Edits with a Copy or IEditableObject",
+   "title_tr": "WPF master-detail ekranında düzenlemeyi iptal etmek: kopya veya IEditableObject",
+   "summary_tr": "Detay formu doğrudan listenin SelectedItem'ına bağlanırsa girilen değer doğrudan listedeki öğeye yazılır ve Cancel geri alamaz; ölçümde Cancel komutu çalıştığında kaynak zaten değişmiş oluyordu. Yazı iki çözümü karşılaştırıyor: düzenleme için ayrı bir kopyaya bağlanmak veya IEditableObject ile orijinal değerleri saklamak. İkinci aşamada kaydedilmemiş girdi varken başka satıra tıklanması ele alınıyor.",
+   "why_tr": "İş uygulamalarında çok yaygın olan master-detail ekranlarında iptal davranışını doğru kurmak için somut ölçümlere dayalı bir karşılaştırma sunuyor.",
+   "published": "2026-11-19T11:39:26+00:00",
+   "tags": [
+    "Windows Development",
     ".NET and Visual Studio"
    ]
   },
@@ -49,43 +120,43 @@
    "url": "https://learn.microsoft.com/visualstudio/releases/2026/release-notes#18.12.1",
    "title_orig": "Visual Studio 2026 v18.12.1 Release Notes",
    "title_tr": "Visual Studio 2026 v18.12.1 sürüm notları",
-   "summary_tr": "Kasım güncellemesi Solution Explorer'a dosya sistemi görünümü getiriyor. Bu görünümden çözüm açılabiliyor ve Build, Rebuild, Clean gibi proje komutları çalıştırılabiliyor. Open Folder modunda çözüm açmadan MSBuild Restore yapılabiliyor. Güncelleme ayrıca ANSI renkli Output penceresi, daha kompakt dil sunucusu hover ipuçları, TIFF, DDS ve WebP gibi ek görsel formatlarının önizlemesi ve araç penceresi sekmeleri için yeni özelleştirmeler içeriyor.",
-   "why_tr": "Günlük kullanılan IDE'deki gezinme, derleme ve çıktı okuma iyileştirmeleri iş akışını doğrudan etkileyebilir.",
+   "summary_tr": "Kasım güncellemesi Solution Explorer'a File System görünümü getiriyor; buradan dosyalar gezilebiliyor, çözüm açılabiliyor ve Build, Rebuild, Clean gibi proje komutları çalıştırılabiliyor. Open Folder'da MSBuild Restore çalıştırma, yenilenen Options sayfaları, Output penceresinde ANSI renk desteği, daha kompakt dil sunucusu hover ipuçları ve TIFF, DDS, WebP gibi ek görsel önizlemeleri de var. Araç penceresi sekmeleri de özelleştirilebiliyor.",
+   "why_tr": "Günlük iş akışını etkileyen Solution Explorer ve Open Folder iyileştirmeleri nedeniyle Visual Studio kullanıcıları için gözden geçirmeye değer.",
    "published": "2026-11-19T11:39:26+00:00",
    "tags": [
     ".NET and Visual Studio"
    ]
   },
   {
-   "id": "af5dddab",
-   "topic": "dotnet",
-   "kind": "qa",
-   "score": 3,
-   "source": "Stack Overflow: winforms",
-   "via": "",
-   "url": "https://stackoverflow.com/questions/80017305/vs-2026-c-sharp-winforms-trying-to-save-forms-return-the-error-popup-value-c",
-   "title_orig": "VS 2026 C# WinForms - Trying to save forms return the error popup: \"Value cannot be null. Parameter name: value.\"",
-   "title_tr": "VS 2026 WinForms: Form kaydedilirken \"Value cannot be null\" hatası",
-   "summary_tr": "Soruyu soran kişi, uzun süredir sorunsuz açılıp derlenen bir Visual Studio çözümünde bazı formları değiştirmek için açtığında bu hata penceresiyle karşılaştığını anlatıyor. Kaynak metin yetersiz: yalnızca sorunun girişi var, neden veya çözüm yok.",
-   "why_tr": "VS 2026 ile WinForms tasarımcısı kullananlar benzer bir hatayla karşılaşabilir, ancak bu metinde bir çözüm bulunmuyor.",
-   "published": "2026-11-18T00:03:05+00:00",
-   "tags": [
-    "Windows Development",
-    ".NET and Visual Studio"
-   ]
-  },
-  {
-   "id": "0deaa650",
+   "id": "1b2ffba5",
    "topic": "dotnet",
    "kind": "article",
    "score": 3,
-   "source": "github.com",
+   "source": "blog.ndepend.com",
    "via": "Morning Dew",
-   "url": "https://github.com/Azure/azure-sdk-for-net/releases/tag/Azure.AI.Projects.Agents_3.0.0",
-   "title_orig": "Azure.AI.Projects.Agents v3.0.0 Release",
-   "title_tr": "Azure.AI.Projects.Agents v3.0.0: Çok sayıda kırıcı değişiklik",
-   "summary_tr": "Sürüm notları birçok kırıcı değişikliği listeliyor. Bazı sınıflar kaldırıldı veya Azure.AI.Extensions.OpenAI paketine taşındı, çeşitli tipler ve özellikler yeniden adlandırıldı. Bazı yapıcılar kaldırıldı ve GetAgentVersions metotlarının parametre sırası değişti. Voice agent turn-detection özelliklerinde milisaniye alanları TimeSpan'a çevrildi, bazı enum'lar genişletilebilir struct oldu, GetSessionLogStream ise deneyselleşti.",
-   "why_tr": "Bu SDK'yı kullanan projelerde sürüm yükseltmesi derleme hatalarına yol açacağından değişiklik listesini önceden okumak gerekir.",
+   "url": "https://blog.ndepend.com/45-real-bugs-found-in-open-source-net-code-while-testing-ndepend-ai/",
+   "title_orig": "45 Real Bugs Found in Open Source .NET Code While Testing NDepend.AI",
+   "title_tr": "NDepend.AI ile test ederken açık kaynak .NET kodunda bulunan 45 gerçek hata",
+   "summary_tr": "NDepend ekibi, NDepend.AI'ı açık kaynak .NET projelerinde denerken ajanın test yazarken tespit ettiği olası hataları elle doğrulayıp doğru olanları GitHub'da bakımcılara bildirdi. Örnekler arasında kimliği doğrulanmış her çağrıda NullReferenceException, yanlış eşleşen düzenli ifade nedeniyle ters argüman, hiç eşleşmeyen bir assembly adı karşılaştırması ve yeniden denemeden sonra gereksiz fırlatılan bir istisna var. Ekip, açık kaynak projeler için NDepend'in ücretsiz olduğunu belirtiyor.",
+   "why_tr": "Ajan destekli test üretiminin gerçek kodda hangi tür küçük hataları yakaladığını gösteriyor; yazı aynı zamanda bir ürün tanıtımı niteliğinde.",
+   "published": "2026-11-19T11:39:26+00:00",
+   "tags": [
+    ".NET and Visual Studio",
+    "AI"
+   ]
+  },
+  {
+   "id": "89063c75",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "postsharp.net",
+   "via": "Morning Dew",
+   "url": "https://postsharp.net/blog/metalama-mcp-server",
+   "title_orig": "Query Any .NET Codebase from Your AI Agent with the Metalama MCP Server",
+   "title_tr": "Metalama MCP sunucusuyla AI ajanından herhangi bir .NET kod tabanını sorgulamak",
+   "summary_tr": "Metalama MCP, ajanın C# projelerini ve çözümlerini Roslyn ile MSBuild üzerinden yükleyip tür, üye, kalıtım ve referans sorularını derleyicinin anlamsal modeliyle yanıtlamasını sağlayan ücretsiz ve açık kaynaklı bir MCP sunucusu. Beş araç sunuyor (load_workspace, reload_workspace, unload_workspace, query, open) ve sonuçlar tarayıcıda etkileşimli bir görünümde açılabiliyor. Projelerin Metalama kullanması gerekmiyor; kullananlarda aspect'ler ve dönüştürülmüş kod da görülebiliyor. .NET 10 SDK gerekiyor ve sunucu Metalama 2027.0 önizlemesinin parçası.",
+   "why_tr": "Ajanların büyük .NET kod tabanlarını metin araması yerine anlamsal modelle keşfetmesinin pratik bir yolunu sunuyor.",
    "published": "2026-11-19T11:39:26+00:00",
    "tags": [
     ".NET and Visual Studio",
@@ -101,85 +172,13 @@
    "via": "",
    "url": "https://github.blog/engineering/engineering-principles/building-the-agent-host-protocol-for-sessions-that-continue-across-devices/",
    "title_orig": "Building the Agent Host Protocol for sessions that continue across devices",
-   "title_tr": "Cihazlar arası süren ajan oturumları için Agent Host Protocol'ün geliştirilmesi",
-   "summary_tr": "GitHub Copilot oturumlarının bir cihazda başlayıp başka birinde sürdürülmesini sağlayan Agent Host Protocol (AHP), VS Code'da geliştirilen ve GitHub genelinde benimsenen açık bir standart. Protokol URI ile tanımlı kanallar ve sunucunun yönettiği reducer tabanlı durum nesnelerine dayanıyor. Bu yapı yeniden bağlanma ve tekrar oynatmayı kolaylaştırıyor. VS Code'un uygulaması TypeScript, GitHub'ınki Rust ile yazılmış iki ayrı gerçekleştirme.",
-   "why_tr": "Ajanları kendi uygulamalarına veya iş akışlarına bağlamak isteyen mühendisler için editöre bağımlı olmayan bir protokol tasarımı sunuyor.",
+   "title_tr": "Cihazlar arası süren oturumlar için Agent Host Protocol'ün geliştirilmesi",
+   "summary_tr": "Agent Host Protocol (AHP), ajan oturumlarının tek bir uygulamaya bağlı kalmadan farklı istemcilerde sürdürülmesini sağlayan, VS Code'da geliştirilip GitHub genelinde benimsenen açık bir standart. URI ile tanımlı kanallar ve sunucunun otorite olduğu reducer tabanlı durum nesnesi üzerine kurulu; bu sayede yeniden bağlanma ve tekrar oynatma kolaylaşıyor. VS Code uygulaması TypeScript, GitHub'ın uygulaması ise Rust ile yazılmış ayrı implementasyonlar.",
+   "why_tr": "Ajan oturumlarının editör, terminal veya telefon gibi istemciler arasında nasıl taşınabilir hâle getirildiğini anlamak isteyen mühendisler için mimari bir bakış sunuyor.",
    "published": "2026-11-17T18:20:40+00:00",
    "tags": [
     "AI",
     "Design, DevOps and Methodology"
-   ]
-  },
-  {
-   "id": "89063c75",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "postsharp.net",
-   "via": "Morning Dew",
-   "url": "https://postsharp.net/blog/metalama-mcp-server",
-   "title_orig": "Query Any .NET Codebase from Your AI Agent with the Metalama MCP Server",
-   "title_tr": "Metalama MCP sunucusuyla AI ajanınızdan .NET kod tabanını sorgulayın",
-   "summary_tr": "Metalama MCP, ücretsiz ve açık kaynaklı bir MCP sunucusu. AI ajanının C# proje ve çözümlerini Roslyn'in semantik modeli üzerinden sorgulamasını sağlıyor, projelerin Metalama kullanması gerekmiyor. Beş aracı var: load_workspace, reload_workspace, unload_workspace, query ve open. Sonuçlar tarayıcıda etkileşimli bir görünümde de açılabiliyor. Metalama kullanan projelerde aspect'ler ve dönüştürülmüş kod da görülebiliyor. Sunucu .NET 10 SDK gerektiriyor ve Metalama 2027.0 önizlemesinin parçası.",
-   "why_tr": "Ajanın metin araması yerine derleyici düzeyinde tür, miras ve referans bilgisiyle çalışması büyük C# kod tabanlarında daha güvenilir sonuç verebilir.",
-   "published": "2026-11-19T11:39:26+00:00",
-   "tags": [
-    ".NET and Visual Studio",
-    "AI"
-   ]
-  },
-  {
-   "id": "cc909697",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "syncfusion.com",
-   "via": "Morning Dew",
-   "url": "https://www.syncfusion.com/blogs/post/dotnet-maui-11-upgrade-guide?utm_source=alvinashcraft&utm_medium=email&utm_campaign=alvinashcraft_blog_edmnov26",
-   "title_orig": "What’s New in .NET MAUI 11: Key Changes and Upgrade Guide",
-   "title_tr": ".NET MAUI 11'de yenilikler: Önemli değişiklikler ve yükseltme rehberi",
-   "summary_tr": "MAUI 11 çalışma zamanı, platform ve geçiş odaklı bir sürüm. Android, iOS, tvOS ve Mac Catalyst projeleri CoreCLR kullanıyor, NativeAOT ise isteğe bağlı bir yayın seçeneği. Android için en az API 24 gerekiyor, x86 desteklenmiyor. Varsayılan handler'lar ve navigasyon yaşam döngüsü değişti. Yazı, Release ve publish derlemelerinin, özel handler'ların, CollectionView2'nin, trimming'in ve üçüncü taraf paketlerin yükseltmeden önce doğrulanmasını öneriyor.",
-   "why_tr": "Üretimdeki MAUI uygulamalarında çalışma zamanı ve handler değişiklikleri Debug derlemesinde görünmeyen gerilemelere yol açabilir.",
-   "published": "2026-11-18T11:34:42+00:00",
-   "tags": [
-    "Mobile and Game Development",
-    ".NET and Visual Studio"
-   ]
-  },
-  {
-   "id": "431751df",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "s-iguchi09.github.io",
-   "via": "Morning Dew",
-   "url": "https://s-iguchi09.github.io/articles/wpf-master-detail-edit-cancel-selecteditem/",
-   "title_orig": "WPF SelectedItem Master-Detail: Canceling Edits with a Copy or IEditableObject",
-   "title_tr": "WPF master-detail ekranında düzenleme iptali: Kopya veya IEditableObject",
-   "summary_tr": "Detay formu doğrudan SelectedItem'a bağlanırsa girilen değer liste öğesine yazılır ve Cancel orijinal değeri geri getiremez. Ölçümlere göre varsayılan LostFocus tetikleyicisinde bile Cancel çalışana kadar kaynak değişmiş oluyor. Yazı iki çözümü karşılaştırıyor: düzenleme için kopya üzerinde çalışmak veya IEditableObject ile orijinal değerleri saklamak. İkinci aşamada, kaydedilmemiş girdi varken başka satıra tıklanması sorununu ele alıyor.",
-   "why_tr": "Kurumsal WPF uygulamalarında çok yaygın olan bu ekran düzeninde iptal işleminin neden çalışmadığını ve nasıl düzeltileceğini gösteriyor.",
-   "published": "2026-11-19T11:39:26+00:00",
-   "tags": [
-    "Windows Development",
-    ".NET and Visual Studio"
-   ]
-  },
-  {
-   "id": "1e6b15e0",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "Martin Fowler",
-   "via": "",
-   "url": "https://martinfowler.com/articles/data-contracts.html",
-   "title_orig": "Data Contracts",
-   "title_tr": "Data Contracts: Veri setlerinin içeriğini ve garantilerini tanımlamak",
-   "summary_tr": "Data contract, veri setlerinin şeklini ve garantilerini API tasarımı pratikleriyle tanımlayan bir yaklaşım. Yazı, Open Data Contract Standard (ODCS) ile şema, kalite kuralları ve servis seviyelerinin YAML'da nasıl ifade edildiğini bir veri mühendisi örneği üzerinden gösteriyor. AI ajanlarının her değeri doğru kabul ettiğini, bu yüzden açık meta veriye ihtiyaç duyduğunu ve data contract'ların bunu sağladığını savunuyor.",
-   "why_tr": "Birden çok kaynaktan veri birleştiren ekipler için güvenin elle sorulmadan, otomatik doğrulanabilir sözleşmelerle kurulmasını anlatıyor.",
-   "published": "2026-11-18T14:02:00+00:00",
-   "tags": [
-    "Design, DevOps and Methodology",
-    "AI"
    ]
   },
   {
@@ -191,13 +190,13 @@
    "via": "",
    "url": "https://github.com/dotnet/skills",
    "title_orig": "dotnet/skills",
-   "title_tr": "dotnet/skills: .NET ekibinin kodlama ajanları için skill koleksiyonu",
-   "summary_tr": "Depo, .NET ekibinin kodlama ajanları için hazırladığı taşınabilir skill'leri ve ana makineye özel özel ajanları içeriyor. Skill'ler agentskills.io standardını izliyor. VS Code, Cursor ve Codex için kurulum yolları anlatılıyor ve GitHub Agentic Workflows paketleri agentic-workflows/ altında yayımlanıyor. Skill değeri panosunda token kullanımı, süre ve başarısızlık oranları karşılaştırılabiliyor.",
-   "why_tr": "Kodlama ajanlarını .NET ve C# projelerinde kullanan ekipler için resmî ve küratörlü bir başlangıç noktası sunuyor.",
+   "title_tr": "dotnet/skills: .NET ekibinin kodlama ajanları için yetenek koleksiyonu",
+   "summary_tr": "Depo, .NET ekibinin kodlama ajanları için derlediği taşınabilir skill'leri ve host'a özgü özel ajanları içeriyor ve agentskills.io standardını izliyor. VS Code, Cursor ve Codex için plugin marketplace desteği ile GitHub Agentic Workflows paketleri sunuyor. Skill değerini token kullanımı ve geçme oranları gibi metriklerle karşılaştıran bir pano da var.",
+   "why_tr": "Kodlama ajanlarını .NET ve C# işlerinde kullanan ekipler için resmi ve hazır bir başlangıç noktası sağlıyor.",
    "published": null,
    "tags": [
-    "AI",
-    ".NET and Visual Studio"
+    ".NET and Visual Studio",
+    "AI"
    ]
   },
   {
@@ -209,25 +208,25 @@
    "via": "",
    "url": "https://www.savunmasanayist.com/kaanda-100-ucaklik-hedef-teslimat-tarihi-belli-oldu/",
    "title_orig": "KAAN’da 100 Uçaklık Hedef: Teslimat Tarihi Belli Oldu",
-   "title_tr": "KAAN için 2035 hedefi: 100 uçak teslimatı",
-   "summary_tr": "Milli Savunma Bakanı Güler, TBMM Plan ve Bütçe Komisyonu'nda yaptığı açıklamada KAAN'dan 2030 sonuna kadar 20, 2035 sonuna kadar 100 uçağın teslim edilmesinin öngörüldüğünü söyledi. Geçiş döneminde F-16, F-35 ve C-130J tedariklerinin süreceğini, 2026 sonunda 2 C-130J alınmasının planlandığını belirtti. Ayrıca CAATSA yaptırımlarının kaldırılması beklentisini yineledi, Suudi Arabistan ve Pakistan ile savunma iş birliğini ve hava savunma projelerinin öncelikli olduğunu anlattı.",
-   "why_tr": "Savunma sanayii ve havacılık alanında çalışan bir mühendis için Türkiye'nin yerli muharip uçak ve hava savunma önceliklerinin resmî takvimini gösteriyor.",
+   "title_tr": "KAAN için teslimat takvimi: 2035 sonuna kadar 100 uçak",
+   "summary_tr": "Milli Savunma Bakanı Yaşar Güler, TBMM Plan ve Bütçe Komisyonu'nda 2030 sonuna kadar Hava Kuvvetleri'ne 20 KAAN teslim edilmesinin, 2035 sonunda ise sayının 100'e ulaşmasının öngörüldüğünü söyledi. Geçiş döneminde F-16, F-35 ve C-130J tedariklerinin süreceğini, 2026 sonunda 2 C-130J'nin teslim alınmasının planlandığını belirtti. F-35 ve CAATSA konusunda ABD ile temasların sürdüğünü, hava savunma, dron ve İHA projelerinin öncelikli hızlandırıldığını ve Suudi Arabistan ile Pakistan'la savunma iş birliği kurulduğunu ifade etti.",
+   "why_tr": "Türkiye'nin savunma sanayii yatırımlarının ve KAAN programının zaman çizelgesini izleyen mühendisler için resmi bir referans noktası sunuyor.",
    "published": "2026-11-19T07:37:10+00:00",
    "tags": []
   },
   {
-   "id": "875a6066",
+   "id": "5d8f4ab0",
    "topic": "savunma",
    "kind": "article",
    "score": 4,
-   "source": "DroneXL",
+   "source": "SavunmaSanayiST",
    "via": "",
-   "url": "https://dronexl.co/2026/11/18/fcc-drone-vote-aura-450-mhz-400-foot-coverage-optional/",
-   "title_orig": "FCC Draft Drone Order Makes 400-Foot Coverage Optional for AURA",
-   "title_tr": "FCC taslağı: AURA için 400 fitlik kapsama zorunluluğu isteğe bağlı oluyor",
-   "summary_tr": "FCC'nin oylayacağı taslak, AURA'nın 450 MHz lisanslarının tek bir ulusal lisansa dönüştürülmesine izin veriyor ve 400 fit kapsama şartını isteğe bağlı hale getiriyor. AURA, 25.000 fit hizmetle birlikte 5.000 fit kapsama hedeflerini karşılayarak da yükümlülüğünü yerine getirebilecek. Taslak ayrıca 24 GHz bandında site bazlı lisansla ikincil radiolokasyon kullanımı ekliyor ve metinde bazı iç tutarsızlıklar da bulunduğu belirtiliyor. Kaynak metin sonunda kesildiği için bazı ayrıntılar eksik.",
-   "why_tr": "Drone kontrol bağlantıları ve sivil hava sahası radarları üzerinde çalışanlar için spektrum düzenlemelerinin hangi irtifalarda hizmet sağlanacağını doğrudan etkilediğini gösteriyor.",
-   "published": "2026-11-18T23:05:00+00:00",
+   "url": "https://www.savunmasanayist.com/tskya-yerli-takviye-zta-uc-envanterde-alpay-d-yolda/",
+   "title_orig": "TSK’ya Yerli Takviye: ZTA-UC Envanterde, ALPAY-D Yolda",
+   "title_tr": "TSK envanterine ZTA-UC giriyor, ALPAY-D saha testlerini geçti",
+   "summary_tr": "MSB'nin haftalık basın toplantısında ZTA-UC silah sistemi ile Sırt Tipi Karıştırma Sistemi'nin muayene ve kabul faaliyetlerinin tamamlandığı, MKE'nin ALPAY-D sisteminin ise saha testlerini başarıyla geçtiği duyuruldu. Envantere giren unsurların adedi paylaşılmadı. Haber ayrıca UMTAS, CİRİT ve İHA ile kullanılmak üzere tasarlanan, roketle mayınlı arazide geçit açan ALPAY-D'nin teknik özelliklerini anlatıyor.",
+   "why_tr": "Yerli tanksavar ve mayın temizleme sistemlerinin envantere girişini ve teknik kabiliyetlerini görmek isteyenler için derli toplu bir özet sunuyor.",
+   "published": "2026-11-19T13:49:43+00:00",
    "tags": []
   },
   {
@@ -239,40 +238,55 @@
    "via": "",
    "url": "https://www.uasvision.com/2026/11/19/uk-royal-navy-to-trial-northrop-grumman-test-aircraft-on-carrier-in-2027/",
    "title_orig": "UK Royal Navy to Trial Northrop Grumman Test Aircraft on Carrier in 2027",
-   "title_tr": "Royal Navy, Northrop Grumman Talon IQ'yu 2027'de uçak gemisinde deneyecek",
-   "summary_tr": "Birleşik Krallık Deniz Kuvvetleri, Northrop Grumman'ın otonomi test uçağı Talon IQ ile Queen Elizabeth sınıfı bir uçak gemisinde 2027'de deneme yapacak. Bu çalışma, F-35'lerle birlikte çalışacak saldırı dronlarını hedefleyen CCA programının ilk aşaması ve Project Vanquish kapsamında yürütülüyor. Aynı konuşmada Atlantic Net gözetleme ağı ile 1. Otonom Filo hakkında da bilgi verildi.",
-   "why_tr": "Otonom uçakların gemiden kalkış-iniş ve insanlı uçaklarla birlikte çalışma konseptinin somut bir denemeye dönüştüğünü gösteriyor.",
+   "title_tr": "Royal Navy, 2027'de uçak gemisinde Northrop Grumman Talon IQ'yu deneyecek",
+   "summary_tr": "Birinci Deniz Lordu, Royal Navy'nin Northrop Grumman'ın Talon IQ otonomi test uçağını 2027'de bir Queen Elizabeth sınıfı uçak gemisinde deneyeceğini açıkladı. Denemeler, F-35 ile birlikte çalışacak saldırı dronlarını hedefleyen CCA programının ilk aşaması ve Vanquish projesinin parçası. Katapult ve durdurma teli olmadan kalkış-iniş yapabilen, jet motorlu bir platform aranıyor. Haberde ayrıca Atlantic Net gözetim ağı ve 1st Autonomous Squadron'a dair gelişmeler de yer alıyor.",
+   "why_tr": "Gemiden işletilen büyük, jet motorlu insansız hava araçlarının ve otonom savaş uçaklarının nasıl ilerlediğini gösteriyor.",
    "published": "2026-11-19T06:45:52+00:00",
    "tags": []
   },
   {
-   "id": "26922ac9",
+   "id": "7ee45bd4",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 4,
+   "source": "Defense News",
+   "via": "",
+   "url": "https://www.defensenews.com/global/europe/2026/11/19/ukraine-plans-to-double-drone-supplies-triple-deep-strikes/",
+   "title_orig": "Ukraine plans to double drone supplies, triple deep strikes",
+   "title_tr": "Ukrayna dron tedarikini ikiye katlayıp derin vuruşları üçe katlamayı planlıyor",
+   "summary_tr": "Ukrayna Savunma Bakanı Khmara, gelecek yıl dron tedarikinin iki katına, uzun menzilli vuruş kapasitesinin üç katından fazlasına çıkarılacağını söyledi. Fonların %62'sinin dronlara ayrılması öngörülüyor. Pentagon'dan Colby derin vuruşları eleştirirken Almanya ve Birleşik Krallık bunlara destek verdi. Birleşik Krallık 1.000'den fazla uzun menzilli dronluk yaklaşık 342 milyon dolarlık paket, Norveç ise 300 milyon dolarlık Ukrayna dronu alımı duyurdu.",
+   "why_tr": "Dronların savaş harcamalarındaki payının nasıl büyüdüğünü ve müttefikler arasındaki stratejik görüş ayrılıklarını gösteriyor.",
+   "published": "2026-11-19T13:21:10+00:00",
+   "tags": []
+  },
+  {
+   "id": "639facd0",
    "topic": "savunma",
    "kind": "article",
    "score": 4,
    "source": "Euromaidan Press",
    "via": "",
-   "url": "https://euromaidanpress.com/2026/11/18/russias-first-shaheds-flew-at-about-185-km-h-its-newest-jet-powered-drone-could-hit-1000-and-interceptor-drones-arent-only-answer-lawmaker-says/",
-   "title_orig": "Russia’s first Shaheds flew at about 185 km/h. Its newest jet-powered drone may hit 1,000, and interceptor drones aren’t only answer, lawmaker says",
-   "title_tr": "Rusya jet motorlu Geran-6'yı test ediyor; hız 1.000 km/s'ye çıkabilir",
-   "summary_tr": "Ukrayna istihbaratına dayandırılan bilgiye göre Rusya, saatte 1.000 kilometreye ulaşabilecek ve büyük başlık taşıyabilecek jet motorlu Geran-6'yı deniyor. Milletvekili Venislavsky, jet Geran-4'lerin yaklaşık %60'ının, daha yavaş Shahed'lerin ise %90'ından fazlasının durdurulduğunu söyledi. Ona göre bu hızlara karşı en etkili çözüm, yer ve havadan atılan hava savunma füzeleri; önleyici dronlar ise henüz yaygın kullanılmıyor.",
-   "why_tr": "Tehdit hızı arttıkça önleyici dron tabanlı savunmaların sınırlarını ve füze tabanlı katmanların gerekliliğini gösteriyor.",
-   "published": "2026-11-18T14:42:25+00:00",
+   "url": "https://euromaidanpress.com/2026/11/18/russia-plans-to-throw-20-million-drones-at-ukraine-in-2027-double-this-years-count-says-eus-defense-commissioner/",
+   "title_orig": "Russia plans to throw 20 million drones at Ukraine in 2027, double this year’s count, says EU’s defense commissioner",
+   "title_tr": "AB komiseri: Rusya 2027'de Ukrayna'ya 20 milyon dron fırlatabilir",
+   "summary_tr": "AB Savunma ve Uzay Komiseri Kubilius, Rusya'nın gelecek yıl 20 milyon dron kullanmayı hazırladığını, bunun bu yılın iki katı olduğunu söyledi. Ukrayna için 2026-2027'ye yayılan 60 milyar euroluk AB savunma kredisinin tedarikleri hızlandırdığını belirtti. 2027'de dron ve mühimmat için 14,4 milyar euro serbest bırakılması planlanıyor. Üretimin AB içinde de ölçeklenmesi gerektiği vurgulandı.",
+   "why_tr": "Dron savaşındaki ölçek artışını ve bunun AB'nin finansman ile üretim planlarını nasıl şekillendirdiğini gösteriyor.",
+   "published": "2026-11-18T18:41:34+00:00",
    "tags": []
   },
   {
-   "id": "74a56239",
+   "id": "15322cf4",
    "topic": "savunma",
    "kind": "article",
    "score": 4,
-   "source": "Defence Industry Europe",
+   "source": "DroneXL",
    "via": "",
-   "url": "https://defence-industry.eu/bae-systems-says-new-passive-radar-can-track-drones-and-aircraft-without-revealing-its-position-through-radar-emissions/",
-   "title_orig": "BAE Systems says new passive radar can track drones and aircraft without revealing its position through radar emissions",
-   "title_tr": "BAE Systems'den yayın sinyallerini kullanan pasif radar",
-   "summary_tr": "BAE Systems, televizyon, radyo ve mobil şebeke sinyallerini kullanarak drone ve uçakları takip eden, kendisi sinyal yaymadığı için konumunu ele vermeyen pasif bir radar geliştirdi. Şirkete göre sistem üç boyutlu hava resmi üretiyor, SUV'lara kurulabilecek kadar küçük ve mevcut pasif sistemlerin on kata kadar altında maliyetli. Canlı denemeler 2027 boyunca planlanıyor. Metnin devamındaki kısa savunma haberleri bu özetin kapsamı dışında.",
-   "why_tr": "Emisyon yaymayan, düşük maliyetli algılama yaklaşımı, karşı drone sistemlerinin tasarımında dikkate alınacak bir alternatif sunuyor.",
-   "published": "2026-11-19T06:20:49+00:00",
+   "url": "https://dronexl.co/2026/11/18/ukraine-brave1-tests-nine-dji-mavic-replacements-60-minutes/",
+   "title_orig": "Ukraine Tests 9 DJI Mavic Replacements With a 60-Minute Flight Bar",
+   "title_tr": "Ukrayna, DJI Mavic'e alternatif 9 yerli dronu 60 dakikalık uçuş şartıyla test etti",
+   "summary_tr": "Brave1 ve Ukrayna Savunma Bakanlığı, dokuz yerli üreticinin Mavic tipi keşif dronlarını test etti. Savaşa hazır çıkanlar tedarik sözleşmesine ilerliyor. Şartlar arasında en az 60 dakika uçuş, elektronik harbe ve GPS'siz uçuşa dayanıklılık, daha uzun kontrol menzili ve tanıdık bir arayüz var. Üreticilerin adları, kaç tanesinin geçtiği ve sözleşme değerleri açıklanmadı.",
+   "why_tr": "Ticari dronlara bağımlılığı azaltmaya yönelik somut gereksinimleri ve test sürecini gösteriyor, ancak sonuçlar henüz şeffaf değil.",
+   "published": "2026-11-18T18:28:00+00:00",
    "tags": []
   },
   {
@@ -284,88 +298,86 @@
    "via": "",
    "url": "https://www.twz.com/land/u-s-air-forces-containerized-surface-to-air-missile-program-comes-into-sharper-focus",
    "title_orig": "U.S. Air Force’s Containerized Surface-To-Air Missile Program Comes Into Sharper Focus",
-   "title_tr": "ABD Hava Kuvvetleri'nin konteynerli yer tabanlı hava savunma füzesi programı CAMP netleşiyor",
-   "summary_tr": "Hava Kuvvetleri'nin Counter-Air Missile Program'ı, birim maliyeti en fazla 500 bin dolar olan ve yılda en az 1.000 adet üretilebilen füzeler ile konteynerli fırlatıcıları hedefliyor. Sierra Nevada ile Specter Aerospace 124 milyon dolarlık ödül aldı, Castelion iki sözleşme kazandı, Anduril ise fırlatıcı geliştirecek. İlk aşamanın yaklaşık 10 ay sürmesi planlanıyor ve program açık mimari ile modülerliğe vurgu yapıyor.",
-   "why_tr": "Düşük maliyetli, seri üretilebilir ve açık mimarili silah tasarımı yaklaşımının hava savunmasına uygulandığını gösteriyor.",
+   "title_tr": "ABD Hava Kuvvetleri'nin konteynerli yer-hava füzesi programı CAMP netleşiyor",
+   "summary_tr": "ABD Hava Kuvvetleri, CAMP kapsamında düşük maliyetli hava savunma füzesi ve konteynerli fırlatıcılar için SNC, Specter Aerospace, Castelion ve Anduril'e sözleşmeler verdi. Hedef, birim maliyeti 500 bin doları aşmayan ve yılda en az 1.000 adet üretilebilen tasarımlar. SNC ve Specter'ın füzesinin ses üstü hızlara ulaşacağı belirtiliyor. Kaynak metin sonunda kesilmiş durumda.",
+   "why_tr": "Ucuz ve yüksek hacimli hava savunma füzelerine yönelik açık mimari, modüler tasarım gibi gereksinimleri görmek için faydalı.",
    "published": "2026-11-18T18:45:21+00:00",
    "tags": []
   },
   {
-   "id": "59d173c1",
+   "id": "74a56239",
    "topic": "savunma",
    "kind": "article",
-   "score": 3,
-   "source": "The War Zone",
+   "score": 4,
+   "source": "Defence Industry Europe",
    "via": "",
-   "url": "https://www.twz.com/news-features/these-are-the-weapons-ukraine-used-to-drop-the-kerch-bridge",
-   "title_orig": "These Are The Weapons Ukraine Used To Drop The Kerch Bridge",
-   "title_tr": "Ukrayna'nın Kerç Köprüsü saldırısında kullandığı silahlar",
-   "summary_tr": "Zelenskiy'in açıklamasına göre yedi aşamalı operasyonda önce hava savunma, radar ve elektronik harp unsurları hedef alındı, ardından köprüye yönelik saldırı yapıldı. Karayolu kısmına Palianytsia dronları, demiryolu kısmına ise FP-5 Flamingo, Neptune ve Ruta füzeleri kullanıldı. Zelenskiy toplam 11 silah sisteminden söz etti; metin Dovbush, Vendetta, Da Vinci, Sichen ve MICH-2000 gibi sistemleri tanıtıyor ancak kaynak metin yetersiz olduğundan listenin tamamı yok.",
-   "why_tr": "Farklı sınıflardan dron ve füzelerin, önce hava savunmasını aşındıran katmanlı bir saldırıda birlikte kullanılmasını gösteriyor.",
-   "published": "2026-11-17T19:22:29+00:00",
+   "url": "https://defence-industry.eu/bae-systems-says-new-passive-radar-can-track-drones-and-aircraft-without-revealing-its-position-through-radar-emissions/",
+   "title_orig": "BAE Systems says new passive radar can track drones and aircraft without revealing its position through radar emissions",
+   "title_tr": "BAE Systems, yayın sinyallerini kullanan pasif radar geliştirdi",
+   "summary_tr": "BAE Systems, TV, radyo ve mobil şebeke sinyallerini kullanarak dronları ve uçakları kendi konumunu ele vermeden izleyebilen bir pasif radar geliştirdiğini duyurdu. Şirkete göre sistem birçok mevcut pasif sistemden on kata kadar ucuz, üç boyutlu hava görüntüsü üretiyor ve SUV'lardan konuşlandırılabiliyor. Kolluk, savunma ve kritik altyapı ortaklarıyla canlı denemeler 2027 boyunca planlanıyor. Metnin sonunda başka savunma haberlerinin kısa özetleri de yer alıyor.",
+   "why_tr": "Yayılım yapmayan algılama yaklaşımı, dron tehdidine karşı düşük maliyetli ve tespit edilmesi zor çözümler açısından ilgi çekici.",
+   "published": "2026-11-19T06:20:49+00:00",
    "tags": []
   },
   {
-   "id": "639facd0",
+   "id": "d13546d0",
    "topic": "savunma",
    "kind": "article",
-   "score": 3,
-   "source": "Euromaidan Press",
+   "score": 4,
+   "source": "Breaking Defense",
    "via": "",
-   "url": "https://euromaidanpress.com/2026/11/18/russia-plans-to-throw-20-million-drones-at-ukraine-in-2027-double-this-years-count-says-eus-defense-commissioner/",
-   "title_orig": "Russia plans to throw 20 million drones at Ukraine in 2027, double this year’s count, says EU’s defense commissioner",
-   "title_tr": "AB komiseri: Rusya 2027'de Ukrayna'ya 20 milyon dron atmayı planlıyor",
-   "summary_tr": "AB Savunma Komiseri Kubilius'a göre Rusya gelecek yıl 20 milyon dron kullanmayı hazırlıyor; Ukrayna tahminlerine göre bu yılın sayısı yaklaşık 10 milyon. AB'nin Ukrayna için ayırdığı 60 milyar euroluk savunma kredisinden 2027'de 31,7 milyar euro harcanacak ve ocak 2027'den itibaren dron ile mühimmat için 14,4 milyar euro serbest bırakılması planlanıyor. Kubilius, üretimin 2027'de teslimat yapacak şekilde hızla artırılması gerektiğini vurguladı.",
-   "why_tr": "Dron savaşının ölçeği ve finansmanın karşı dron ile üretim kapasitesine yönelmesi, sektördeki talep beklentisini gösteriyor.",
-   "published": "2026-11-18T18:41:34+00:00",
+   "url": "https://breakingdefense.com/2026/11/iceye-makes-2b-bid-for-italian-rocket-firm-avio/",
+   "title_orig": "ICEYE makes $2B bid for Italian rocket firm Avio",
+   "title_tr": "ICEYE, İtalyan roket şirketi Avio'ya satın alma teklifi yaptı",
+   "summary_tr": "Finlandiyalı uydu şirketi ICEYE, Avio'yu hisse başına 41 euro üzerinden satın almayı önerdi. Reuters'a göre bu yaklaşık 2,2 milyar dolar ediyor. ICEYE ayrıca anlaşma olursa İtalya'ya beş yılda 1 milyar euro daha yatırım yapmayı planlıyor. Amaç, Avio'nun fırlatma ve itki yeteneklerini ICEYE'in uydu üretimiyle birleştirmek. İtalyan ve Fin hükümet onayı gerekiyor.",
+   "why_tr": "Avrupa'da uzay ve savunma sektöründe dikey entegrasyon ve ABD'ye bağımlılığı azaltma eğilimini gösteriyor.",
+   "published": "2026-11-17T21:12:16+00:00",
    "tags": []
   },
   {
-   "id": "7ee45bd4",
+   "id": "875a6066",
    "topic": "savunma",
    "kind": "article",
-   "score": 3,
-   "source": "Defense News",
+   "score": 4,
+   "source": "DroneXL",
    "via": "",
-   "url": "https://www.defensenews.com/global/europe/2026/11/19/ukraine-plans-to-double-drone-supplies-triple-deep-strikes/",
-   "title_orig": "Ukraine plans to double drone supplies, triple deep strikes",
-   "title_tr": "Ukrayna dron tedarikini ikiye katlayıp derin vuruş kapasitesini üçe katlamayı planlıyor",
-   "summary_tr": "Savunma Bakanı Khmara, gelecek yıl dron tedarikinin iki katına, uzun menzilli vuruş kapasitesinin üç katından fazlasına çıkarılacağını ve finansmanın %62'sinin dronlara ayrılacağını söyledi. Pentagon yetkilisi Colby derin vuruşların etkisini eleştirirken Almanya ve Birleşik Krallık bu saldırıları savundu. Birleşik Krallık 1.000'den fazla uzun menzilli dron gönderecek, Norveç ise Ukrayna dronları için 300 milyon dolar ayıracak.",
-   "why_tr": "Ukrayna'nın dron odaklı bütçesi ve müttefikler arasındaki strateji ayrılığı, bölgedeki tedarik ve üretim talebini şekillendiriyor.",
-   "published": "2026-11-19T13:21:10+00:00",
+   "url": "https://dronexl.co/2026/11/18/fcc-drone-vote-aura-450-mhz-400-foot-coverage-optional/",
+   "title_orig": "FCC Draft Drone Order Makes 400-Foot Coverage Optional for AURA",
+   "title_tr": "FCC taslak dron kararında AURA için 400 fitlik kapsama zorunluluğu opsiyonel oluyor",
+   "summary_tr": "FCC'nin 19 Kasım'da oylayacağı taslak, AURA'nın 450 MHz lisanslarını tek ulusal lisansa çevirmesine izin veriyor ve 400 fit kapsama şartını isteğe bağlı hale getiriyor. AURA, 25.000 fit hizmetine ek olarak 5.000 fit kapsama hedeflerini seçebilecek. Taslak ayrıca 24 GHz bandında radarlar için ikincil lisanslama getiriyor. Taslakta bazı iç tutarsızlıklar bulunduğu da belirtiliyor, kaynak metin sonunda kesilmiş.",
+   "why_tr": "Dron kontrol bağlantıları ve karşı-dron radarları için spektrum kurallarının nasıl şekillendiğini izleyenler açısından önemli.",
+   "published": "2026-11-18T23:05:00+00:00",
    "tags": []
   },
   {
-   "id": "81be4bd9",
-   "topic": "savunma",
-   "kind": "article",
+   "id": "b6652532",
+   "topic": "liderlik",
+   "kind": "preview",
    "score": 3,
-   "source": "UAS Weekly",
+   "source": "Inc. Türkiye",
    "via": "",
-   "url": "https://uasweekly.com/2026/11/18/schiebel-demonstrates-camcopter-s-100-drone-mothership-capabilities-for-advanced-uas-missions/?utm_source=rss&utm_medium=rss&utm_campaign=schiebel-demonstrates-camcopter-s-100-drone-mothership-capabilities-for-advanced-uas-missions",
-   "title_orig": "Schiebel Demonstrates CAMCOPTER S-100 Drone Mothership Capabilities for Advanced UAS Missions",
-   "title_tr": "Schiebel CAMCOPTER S-100'ü havadan dron ana gemisi olarak gösterdi",
-   "summary_tr": "Schiebel ve OSIRIS Poland, Avusturya'da S-100 insansız helikopterinden uçuş sırasında daha küçük bir HSCD-1 dronunu bıraktı ve bırakıldıktan sonra kontrol bağlantısını S-100 üzerinden röle etti. Test etkisiz (inert) bir sürümle yapıldı; gerçek bir önleme veya silah kullanımı gösterilmedi. Bırakma irtifası, menzil ve performans ölçümleri paylaşılmadı.",
-   "why_tr": "Büyük bir platformun küçük dronları taşıyıp iletişimini röle etmesi fikri umut verici ama bu aşamada yalnızca kavram kanıtı niteliğinde.",
-   "published": "2026-11-18T12:45:32+00:00",
+   "url": "https://incturkiye.com/makaleler/patagonianin-zirvesi",
+   "title_orig": "Patagonia’nın Zirvesi",
+   "title_tr": "Patagonia'nın Zirvesi",
+   "summary_tr": "Yvon Chouinard, gezegenin yararına çalışan bir şirket kurdu ve Patagonia'nın misyonunun sonsuza dek sürmesini sağlamak için daha önce örneği görülmemiş bir hamle yaptı. Kaynak metin yalnızca kısa bir ön izleme olduğundan hamlenin ayrıntıları bilinmiyor (kaynak metin yetersiz).",
+   "why_tr": "Ayrıntılar verilmediği için teknik bir çıkarım yapılamıyor; yalnızca şirket misyonunu uzun vadede korumaya yönelik bir yönetişim hamlesine işaret ediyor.",
+   "published": "2026-11-19T13:56:14+00:00",
    "tags": []
   }
  ],
  "top_ids": [
   "982c6cc3",
   "b70ab63e",
-  "bbcc14e1"
+  "f91ec5c8"
  ],
  "stats": {
   "feeds": 39,
-  "feed_errors": [
-   "Inc. Türkiye: Response ended prematurely",
-   "Naval News: 503 Server Error: Service Temporarily Unavailable for url: https://www.navalnews.com/feed/"
-  ],
+  "feed_errors": [],
   "candidates": {
+   "liderlik": 20,
    "dotnet": 144,
-   "savunma": 142
+   "savunma": 152
   },
-  "selected": 21
+  "selected": 22
  }
 }
