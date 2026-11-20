@@ -1,24 +1,42 @@
 {
  "date": "2026-11-20",
  "issue_no": 3,
- "generated_at": "2026-11-20T09:58:35.702976+00:00",
+ "generated_at": "2026-11-20T10:52:17.936561+00:00",
  "backend": "claude_cli",
  "items": [
   {
-   "id": "df98bcb7",
+   "id": "1e6b15e0",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 4,
+   "source": "Martin Fowler",
+   "via": "",
+   "url": "https://martinfowler.com/articles/data-contracts.html",
+   "title_orig": "Data Contracts",
+   "title_tr": "Data Contracts: Veri Setleri İçin Sözleşme Yaklaşımı",
+   "summary_tr": "Yazı, API tasarımı pratiklerini veriye uygulayan data contract'ları anlatıyor. Bunlar veri setinin içeriğini, kalite kurallarını ve servis seviyelerini tanımlıyor. Örneklerde Open Data Contract Standard (ODCS) kullanılıyor. Hem insanların hem AI ajanlarının veriye güvenerek ve özerk biçimde çalışabilmesi için gereken açık metadata'yı sağladığı savunuluyor. Metin kesik olduğundan ODCS'in ayrıntıları eksik.",
+   "why_tr": "Birden çok kaynaktan veri birleştiren ekipler için verinin şeklini ve garantilerini açıkça tanımlamak, güven ve otomasyon açısından pratik bir çerçeve sunuyor.",
+   "published": "2026-11-18T14:02:00+00:00",
+   "tags": [
+    "Design, DevOps and Methodology",
+    "AI"
+   ]
+  },
+  {
+   "id": "00002822",
    "topic": "dotnet",
    "kind": "article",
    "score": 4,
    "source": "Hacker News",
    "via": "",
-   "url": "https://github.com/openssl/openssl/pull/33652",
-   "title_orig": "OpenSSL: Buffer overflow in EVP_EncodeBlock() (CVE-2026-121481, CVSS 9.8)",
-   "title_tr": "OpenSSL EVP_EncodeBlock() içindeki buffer overflow düzeltmesi tartışılıyor (CVE-2026-121481)",
-   "summary_tr": "Bir pull request, EVP_EncodeBlock() için NULL tamponlar, negatif uzunluklar ve int'e sığmayan kodlanmış boyutlar gibi geçersiz girdilerde -1 döndürmeyi öneriyor. Aynı korumanın EVP_DecodeBlock() ve http_client.c içindeki base64encode() için de eklenmesi planlanıyor. İncelemede bakımcılar, 0 veya -1 gibi hata değerleri yerine belgelendirme ve OPENSSL_assert() kullanılmasını, ayrıca dlen == 0 iken f == NULL çağrılarının eskisi gibi çalışmasını istiyor. Advisory henüz yayımlanmadı.",
-   "why_tr": "Kütüphane API'lerinde yeni hata dönüş değerleri eklemenin, üçüncü taraf çağıranlar açısından uyumluluk riski taşıdığını gösteren somut bir tartışma.",
-   "published": "2026-11-20T02:01:09+00:00",
+   "url": "https://architectlabs.com/blog/frostbite",
+   "title_orig": "Frostbite: A new CPU architecture discovered, designed and verified by AI",
+   "title_tr": "Frostbite: AI ile Keşfedilen ve Doğrulanan Yeni CPU Mimarisi",
+   "summary_tr": "Yazarlar, interaction net özelliklerinden yararlanan yeni bir komut seti ve genel amaçlı CPU olan Frostbite'ı tanıtıyor. 25 iş yükünde, 15'i son değerlendirmeye kadar ayrılmış olmak üzere, çift yayınlı sıralı bir CPU çekirdeğine göre 4,59 kat watt başına performans elde edildiğini söylüyor. Derleyiciden nihai GDS'e kadar tasarım adımlarının AI sistemleriyle otomatik yinelendiği belirtiliyor. Sonuçlar yazarların kendi iddiası.",
+   "why_tr": "AI ile donanım ve yazılımın birlikte tasarlanması fikrini somut bir örnekle gösteriyor, ancak sonuçlar bağımsız doğrulanmış değil.",
+   "published": "2026-11-20T10:01:41+00:00",
    "tags": [
-    "Design, DevOps and Methodology"
+    "AI"
    ]
   },
   {
@@ -30,154 +48,132 @@
    "via": "Morning Dew",
    "url": "https://github.com/Azure/azure-sdk-for-net/releases/tag/Azure.AI.Projects.Agents_3.0.0",
    "title_orig": "Azure.AI.Projects.Agents v3.0.0 Release",
-   "title_tr": "Azure.AI.Projects.Agents v3.0.0 sürümü: çok sayıda kırıcı değişiklik",
-   "summary_tr": "Sürüm notları birçok kırıcı değişiklik listeliyor. Bazı sınıflar kaldırıldı veya Azure.AI.Extensions.OpenAI paketine taşındı, bazı tipler ve özellikler yeniden adlandırıldı, ses algılama ayarlarındaki milisaniye alanları TimeSpan? tipine geçti. Bazı enum'lar genişletilebilir struct'a dönüştü, GetSessionLogStream metotları ise deneyselleşti ve AAIP001 uyarısının bastırılmasını gerektiriyor.",
-   "why_tr": "Bu SDK'yı kullanan projelerin 3.0.0'a yükseltirken kod değişikliği yapması gerekecek.",
+   "title_tr": "Azure.AI.Projects.Agents v3.0.0 Sürümü: Kırıcı Değişiklikler",
+   "summary_tr": "Sürüm notları çok sayıda kırıcı değişiklik listeliyor. Bazı sınıflar kaldırıldı veya Azure.AI.Extensions.OpenAI paketine taşındı, çeşitli tipler yeniden adlandırıldı, bazı yapıcılar kaldırıldı ve metot argüman sıraları değişti. Ses ajanı turn detection özelliklerinde milisaniye alanları TimeSpan'e geçti, bazı enum'lar genişletilebilir struct oldu ve bazı log stream metotları deneysel hale geldi.",
+   "why_tr": "Bu paketi kullanan .NET projeleri yükseltmede derleme hataları alacağı için geçiş öncesi listeye bakmak gerekiyor.",
    "published": "2026-11-19T11:39:26+00:00",
    "tags": [
-    "AI",
-    ".NET and Visual Studio"
-   ]
-  },
-  {
-   "id": "948df98c",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "blogs.windows.com",
-   "via": "Morning Dew",
-   "url": "https://blogs.windows.com/windowsdeveloper/2026/11/17/enterprise-deployment-of-governed-agents-on-windows/",
-   "title_orig": "Enterprise Deployment of Governed Agents on Windows",
-   "title_tr": "Windows'ta yönetilen agent'ların kurumsal dağıtımı",
-   "summary_tr": "Yazı, agent'ları kurumsal ölçekte güvenli çalıştırmak için kimlik, kapsama (containment) ve yönetilebilirlik ilkelerini öneriyor. Microsoft Execution Containers (MXC), bir agent'ın erişebileceği kaynakları platform düzeyinde sınırlıyor. Önerilen yaklaşım, mevcut agent envanteriyle başlamak, etkinlik kanıtından en az ayrıcalıklı politika üretmek ve kademeli halkalarla dağıtmak. İlgili özellik şu an MXC SDK üzerinden Windows süreç kapsamalı iş yükleri için sunuluyor.",
-   "why_tr": "Çalışan makinelerde yerel agent çalıştırmayı değerlendiren ekipler için, erişimi kullanıcıdan ayrı biçimde sınırlamaya dair bir çerçeve sunuyor.",
-   "published": "2026-11-18T11:34:42+00:00",
-   "tags": [
-    "Windows Development",
+    ".NET and Visual Studio",
     "AI"
    ]
   },
   {
-   "id": "153a0d53",
+   "id": "9a2ee73a",
    "topic": "dotnet",
    "kind": "article",
    "score": 3,
-   "source": "techcommunity.microsoft.com",
+   "source": "aws.amazon.com",
    "via": "Morning Dew",
-   "url": "https://techcommunity.microsoft.com/t5/microsoft-foundry-blog/observe-and-improve-agents-built-outside-foundry/ba-p/4574508",
-   "title_orig": "Observe and improve agents built outside Foundry",
-   "title_tr": "Foundry dışında geliştirilen agent'ları gözlemleme ve iyileştirme",
-   "summary_tr": "Microsoft Foundry'de harici agent'lar genel kullanıma açıldı. Foundry dışında çalışan bir agent, OpenTelemetry izlerini Application Insights'a gönderip Foundry'ye kaydedilerek taşınmadan gözlemlenebiliyor ve değerlendirilebiliyor. Yazı, bir örnek senaryoyla iz görünümü, Insights ile sorun gruplama, uzman anotasyonuyla test veri seti oluşturma ve üretim izlerinin sürekli değerlendirilmesini anlatıyor. Bazı özellikler hâlâ önizlemede.",
-   "why_tr": "Üretimdeki agent'ların testlerde öngörülmeyen davranışlarını yakalamak için agent'ı yeniden yazmadan kullanılabilecek bir gözlemlenebilirlik yolu sunuyor.",
+   "url": "https://aws.amazon.com/blogs/developer/announcing-developer-preview-aws-sdk-for-python-v4/",
+   "title_orig": "Announcing the developer preview of the AWS SDK for Python v4",
+   "title_tr": "AWS SDK for Python v4 Geliştirici Önizlemesi Duyuruldu",
+   "summary_tr": "AWS SDK for Python v4, S3, DynamoDB, Lambda ve Bedrock gibi servisler için tip bilgisi olan modüler istemciler sunan bir önizleme olarak yayımlandı. Hedefleri yerel async desteği, doğru type hint'ler ve yalnızca kullanılan servislerin kurulduğu modüler paketler. Senkron ve async istemciler var, event streaming şimdilik yalnızca async tarafında. Önizleme olduğu için üretimde Boto3 kullanımı öneriliyor.",
+   "why_tr": "Python tarafında AWS kullanan ekipler için Boto3'ün olası halefini erkenden denemek ve geri bildirim vermek mümkün hale geliyor.",
+   "published": "2026-11-19T11:39:26+00:00",
+   "tags": [
+    "Python",
+    "Web and Cloud Development"
+   ]
+  },
+  {
+   "id": "1f1e2735",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "tabsoverspaces.com",
+   "via": "Morning Dew",
+   "url": "https://www.tabsoverspaces.com/233984-entity-framework-core-11-provider-for-firebird-is-ready",
+   "title_orig": "Entity Framework Core 11 provider for Firebird is ready",
+   "title_tr": "Firebird için Entity Framework Core 11 Provider'ı Yayımlandı",
+   "summary_tr": "Jiří Činčura, Firebird için Entity Framework Core 11 provider'ının yayımlandığını duyuruyor. Paket NuGet'te FirebirdSql.EntityFrameworkCore.Firebird adıyla bulunuyor. Değişikliklerin genel özeti yazıdaki bağlantıda yer alıyor, yazının kendisi çok kısa.",
+   "why_tr": "Firebird kullanan .NET projeleri için EF Core 11'e geçişin önünü açıyor.",
+   "published": "2026-11-19T11:39:26+00:00",
+   "tags": [
+    ".NET and Visual Studio"
+   ]
+  },
+  {
+   "id": "223ad310",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "giorgi.dev",
+   "via": "Morning Dew",
+   "url": "https://www.giorgi.dev/entity-framework/efcore-visualizer-for-vs-code/",
+   "title_orig": "EF Core Query Plans in VS Code: EFCore Visualizer 1.0",
+   "title_tr": "VS Code'da EF Core Sorgu Planları: EFCore Visualizer 1.0",
+   "summary_tr": "Visual Studio'da bulunan EFCore Visualizer'ın VS Code sürümü 1.0 olarak Marketplace'te yayımlandı. SQL Server, PostgreSQL, Oracle ve SQLite için sorgu planlarını hata ayıklama sırasında Variables veya Watch görünümündeki düğmeyle açıyor. Eklenti, durdurulmuş uygulamada debugger üzerinden ifade değerlendirip bir yardımcı DLL ile planı üretiyor. VS Code'un görselleştirici API'si henüz önerilen aşamada olduğundan düğme bu görünümlerde yer alıyor.",
+   "why_tr": "EF Core sorgu performansını VS Code içinde, gerçek çalışma planı verileriyle incelemeyi mümkün kılıyor.",
+   "published": "2026-11-19T11:39:26+00:00",
+   "tags": [
+    ".NET and Visual Studio"
+   ]
+  },
+  {
+   "id": "b2c084a4",
+   "topic": "dotnet",
+   "kind": "article",
+   "score": 3,
+   "source": "blog.google",
+   "via": "Morning Dew",
+   "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/",
+   "title_orig": "Introducing Gemini 4 Neon",
+   "title_tr": "Gemini 4 Neon Tanıtıldı",
+   "summary_tr": "Google, yazılım mühendisliği, bilgi işi ve bilim iş akışlarını hedefleyen Gemini 4 Neon modelini duyurdu. Model 1 milyon token bağlam penceresine sahip, fiyatı milyon girdi token'ı başına 3 dolar, çıktı token'ı başına 15 dolar. Google'ın paylaştığı sonuçlara göre çeşitli üçüncü taraf benchmark'larda üst sıralarda yer alıyor. Gemini API, AI Studio, Antigravity ve Gemini uygulamasında kullanıma sunuluyor.",
+   "why_tr": "Ajan tabanlı kodlama için yeni bir model seçeneği ve fiyat/performans referansı sunuyor, ancak rakamlar üreticinin kendi sunumu.",
    "published": "2026-11-19T11:39:26+00:00",
    "tags": [
     "AI"
    ]
   },
   {
-   "id": "2ea26d40",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "redbase.app",
-   "via": "Morning Dew",
-   "url": "https://redbase.app/articles/identity-dpop-advisory",
-   "title_orig": "The tests were green, a person found the hole: a vulnerability in our OpenID server, start to finish",
-   "title_tr": "Testler yeşildi, açığı bir insan buldu: OpenID sunucumuzdaki DPoP zafiyeti",
-   "summary_tr": "redb.Identity'de DPoP etkinken, kullanıcıya bağlı (key-bound) token'lar userinfo ve yönetim API'sinde kanıt (proof) kontrolü yapılmadan sıradan Bearer token gibi kabul ediliyordu. Zafiyet 1.0.1'den 4.6.1'e kadar olan sürümleri etkiliyor ve 4.6.2'de düzeltildi. Mevcut bir testin yalnızca kabul edilmesi gereken durumu denemesi, kusuru fark etmeden sabitlemişti. Yazı ayrıca bildirim ve ifşa sürecini, CVE numarasının gecikmesini ve gRPC/SOAP kanallarında bağlı token'ların artık reddedildiğini aktarıyor.",
-   "why_tr": "Güvenlik mekanizmalarında yalnızca 'kabul edilmeli' testlerinin yetmediğini, 'reddedilmeli' testlerinin de gerektiğini somut bir olayla gösteriyor.",
-   "published": "2026-11-18T11:34:42+00:00",
-   "tags": [
-    "Design, DevOps and Methodology",
-    ".NET and Visual Studio"
-   ]
-  },
-  {
-   "id": "95d8985c",
+   "id": "0c06dab3",
    "topic": "dotnet",
    "kind": "article",
    "score": 3,
    "source": "ByteByteGo",
    "via": "",
-   "url": "https://blog.bytebytego.com/p/the-invisible-systems-what-happens",
-   "title_orig": "The Invisible Systems: What Happens Between Services",
-   "title_tr": "Görünmeyen sistemler: servisler arasında neler oluyor",
-   "summary_tr": "Kaynak metin yetersiz; yalnızca giriş bölümü mevcut. Mimari diyagramlardaki oklarla gösterilen servisler arası iletişimin de gizli iş, kaynak ve varsayımlar barındırdığı anlatılıyor. İki servis sağlıklı çalışırken bile bir isteğin başarısız olabileceği belirtiliyor.",
-   "why_tr": "Servisler arası iletişimin hata kaynağı olabileceğini hatırlatıyor, ancak ayrıntılar için tam metin gerekiyor.",
-   "published": "2026-11-19T16:30:47+00:00",
+   "url": "https://blog.bytebytego.com/p/evals-for-ai-engineers",
+   "title_orig": "Evals for AI Engineers",
+   "title_tr": "AI Mühendisleri İçin Eval'ler: Üç Uçurum Çerçevesi",
+   "summary_tr": "Hamel Husain ve Shreya Shankar'ın kitabından alınan bölüm, LLM uygulaması geliştirirken karşılaşılan üç boşluğu tanımlıyor: anlama, belirtim ve genelleme. Anlama boşluğu, geliştiricinin gerçek girdi verisini ve modelin çıktı davranışını ölçekte kavramasıyla ilgili. Belirtim boşluğu ise niyet ile prompt'a yazılanlar arasındaki farkı anlatıyor. Örnek olarak e-posta işleyen bir ajan kullanılıyor. Metin kesik olduğundan genelleme boşluğunun ayrıntıları eksik.",
+   "why_tr": "LLM uygulaması hatalarını tanılamak ve hangi tür eval çalışmasına ihtiyaç olduğunu belirlemek için düzenli bir bakış açısı veriyor.",
+   "published": "2026-11-18T16:31:02+00:00",
+   "tags": [
+    "AI"
+   ]
+  },
+  {
+   "id": "c71b6204",
+   "topic": "dotnet",
+   "kind": "medium",
+   "score": 3,
+   "source": "Medium: Level Up Coding",
+   "via": "",
+   "url": "https://levelup.gitconnected.com/architecture-decisions-are-bets-a-senior-engineers-playbook-for-choosing-the-right-trade-offs-df1fd6cd060b?source=rss----5517fd7b58a6---4",
+   "title_orig": "Architecture Decisions Are Bets: A Senior Engineer’s Playbook for Choosing the Right Trade-offs",
+   "title_tr": "Mimari Kararlar Birer Bahistir: Doğru Ödünleşimleri Seçmek",
+   "summary_tr": "Yazı, her mimari kararın trafik, ekip büyüklüğü ve tedarikçinin ömrü gibi konularda bir bahis olduğunu savunuyor. Kaynak metin yetersiz; yalnızca girişin ilk cümleleri mevcut ve altı örnek ile çerçevenin içeriği bilinmiyor.",
+   "why_tr": "Kaynak metin yetersiz olduğundan değeri tam değerlendirilemiyor; yine de mimari kararlara varsayım olarak bakma fikrini gündeme getiriyor.",
+   "published": "2026-11-18T16:29:11+00:00",
    "tags": [
     "Design, DevOps and Methodology"
    ]
   },
   {
-   "id": "1e6b15e0",
+   "id": "d1b37cc3",
    "topic": "dotnet",
    "kind": "article",
    "score": 3,
-   "source": "Martin Fowler",
-   "via": "",
-   "url": "https://martinfowler.com/articles/data-contracts.html",
-   "title_orig": "Data Contracts",
-   "title_tr": "Veri Sözleşmeleri (Data Contracts)",
-   "summary_tr": "Veri sözleşmeleri, veri setlerinin içeriğini ve garantilerini API tasarımı pratiklerini uygulayarak tanımlıyor. Yazı, Open Data Contract Standard (ODCS) formatıyla şema, kalite kuralları ve servis seviyelerinin nasıl ifade edildiğini bir veri mühendisi örneğiyle gösteriyor. Sözleşmelerin, metaveriyi kendiliğinden sorgulayamayan AI agent'lar için özellikle güvenilir veri kullanımını mümkün kıldığı savunuluyor.",
-   "why_tr": "Veri ürünleriyle çalışan ekipler için, güveni elle sorgulamak yerine açık ve otomatik doğrulanabilir garantilere dayandırma yaklaşımını açıklıyor.",
-   "published": "2026-11-18T14:02:00+00:00",
-   "tags": [
-    "Design, DevOps and Methodology",
-    "AI"
-   ]
-  },
-  {
-   "id": "1c19446e",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "github.com",
+   "source": "oreilly.com",
    "via": "Morning Dew",
-   "url": "https://github.com/unoplatform/Uno.microsoft-ui-reactor",
-   "title_orig": "Uno Platform port of Microsoft.UI.Reactor",
-   "title_tr": "Microsoft.UI.Reactor'ın Uno Platform portu",
-   "summary_tr": "Bu fork, Microsoft'un XAML'siz, React tarzı bileşen ve hook yaklaşımıyla WinUI 3 uygulamaları yazmaya yarayan Reactor framework'ünü Uno Platform üzerinde çalıştırıyor. Hedefler masaüstü (Windows, macOS, Linux), WebAssembly, Android ve iOS. Port deneysel ve geliştirilmekte; Uno'ya özgü hatalar bu repoya, Reactor'ın kendi hataları Microsoft deposuna bildirilmeli.",
-   "why_tr": "WinUI tarzı bildirimsel C# arayüzünü Windows dışındaki platformlarda denemek isteyenler için ilgi çekici, ancak deneysel durumda.",
-   "published": "2026-11-18T11:34:42+00:00",
+   "url": "https://www.oreilly.com/radar/?p=20247",
+   "title_orig": "Modeling Software’s Business Impact",
+   "title_tr": "Yazılımın İş Etkisini Modellemek",
+   "summary_tr": "James Shore, AI'ın yazılım geliştirmeye etkisini değerlendiren serinin dördüncü yazısında, ekiplerin doğru şeyi inşa edip etmediğine odaklanıyor. Değerin doğrudan ölçülmesindeki katkı payı ve gecikme sorunları nedeniyle, değeri proxy ölçümlerle modellemeyi öneriyor ve örnek olarak Pirate Metrics'i (AARRR) gösteriyor. Kodlama artık darboğaz değilse, darboğazın müşterinin yeni özellikleri özümseme kapasitesine kayabileceğini savunuyor.",
+   "why_tr": "Geliştirme hızı artarken neyin gerçekten değer yarattığını ölçmek için pratik bir yaklaşım ve önceliklendirme bakışı sunuyor.",
+   "published": "2026-11-19T11:39:26+00:00",
    "tags": [
-    ".NET and Visual Studio",
-    "Mobile and Game Development"
-   ]
-  },
-  {
-   "id": "cc909697",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "syncfusion.com",
-   "via": "Morning Dew",
-   "url": "https://www.syncfusion.com/blogs/post/dotnet-maui-11-upgrade-guide?utm_source=alvinashcraft&utm_medium=email&utm_campaign=alvinashcraft_blog_edmnov26",
-   "title_orig": "What’s New in .NET MAUI 11: Key Changes and Upgrade Guide",
-   "title_tr": ".NET MAUI 11'de yenilikler: temel değişiklikler ve yükseltme rehberi",
-   "summary_tr": ".NET 11'de Android, iOS, tvOS ve Mac Catalyst projeleri CoreCLR çalışma zamanını kullanıyor; NativeAOT isteğe bağlı bir yayınlama seçeneği. Android için minimum API 24 gerekiyor, x86 desteklenmiyor ve bazı varsayılan handler'lar ile gezinme davranışları değişti. Yazı, Release ve publish derlemelerinin, özel handler'ların, CollectionView2'nin, trimming'in ve üçüncü taraf paketlerin yükseltme öncesinde doğrulanmasını öneriyor.",
-   "why_tr": "Üretimdeki MAUI uygulamalarını .NET 11'e taşıyacak ekipler için, çalışma zamanı ve handler değişikliklerinden kaynaklanabilecek regresyonları önceden gösteriyor.",
-   "published": "2026-11-18T11:34:42+00:00",
-   "tags": [
-    ".NET and Visual Studio",
-    "Mobile and Game Development"
-   ]
-  },
-  {
-   "id": "9e555830",
-   "topic": "dotnet",
-   "kind": "article",
-   "score": 3,
-   "source": "The Practical Developer",
-   "via": "",
-   "url": "https://dev.to/kami_butt_69b922ade8de012/time-series-models-in-the-streamhouse-real-time-forecasting-on-streaming-data-2am3",
-   "title_orig": "Time-Series Models in the Streamhouse: Real-Time Forecasting on Streaming Data",
-   "title_tr": "Streamhouse'ta zaman serisi modelleri: akan veride gerçek zamanlı tahmin",
-   "summary_tr": "IBM ve Confluent, Granite zaman serisi foundation modellerini Confluent içine entegre etti. Apache Flink üzerinden AI_FORECAST ve AI_DETECT_ANOMALIES gibi SQL fonksiyonlarıyla, ayrı bir model sunucusu kurmadan tahmin ve anomali tespiti yapılabiliyor. Yazar, Flink içindeki modeller için doğruluk kıyaslaması yayımlanmadığını, fiyat ve bölge bilgisinin belirsiz olduğunu ve şirket içi (on-prem) desteğin durumunun doğrulanması gerektiğini belirtiyor.",
-   "why_tr": "Akış verisinde tahmini bir SQL çağrısına indirgeyen bir yaklaşım sunuyor, ancak kendi verinizde doğrulamadan güvenilmemesi gerektiğini de vurguluyor.",
-   "published": "2026-11-20T09:57:36+00:00",
-   "tags": [
-    "AI",
     "Design, DevOps and Methodology"
    ]
   },
@@ -185,93 +181,32 @@
    "id": "f7cfdfd7",
    "topic": "dotnet",
    "kind": "repo",
-   "score": 3,
+   "score": 4,
    "source": "GitHub Trending",
    "via": "",
    "url": "https://github.com/alibaba/open-code-review",
    "title_orig": "alibaba/open-code-review",
-   "title_tr": "alibaba/open-code-review: AI destekli kod inceleme CLI aracı",
-   "summary_tr": "Open Code Review, Git diff'lerini okuyup yapılandırılabilir bir LLM'e gönderen ve satır düzeyinde yorum üreten bir CLI aracı. Deterministik mühendislik ile araç kullanan bir agent'ı birleştiriyor; yazarlara göre aynı modelle genel amaçlı agent'lara kıyasla daha yüksek precision ve F1 sağlıyor, ancak recall daha düşük. Claude Code, Codex, Cursor gibi agent'larda skill olarak veya doğrudan yerel modda kullanılabiliyor.",
-   "why_tr": "AI destekli kod incelemesini daha az token harcayarak ve daha kontrollü bir süreçle denemek isteyen ekipler için değerlendirilebilir bir araç.",
+   "title_tr": "alibaba/open-code-review: AI Destekli Kod İnceleme CLI Aracı",
+   "summary_tr": "Open Code Review, Alibaba'nın iç kullanımdan açık kaynağa taşıdığı bir kod inceleme CLI aracı. Git diff'lerini okuyup araç kullanabilen bir ajan aracılığıyla yapılandırılabilir bir LLM'e gönderiyor ve satır düzeyinde yorumlar üretiyor. Proje, doğruluk açısından kritik adımlar için deterministik mühendislik, dinamik bağlam toplama için ajan kullanan hibrit bir mimari öneriyor. Ayrıca README'ye göre Claude Code gibi genel amaçlı ajanlara kıyasla daha yüksek precision ve F1 sağlıyor, recall ise daha düşük.",
+   "why_tr": "Kod incelemesini otomatikleştirmek isteyen ekipler için gürültüyü azaltmaya odaklanan, mevcut ajanlarla da kullanılabilen bir alternatif sunuyor.",
    "published": null,
    "tags": [
-    "AI",
-    "Design, DevOps and Methodology"
+    "AI"
    ]
   },
   {
    "id": "7b385cdc",
    "topic": "savunma",
    "kind": "article",
-   "score": 4,
+   "score": 5,
    "source": "SavunmaSanayiST",
    "via": "",
    "url": "https://www.savunmasanayist.com/bayraktar-kizilelma-envantere-girdi/",
    "title_orig": "KIZILELMA Envantere Girdi: İlk 3 Uçak Teslim Edildi",
-   "title_tr": "KIZILELMA envantere girdi: İlk 3 uçak teslim edildi",
-   "summary_tr": "Baykar'ın geliştirdiği KIZILELMA insansız savaş uçağı kabul testlerini tamamladı ve ilk 3 adet 19 Kasım 2026 itibarıyla teslim edilerek göreve başladı. Metne göre projede şimdiye kadar 600 sorti yapıldı. Kaynak ayrıca uçağın 2021'den bu yana tasarım, ilk uçuş, atış testleri, sürü otonomisi ve insanlı uçaklarla formasyon uçuşu gibi aşamalarını sıralıyor. Baykar, Türkiye'nin bir insansız savaş uçağını operasyonel olarak envantere alan ilk ülke olduğunu öne sürüyor.",
-   "why_tr": "İnsansız savaş uçaklarında prototip aşamasından operasyonel envantere geçişin ilk örneklerinden biri olarak, otonomi ve entegre sensör-silah mimarisi açısından izlenmeye değer; ancak 'dünyada ilk' iddiaları üreticiye ait.",
+   "title_tr": "KIZILELMA insansız savaş uçağı envantere girdi: İlk 3 uçak teslim edildi",
+   "summary_tr": "Baykar'ın geliştirdiği KIZILELMA, kabul testlerini tamamlayarak 19 Kasım 2026 itibarıyla ilk 3 uçağın teslimiyle envantere girdi. Metne göre projede bugüne kadar 600 sorti uçuldu. Metin ayrıca platformun 2025-2026 arasındaki atış, hedefleme ve otonom formasyon testlerini özetliyor. Bunların arasında GÖKDOĞAN füzesiyle jet motorlu hedefin vurulması da var.",
+   "why_tr": "İnsansız savaş uçaklarının prototipten operasyonel envantere geçişini ve sensör, silah ve otonomi entegrasyonunun hangi aşamalardan geçtiğini gösteren bir örnek.",
    "published": "2026-11-19T15:58:48+00:00",
-   "tags": []
-  },
-  {
-   "id": "9f44b8cf",
-   "topic": "savunma",
-   "kind": "article",
-   "score": 4,
-   "source": "SavunmaSanayiST",
-   "via": "",
-   "url": "https://www.savunmasanayist.com/msbye-dev-butce-1-trilyon-532-milyar-tl/",
-   "title_orig": "MSB’ye Dev Bütçe: 1 Trilyon 532 Milyar TL",
-   "title_tr": "MSB'nin 2027 bütçe teklifi 1 trilyon 532 milyar TL oldu",
-   "summary_tr": "Milli Savunma Bakanlığı'nın 2027 bütçe teklifi 1 trilyon 532 milyar lira olarak açıklandı ve toplam bütçenin yüzde 6,17'sini oluşturuyor. Bu rakam, 2026 teklifi olan 822 milyar 930 milyon liraya göre yaklaşık yüzde 86 artış anlamına geliyor. Bakan Güler sunumunda MKE ve ASFAT'ın ihracat rakamlarını, Mekke Ortak Savunma Anlaşması ile Bedir Mutabakat Zaptı'nı ve KAAN, KIZILELMA, HÜRJET gibi projeleri de ele aldı.",
-   "why_tr": "Savunma harcamalarındaki büyük artış, Türkiye'deki savunma sanayii projelerinin ve ihracat odaklı iş kollarının önümüzdeki dönemdeki ölçeğini anlamak için bağlam sağlıyor.}",
-   "published": "2026-11-18T10:20:04+00:00",
-   "tags": []
-  },
-  {
-   "id": "26922ac9",
-   "topic": "savunma",
-   "kind": "article",
-   "score": 4,
-   "source": "Euromaidan Press",
-   "via": "",
-   "url": "https://euromaidanpress.com/2026/11/18/russias-first-shaheds-flew-at-about-185-km-h-its-newest-jet-powered-drone-could-hit-1000-and-interceptor-drones-arent-only-answer-lawmaker-says/",
-   "title_orig": "Russia’s first Shaheds flew at about 185 km/h. Its newest jet-powered drone may hit 1,000, and interceptor drones aren’t only answer, lawmaker says",
-   "title_tr": "Rusya jet motorlu Geran-6 dronunu test ediyor; füzeler de gerekli",
-   "summary_tr": "Ukrayna istihbaratı verilerine dayanan milletvekili Fedir Venislavsky'ye göre Rusya, saatte 1.000 km'ye ulaşabilecek ve büyük başlık taşıyabilecek jet motorlu 'Geran-6' dronunu deniyor. İlk Shahed'ler yaklaşık 185 km/s hızla uçarken jet motorlu modeller şimdiden 500-1.000 km/s aralığında uçuyor. Metne göre Ukrayna jet Geran-4'lerin yaklaşık yüzde 60'ını, yavaş Shahed'lerin ise yüzde 90'ından fazlasını durduruyor. Venislavsky, hava savunma füzelerinin en etkili araç olduğunu, önleyici dronların da iyi sonuç verdiğini ancak henüz yaygın kullanılmadığını söylüyor.",
-   "why_tr": "Hızlanan saldırı dronları, önleyici dron tabanlı savunma yaklaşımlarının sınırlarını ve katmanlı hava savunmasının gerekliliğini gösteriyor.",
-   "published": "2026-11-18T14:42:25+00:00",
-   "tags": []
-  },
-  {
-   "id": "8c54801b",
-   "topic": "savunma",
-   "kind": "article",
-   "score": 4,
-   "source": "Euromaidan Press",
-   "via": "",
-   "url": "https://euromaidanpress.com/2026/11/19/china-tightens-export-controls-on-drone-parts-used-by-russia/",
-   "title_orig": "China tightens export controls on drone parts used by Russia, but key components remain exempt",
-   "title_tr": "Çin, Rusya'nın kullandığı dron parçalarına ihracat kontrollerini sıkılaştırdı",
-   "summary_tr": "Çin, 18 Kasım'da yürürlüğe giren düzenlemeyle motorlar, radyo modülleri ve elektrik motorları gibi bazı dron bileşenleri için ihracat lisansı şartı getirdi. Ukrayna'nın yaptırım komisyoncusu Vlasiuk'a göre anti-parazit antenler, navigasyon modülleri, gimbal kameralar ve servolar gibi Rus silahlarında bulunan bazı parçalar kapsam dışında kaldı. Kurallar tam yasak değil, lisans gerektiriyor; etkisi uygulamanın ne kadar sıkı yapılacağına ve aracılar üzerinden tedarikin sürüp sürmeyeceğine bağlı.",
-   "why_tr": "Dron ve mühimmat tedarik zincirlerinin Çin'e bağımlılığını ve ihracat kontrollerinin pratikteki sınırlarını gösteriyor.}",
-   "published": "2026-11-19T20:54:56+00:00",
-   "tags": []
-  },
-  {
-   "id": "c1d303f0",
-   "topic": "savunma",
-   "kind": "article",
-   "score": 4,
-   "source": "Naval Today",
-   "via": "",
-   "url": "https://www.navaltoday.com/2026/11/19/bae-systems-tests-autonomous-weapon-control-on-retrofitted-fast-boat",
-   "title_orig": "BAE Systems tests autonomous weapon control on retrofitted fast boat",
-   "title_tr": "BAE Systems, Nautomate ile hızlı teknede otonom silah kontrolünü test etti",
-   "summary_tr": "BAE Systems, Nautomate otonom kontrol sistemini, otonom çalışma için tasarlanmamış 14 metrelik P38 hızlı müdahale botuna entegre ederek gösterdi. Sistem devriye gezip simüle edilmiş bir tehdidi takip etti; insan operatör hedefi onayladıktan sonra uzaktan kumandalı silah istasyonuyla yaklaşık bir kilometreden isabet sağladı. Şirkete göre manuel kullanan eğitimli bir operatör benzer sonuç için yaklaşık 500 metreye yaklaşmak zorunda kaldı. Bu sonuçlar şirketin kendi açıklamalarına dayanıyor.",
-   "why_tr": "Mevcut gemilere sonradan otonomi eklenebilmesi, sıfırdan platform geliştirmeye göre daha esnek bir yol sunuyor; yazılım mimarisinin diğer platformlarla ortak olması da dikkat çekici.}",
-   "published": "2026-11-19T08:18:01+00:00",
    "tags": []
   },
   {
@@ -283,9 +218,9 @@
    "via": "",
    "url": "https://dronexl.co/2026/11/20/fcc-drone-spectrum-order-adopted-trusty-800-mhz-air-ground-drones/",
    "title_orig": "FCC Drone Order Passes 3-0, Trusty Says 800 MHz Band Covers Drones",
-   "title_tr": "FCC dron spektrum kararı 3-0 oy ile kabul edildi, 800 MHz bandındaki ifade belirsiz",
-   "summary_tr": "FCC, 19 Kasım'da 'Unleashing American Drone Dominance' kararını oybirliğiyle kabul etti. Karar 450 MHz bandını dron kontrol bağlantılarına açıyor, 24,45-24,65 GHz'de dron izleyen yer radarlarına izin veriyor ve 800 MHz hava-yer bandı kurallarını değiştiriyor. Yazar, Komiser Trusty'nin 800 MHz bandının dron operasyonlarına kullanılabileceğini netleştirdiğini söylemesine rağmen taslakta dronlardan bahsedilmediğini, nihai metnin de henüz yayımlanmadığını belirtiyor. 450 MHz lisansında 400 feet kapsama şartının nihai metinde yer alıp almadığı da belli değil.",
-   "why_tr": "Dron haberleşmesi ve karşı-dron radarları için düzenleyici çerçeve şekilleniyor; ancak ayrıntılar nihai metin yayımlanana kadar kesin değil.}",
+   "title_tr": "FCC drone spektrum kararını 3-0 oyla kabul etti; 800 MHz bandındaki drone ifadesi belirsiz",
+   "summary_tr": "FCC, 19 Kasım'da \"Unleashing American Drone Dominance\" kararını oybirliğiyle kabul etti. Karar 450 MHz bandını drone kontrol bağlantılarına açıyor, 24.45-24.65 GHz'de yer radarlarıyla drone takibine izin veriyor ve 800 MHz hava-yer bandı kurallarını yeniden yazıyor. Yazar, Komisyoner Trusty'nin 800 MHz bandının drone kullanımına açıklık getirdiğine dair ifadesinin taslakta bulunmadığına dikkat çekiyor. Nihai metin henüz yayımlanmadığı için 450 MHz bandındaki 400 feet kapsama şartının akıbeti bilinmiyor.",
+   "why_tr": "Drone haberleşmesi ve drone karşıtı sistemler üzerinde çalışanlar için lisanslı spektrumun genişlemesi ilgili olabilir, ancak ayrıntılar nihai metin yayımlanana kadar belirsiz.",
    "published": "2026-11-20T09:21:00+00:00",
    "tags": []
   },
@@ -298,92 +233,461 @@
    "via": "",
    "url": "https://www.uasvision.com/2026/11/20/mbda-germany-to-develop-airborne-laser-weapon-for-tactical-aircraft/",
    "title_orig": "MBDA Germany to Develop Airborne Laser Weapon For Tactical Aircraft",
-   "title_tr": "MBDA Germany, taktik uçaklar için havadan lazer silahı geliştirecek",
-   "summary_tr": "Almanya'nın BAAINBw kurumu, MBDA'ya pod tabanlı bir havadan lazer silahı gösterici sistemi geliştirme sözleşmesi verdi. Hedef, ileride dron ve seyir füzelerini vurabilecek bir yeteneğin teknolojik temelini atmak. Duyuruda sözleşme değeri, lazer güç sınıfı, takvim ve taşıyıcı uçak belirtilmiyor; metne göre boyut, ağırlık ve soğutma gereksinimleri havadan versiyonu zorlaştırıyor.",
-   "why_tr": "Ucuz saldırı dronlarına karşı füze yerine lazerle maliyet-etkin savunma arayışının uçak platformlarına taşınıp taşınamayacağını gösteren erken bir adım.",
+   "title_tr": "MBDA Germany taktik uçaklar için havadan kullanılan lazer silahı geliştirecek",
+   "summary_tr": "Almanya, MBDA'yı pod tabanlı bir havadan lazer silahı gösterge sistemi geliştirmek üzere görevlendirdi. Uzun vadeli hedef, drone ve seyir füzelerini düşürebilen bir yetenek. Duyuruda sözleşme değeri, lazer güç sınıfı, takvim ve taşıyıcı uçak belirtilmiyor. Metin boyut, ağırlık, soğutma ve güç kısıtlarının zorluğunu vurguluyor.",
+   "why_tr": "Enerji ve ısı yönetimi kısıtlarının yönlendirilmiş enerji silahlarında temel mühendislik darboğazı olduğunu gösteriyor.",
    "published": "2026-11-20T06:25:10+00:00",
    "tags": []
   },
   {
-   "id": "800432f7",
+   "id": "c5cfd7e0",
    "topic": "savunma",
    "kind": "article",
    "score": 4,
-   "source": "Defence Industry Europe",
+   "source": "UAS Vision",
    "via": "",
-   "url": "https://defence-industry.eu/united-states-defense-spending-proposal-would-cut-f-15ex-purchases-f-47-development-and-combat-drone-funding/",
-   "title_orig": "United States defense spending proposal would cut F-15EX purchases, F-47 development and combat drone funding",
-   "title_tr": "ABD Senatosu komitesi F-15EX, F-47 ve CCA bütçelerinde kesinti öneriyor",
-   "summary_tr": "Senato Ödenekler Komitesi'nin 16 Kasım'da yayımlanan 2027 mali yılı önerisi 29 F-35A ve 18 F-15EX alımı öngörüyor; F-15EX talebi 24'ten 18'e düşüyor. Teklif F-47 araştırma-geliştirme bütçesini yaklaşık 5 milyar dolardan 4,4 milyar dolara indiriyor ve Collaborative Combat Aircraft kalemlerinde de kesintiler yapıyor. F-35 ve F-15EX için çok yıllı alım yetkisi verilmiyor; komite bunu yetersiz finansman ve ölçekli üretim kanıtının olmamasına bağlıyor.",
-   "why_tr": "Önerilen bütçe kararları, ABD hava gücü modernizasyonundaki öncelikleri ve program risklerini gösteriyor; teklif henüz nihai değil.}",
-   "published": "2026-11-19T17:39:50+00:00",
+   "url": "https://www.uasvision.com/2026/11/20/ukraine-used-relay-drones-to-bypass-starlink-limits-in-kerch-bridge-attack/",
+   "title_orig": "Ukraine Used Relay Drones to Bypass Starlink Limits in Kerch Bridge Attack",
+   "title_tr": "Ukrayna, Kerç Köprüsü saldırısında Starlink sınırlarını röle dronlarla aştı",
+   "summary_tr": "Financial Times'a dayanan habere göre Ukrayna, Kerç Köprüsü saldırısında mesh radyolu dronlarla havada bir iletişim ağı kurdu. Her drone röle düğümü görevi görerek 250 km'den fazla uzaktaki operatörlerin füze ve saldırı dronlarını yönlendirmesini sağladı. Ukrayna, ABD'nin saatte 100 mil üzerindeki araçlarda Starshield kullanımını kısıtlaması nedeniyle bu sistemi kullanmadı. Köprünün onarımının uzun sürebileceği belirtiliyor.",
+   "why_tr": "Uydu bağlantısına bağımlılığı azaltan mesh röle mimarisi, kesintiye dayanıklı uzaktan kontrol sistemleri tasarlayanlar için ilgi çekici bir örnek.",
+   "published": "2026-11-20T06:40:16+00:00",
    "tags": []
   },
   {
    "id": "85cebb20",
    "topic": "savunma",
    "kind": "article",
-   "score": 3,
+   "score": 4,
    "source": "SavunmaSanayiST",
    "via": "",
    "url": "https://www.savunmasanayist.com/60267-2/",
    "title_orig": "İngiliz Bakandan Türkiye’ye: “Daha Fazlasını Yapabiliriz”",
    "title_tr": "İngiliz Bakan Pollard: Türkiye ile savunma sanayiinde daha fazlasını yapabiliriz",
-   "summary_tr": "İngiltere Savunma Tedariki Bakanı Luke Pollard, Türkiye-Birleşik Krallık Savunma Sanayii Konseyi'nin 2. toplantısı için Türkiye'de bulundu. Eurofighter Typhoon anlaşmasının tek bir programla sınırlı olmayan, daha geniş bir sanayi ilişkisinin temeli olduğunu söyledi. Türkiye'yi uzun vadeli bir savunma ve sanayi ortağı olarak gördüklerini belirten Pollard, KAAN ve GCAP'i kendi gereksinimleri ve süreçleri olan iki ayrı program olarak tanımladı.",
-   "why_tr": "İki ülke arasındaki savunma sanayii iş birliğinin Eurofighter'ın ötesine geçip geçmeyeceğini izlemek için bağlam sağlıyor; somut yeni proje metinde belirtilmiyor.}",
+   "summary_tr": "İngiltere Savunma Tedariki Bakanı Luke Pollard, Türkiye-Birleşik Krallık Savunma Sanayii Konseyi'nin 2. toplantısı için Türkiye'deydi. Eurofighter Typhoon anlaşmasını ilişkinin dönüm noktası olarak niteleyip iş birliğinin tek programla sınırlı olmadığını söyledi. Temmuzda imzalanan Güvenlik ve Savunma Ortaklığı'na değindi ve KAAN ile GCAP'ı kendi gereksinimleri olan iki ayrı program olarak tanımladı.",
+   "why_tr": "Savunma sanayii iş birliklerinin yönünü izleyenler için Türkiye-İngiltere ilişkisinin kurumsal çerçevesini gösteriyor; somut yeni proje duyurusu yok.",
    "published": "2026-11-19T11:36:20+00:00",
    "tags": []
   },
   {
-   "id": "862cb1b6",
+   "id": "8c54801b",
    "topic": "savunma",
    "kind": "article",
-   "score": 3,
-   "source": "Naval News",
+   "score": 4,
+   "source": "Euromaidan Press",
    "via": "",
-   "url": "https://www.navalnews.com/naval-news/2026/11/estonian-president-christens-first-euroguard-the-largest-warship-ever-built-in-the-country/",
-   "title_orig": "Baltic Workboats Launches EUROGUARD Modular Ship in Estonia",
-   "title_tr": "Baltic Workboats, modüler EUROGUARD gemisini Estonya'da denize indirdi",
-   "summary_tr": "19 Kasım 2026'da Nasva'daki tersanede 45 metrelik EUROGUARD prototipi denize indirildi; gemi, Estonya'da inşa edilen en büyük deneysel savaş gemisi olarak anılıyor. Proje on Avrupa ülkesi ve 27 şirketin ortak çalışması; yaklaşık 95 milyon euro bütçesinin 65 milyon eurosu Avrupa Savunma Fonu'ndan geliyor. Gemi otonom seyrüsefer ve kıyıdan uzaktan kontrol için kullanılacak, ortak sistem mimarisi GENSA da test edilecek; denemeler ve gösteriler 2027'de planlanıyor.",
-   "why_tr": "Farklı üreticilerin teknolojilerini birleştiren ortak mimari ve modüler tasarım, gelecekteki deniz platformlarının daha hızlı geliştirilmesi açısından mühendislik açısından ilgi çekici.}",
-   "published": "2026-11-19T18:32:50+00:00",
+   "url": "https://euromaidanpress.com/2026/11/19/china-tightens-export-controls-on-drone-parts-used-by-russia/",
+   "title_orig": "China tightens export controls on drone parts used by Russia, but key components remain exempt",
+   "title_tr": "Çin, Rusya'nın kullandığı drone parçalarına ihracat kontrollerini sıkılaştırdı; kritik bileşenler kapsam dışı",
+   "summary_tr": "Çin, 18 Kasım'da yürürlüğe giren kurallarla bazı drone motorları, radyo modülleri ve yüksek güçlü fırçasız elektrik motorları için ihracat lisansı şartı getirdi; tam yasak söz konusu değil. Ukrayna'nın yaptırım komiseri Vlasiuk'a göre CRPA antenler, navigasyon modülleri, HARXON antenleri, gimbal kameralar ve servolar kapsam dışında kalıyor. Etkinin uygulamanın ne kadar sıkı olacağına ve aracılar üzerinden tedarikin sürüp sürmediğine bağlı olduğu belirtiliyor.",
+   "why_tr": "Drone tedarik zincirlerindeki bileşen bağımlılıklarını ve ihracat kontrollerinin pratikteki sınırlarını anlamak için faydalı.",
+   "published": "2026-11-19T20:54:56+00:00",
    "tags": []
   },
   {
-   "id": "0e49b89b",
-   "topic": "liderlik",
-   "kind": "preview",
+   "id": "25cbab45",
+   "topic": "savunma",
+   "kind": "article",
    "score": 3,
-   "source": "Inc. Türkiye",
+   "source": "DroneLife",
    "via": "",
-   "url": "https://incturkiye.com/makaleler/yapay-zeka-neden-hata-yapiyor-cunku-cevap-vermeye-mecbur-birakiliyor",
-   "title_orig": "Yapay Zekâ Neden Hata Yapıyor? Çünkü Cevap Vermeye Mecbur Bırakılıyor",
-   "title_tr": "Yapay Zekâ Neden Hata Yapıyor? Cevap Vermeye Mecbur Bırakıldığı İçin",
-   "summary_tr": "Kaynak metne göre yapay zekâ susmayı bilmiyor, çünkü sürekli tahmin üretmeye ve her koşulda cevap vermeye odaklı geliştirilmiş. Kaynak metin yetersiz: yalnızca bir ön izleme cümlesi var, ayrıntılı bir gerekçe veya örnek içermiyor.",
-   "why_tr": "Modellerin emin olmadıkları durumlarda bile cevap üretmeye yatkın olması, çıktıları doğrulamadan kullanmamak için hatırlatıcı bir bakış açısı sunuyor.",
-   "published": "2026-11-20T09:58:38+00:00",
+   "url": "https://dronelife.com/2026/11/18/red-cat-2026-revenue-forecast-defense-contracts/",
+   "title_orig": "Red Cat Withdraws 2026 Revenue Forecast as Defense Contracts Progress More Slowly Than Expected",
+   "title_tr": "Red Cat, savunma sözleşmeleri beklenenden yavaş ilerlediği için 2026 gelir tahminini geri çekti",
+   "summary_tr": "Red Cat Holdings, finansman ve sözleşme verilmesinin yavaş ilerlemesi ve Pentagon'un Drone Dominance Gauntlet II sonucu nedeniyle yıllık gelir tahminini geri çekti. Şirket üçüncü çeyrekte 11,8 milyon dolar gelir bildirdi; bu, geçen yılın aynı dönemine göre %22 artış. Dokuz aylık gelir 47,4 milyon dolar, kasa ise çeyrek sonunda 242,7 milyon dolar.",
+   "why_tr": "Savunma teknolojisi alanında talep ile fiilen gelire dönüşen sipariş arasındaki zaman farkını gösteren bir örnek.",
+   "published": "2026-11-18T17:29:04+00:00",
+   "tags": []
+  },
+  {
+   "id": "9afb1f92",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 3,
+   "source": "Defence Industry Europe",
+   "via": "",
+   "url": "https://defence-industry.eu/quantum-systems-joint-venture-plans-fivefold-increase-in-drone-production-capacity-in-2027/",
+   "title_orig": "Quantum Systems joint venture plans fivefold increase in drone production capacity in 2027",
+   "title_tr": "Quantum Systems ortak girişimi 2027'de drone üretim kapasitesini beş katına çıkaracak",
+   "summary_tr": "Quantum Systems ve Frontline Robotics'in ortak girişimi QFI, Ukrayna Ulusal Muhafızları'ndan gelen daha büyük bir sipariş sonrası kapasitesini 2027'de beş katına çıkarmayı planlıyor. İlk sözleşme kapsamındaki 10.000 Linza sisteminin teslimatı tamamlanmak üzere. Ayrıca Ukrayna'da eğitim, destek hattı ve bakım için 10 milyon euronun üzerinde taahhütte bulunulacak.",
+   "why_tr": "Drone üretiminin Almanya'da yapılıp Ukrayna'da destek verilmesi, üretim ve sahada bakım ölçeklendirmesine dair bir model sunuyor.",
+   "published": "2026-11-20T05:33:19+00:00",
+   "tags": []
+  },
+  {
+   "id": "6880e5f5",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 3,
+   "source": "Defence Industry Europe",
+   "via": "",
+   "url": "https://defence-industry.eu/ukraine-says-drones-hit-over-2-million-russian-targets-in-2026-with-october-tally-nearly-2-5-times-januarys/",
+   "title_orig": "Ukraine says drones hit over 2 million Russian targets in 2026, with October tally nearly 2.5 times January’s",
+   "title_tr": "Ukrayna: 2026'da dronlarla 2 milyondan fazla Rus hedefi vuruldu",
+   "summary_tr": "Ukrayna Savunma Bakanlığı'na göre 2026 başından beri dronlarla 2 milyondan fazla hedef vuruldu. Vuruşlar DELTA sisteminde kaydedilip Brave1 uzmanlarınca doğrulandı. Ekim ayı yaklaşık 257.264 vuruşla en yüksek aylık toplamdı; bu, Ocak ayının yaklaşık 2,5 katı.",
+   "why_tr": "Doğrulama hattı olarak DELTA ve Brave1 üzerinden toplanan ölçülebilir veriler, drone kullanımının ölçeğini gösteriyor; rakamlar bakanlık beyanı olduğundan bağımsız doğrulama yok.",
+   "published": "2026-11-19T17:18:22+00:00",
+   "tags": []
+  },
+  {
+   "id": "39e1f302",
+   "topic": "savunma",
+   "kind": "article",
+   "score": 3,
+   "source": "Breaking Defense",
+   "via": "",
+   "url": "https://breakingdefense.com/2026/11/raytheon-taps-ursa-major-avio-usa-as-second-source-for-tomahawk-solid-rocket-motors/",
+   "title_orig": "Raytheon taps Ursa Major, Avio USA as second source for Tomahawk solid rocket motors",
+   "title_tr": "Raytheon, Tomahawk katı yakıtlı roket motorları için Ursa Major ve Avio USA'yı ikinci kaynak seçti",
+   "summary_tr": "Raytheon, Tomahawk füzesinin katı yakıtlı roket motoru için Ursa Major ve Avio USA'yı stratejik ortak olarak seçti. Açıklamada takvim ve mali değer belirtilmiyor. Metne göre Ağustos'ta Donanma, Raytheon'a yıllık 1.000 füzeye çıkış için 22,9 milyar dolarlık çok yıllı sözleşme verdi. Cephane üretim planlarının finansmanı ise hâlâ belirsiz.",
+   "why_tr": "Tedarik zinciri çeşitlendirmesinin, katı yakıtlı motor gibi dar boğaz bileşenlerde üretim kapasitesini nasıl etkilediğini gösteriyor.",
+   "published": "2026-11-19T17:24:48+00:00",
+   "tags": []
+  },
+  {
+   "id": "e2bbeee9",
+   "topic": "teknoloji",
+   "kind": "article",
+   "score": 4,
+   "source": "Webrazzi",
+   "via": "",
+   "url": "https://webrazzi.com/2026/11/20/meta-nin-yapay-zeka-ajani-muse-farkli-hesaplara-ait-ozel-verileri-birbirine-karistiriyor/",
+   "title_orig": "Meta'nın yapay zeka ajanı Muse, farklı hesaplara ait özel verileri birbirine karıştırıyor",
+   "title_tr": "Meta'nın yapay zeka ajanı Muse, hesaplar arası özel verileri karıştırıyor",
+   "summary_tr": "Reuters'ın şirket içi yazışmalara dayandırdığı habere göre Meta'nın Muse ajanı, test sırasında bazı çalışanlara başka kullanıcılara ait talepleri, sipariş bilgilerini ve banka bakiyelerini gösterdi. Bir çalışan, erişim izni vermediği hâlde Signal mesajıyla ilgili bir hatırlatma aldığını belirtti. Meta, çalışanların henüz yayımlanmamış özelliklerin denendiği, kamuya açık sürümden farklı bir sürümü kullandığını ve geri bildirimlerin güvenlik ile gizlilik önlemlerini geliştirmek için kullanılacağını söyledi.",
+   "why_tr": "Kullanıcı verisine erişen ajan tabanlı ürünlerde hesap izolasyonunun ne kadar kritik olduğunu ve test sürümlerinde bile sızıntı riskinin gerçek olduğunu gösteriyor.",
+   "published": "2026-11-20T10:00:00+00:00",
+   "tags": []
+  },
+  {
+   "id": "4e008acf",
+   "topic": "teknoloji",
+   "kind": "article",
+   "score": 3,
+   "source": "Yapay Bülten",
+   "via": "",
+   "url": "https://bulten.yapaybulten.com/p/yapay-bulten-127",
+   "title_orig": "Yapay Bülten: 127",
+   "title_tr": "Yapay Bülten 127: Anthropic, Google ve OpenAI cephesinde haftanın önemli gelişmeleri",
+   "summary_tr": "Bülten; Anthropic'in aynı temel modeli paylaşan Claude Fable 5.2 ve Mythos 5.2'yi yayımladığını, şirketin Nasdaq'ta ANT koduyla halka arz için yatırımcı turuna başladığını aktarıyor. Google'ın Gemini 4 Hydrogen'ı duyurduğu ve Gemini 4 Carbon'ı genel kullanıma açtığı, OpenAI'ın ise çeyreklik gelirinin ilk kez 10 milyar dolara ulaştığı ve ajanlar için ChatGPT Wallet'ı tanıttığı belirtiliyor. Ayrıca Nvidia CEO'sunun istifası, DeepMind'ın AlphaProof Code'u ve Grok Build ile yapılmış 35 binden fazla uygulamanın açıkta kalması gibi başlıklar kısaca yer alıyor.",
+   "why_tr": "Model, araç ve güvenlik alanındaki haftalık gelişmeleri tek yerde görmek, kullanılan platformları ve riskleri takip etmek için pratik bir özet sunuyor.",
+   "published": "2026-11-15T07:02:29+00:00",
+   "tags": []
+  },
+  {
+   "id": "452a46e4",
+   "topic": "teknoloji",
+   "kind": "article",
+   "score": 3,
+   "source": "Webrazzi",
+   "via": "",
+   "url": "https://webrazzi.com/2026/11/20/chatgpt-de-sesli-dikte-kayitlarinin-10-dakikalik-siniri-kaldirildi/",
+   "title_orig": "ChatGPT'de sesli dikte kayıtlarının 10 dakikalık sınırı kaldırıldı",
+   "title_tr": "ChatGPT'de sesli dikte kayıtlarındaki 10 dakikalık sınır kaldırıldı",
+   "summary_tr": "OpenAI, ChatGPT'nin sesli diktesindeki 10 dakikalık süre sınırını kaldırdı ve konuşulanlar artık konuşma sürerken eş zamanlı olarak ekranda görünüyor. Kullanıcı ses dalgası simgesiyle metin gösterimini açıp kapatabiliyor. Özellik ücretsiz ve ücretli planlara kademeli olarak sunuluyor. OpenAI daha hızlı ve güvenilir olduğunu söylüyor ancak doğruluk ya da gecikmeye dair sayısal veri paylaşmadı.",
+   "why_tr": "Uzun, çok adımlı talimatları sesle vermek isteyenler için kullanım kolaylığı sağlayan küçük ama pratik bir iyileştirme.",
+   "published": "2026-11-20T09:00:00+00:00",
+   "tags": []
+  },
+  {
+   "id": "0f8637a0",
+   "topic": "teknoloji",
+   "kind": "article",
+   "score": 3,
+   "source": "Webrazzi",
+   "via": "",
+   "url": "https://webrazzi.com/2026/11/20/openai-chatgpt-yi-hizlandirmak-icin-codex-destekli-performance-factory-yi-gelistirdi/",
+   "title_orig": "OpenAI, ChatGPT'yi hızlandırmak için Codex destekli Performance Factory'yi geliştirdi",
+   "title_tr": "OpenAI, ChatGPT performans sorunları için Codex destekli Performance Factory'yi geliştirdi",
+   "summary_tr": "Performance Factory, performans düşüşlerinin nedenini araştıran, düzeltme hazırlayan ve sonucu yeniden kontrol eden Codex ajanlarından oluşuyor. İlk uygulaması Regression Workflow, üç aydan biraz uzun sürede 1.700'den fazla incelemeyi takip etti ve 600'den fazla sorunun temel nedenini belirledi. İlk ajanın bulgularını sorgulayan ikinci bir ajan eklendi. Elle değerlendirilen 100 temel neden önerisinin yüzde 70'i doğru bulundu. Kod değişiklikleri için mühendis onayı gerekiyor.",
+   "why_tr": "Ajanların yalnızca kod yazmada değil, performans regresyonlarının tespiti ve doğrulanmasında da, insan onayı ve çapraz kontrolle nasıl kullanılabileceğine somut bir örnek veriyor.",
+   "published": "2026-11-20T08:00:00+00:00",
+   "tags": []
+  },
+  {
+   "id": "8762f8b3",
+   "topic": "jeopolitik",
+   "kind": "article",
+   "score": 3,
+   "source": "Küme Vakfı",
+   "via": "",
+   "url": "https://kumevakfi.org/orta-dogu-da-cift-kullanim-sorunsali-ve-cok-tarafli-nukleer-yaklasimlar",
+   "title_orig": "Orta Doğu'da Çift Kullanım Sorunsalı ve Çok Taraflı Nükleer Yaklaşımlar",
+   "title_tr": "Orta Doğu'da Çift Kullanım Sorunu ve Çok Taraflı Nükleer Yaklaşımlar",
+   "summary_tr": "Rapor, Orta Doğu'daki ülkelerin nükleer enerjiye yönelse de yakıt tedarikinde dış aktörlere bağımlı kaldığını ve uranyum zenginleştirme ile yeniden işlemenin hem sivil hem askeri kullanıma açık olması nedeniyle ulusal adımların siyasi maliyet doğurduğunu belirtiyor. Mevcut uluslararası rejimin bu riske yeterli yanıt veremediği görüşünden hareketle, tesislerin ortak mülkiyet ve işletmeyle yürütüldüğü ulusüstü bir model (Tip 5, EURATOM benzeri) öneriliyor. Model; karşılıklı bağımlılık, karşılıklı denetim, düşük maliyet ve caydırıcılık getirebilir, ancak bölge ülkeleri arasındaki kabiliyet farkları ve farklı dış yakıt tedarikçilerine bağlılık (örneğin Akkuyu'da ROSATOM onayı gerekliliği) önemli engeller oluşturuyor.",
+   "why_tr": "Enerji altyapısı ve jeopolitik risk üzerine çalışan bir mühendis için nükleer yakıt tedarik zincirindeki bağımlılıkların ve çok taraflı yönetim modellerinin nasıl tartışıldığını gösteren bir bakış sunuyor, ancak doğrudan yazılım pratiğiyle bağlantısı sınırlı.",
+   "published": "2026-11-13T12:00:00+00:00",
    "tags": []
   }
  ],
  "top_ids": [
-  "df98bcb7",
   "7b385cdc",
-  "9f44b8cf"
+  "1e6b15e0",
+  "00002822"
  ],
  "stats": {
-  "feeds": 48,
+  "feeds": 53,
   "feed_errors": [
-   "Küme Vakfı: Küme arşivi ayrıştırılamadı (1 yayın, sayfa 376154 karakter); sayfa yapısı değişmiş olabilir",
-   "UAS Weekly: akış okunamadı: <unknown>:2:119: not well-formed (invalid token)"
+   "Anafikir: 403 Client Error: Forbidden for url: https://anafikir.substack.com/feed",
+   "Dünya Trendleri: 403 Client Error: Forbidden for url: https://dunyatrendleri.substack.com/feed",
+   "Cem Gürdeniz: 403 Client Error: Forbidden for url: https://cemgurdenz.substack.com/feed",
+   "Middle East Politics: 403 Client Error: Forbidden for url: https://mideastpolitics.substack.com/feed",
+   "The Economist: Off the Charts: 403 Client Error: Forbidden for url: https://theeconomistoffthecharts.substack.com/feed"
   ],
   "candidates": {
-   "dotnet": 138,
-   "teknoloji": 1,
-   "jeopolitik": 0,
-   "ekonomi": 1,
+   "dotnet": 143,
+   "teknoloji": 28,
+   "jeopolitik": 3,
    "liderlik": 20,
-   "savunma": 146
+   "savunma": 151
   },
-  "selected": 22
+  "selected": 26,
+  "sources": {
+   "Air & Space Forces Magazine": {
+    "candidates": 8,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "Breaking Defense": {
+    "candidates": 15,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 3.0
+   },
+   "ByteByteGo": {
+    "candidates": 7,
+    "scored": 2,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 3.0
+   },
+   "Defence Industry Europe": {
+    "candidates": 10,
+    "scored": 4,
+    "skipped_text": 0,
+    "published": 2,
+    "avg_score": 3.0
+   },
+   "Defense News": {
+    "candidates": 9,
+    "scored": 2,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": 3.0
+   },
+   "Defense Tech Daily": {
+    "candidates": 4,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "DefenseScoop": {
+    "candidates": 4,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "DroneLife": {
+    "candidates": 9,
+    "scored": 2,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 3.0
+   },
+   "DroneXL": {
+    "candidates": 20,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 4.0
+   },
+   "Euromaidan Press": {
+    "candidates": 20,
+    "scored": 3,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 3.33
+   },
+   "European Security & Defence": {
+    "candidates": 5,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": 3.0
+   },
+   "GitHub Trending": {
+    "candidates": 12,
+    "scored": 3,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 3.33
+   },
+   "Hacker News": {
+    "candidates": 20,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 4.0
+   },
+   "Hardware Plus": {
+    "candidates": 5,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "Inc. Türkiye": {
+    "candidates": 20,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "Küme Vakfı": {
+    "candidates": 5,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 3.0
+   },
+   "LOG": {
+    "candidates": 5,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "M. Serdar Kuzuloğlu Bülteni": {
+    "candidates": 1,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "Martin Fowler": {
+    "candidates": 1,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 4.0
+   },
+   "Medium: Level Up Coding": {
+    "candidates": 9,
+    "scored": 2,
+    "skipped_text": 1,
+    "published": 1,
+    "avg_score": 3.0
+   },
+   "Morning Dew": {
+    "candidates": 80,
+    "scored": 11,
+    "skipped_text": 1,
+    "published": 6,
+    "avg_score": 3.0
+   },
+   "Naval News": {
+    "candidates": 10,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "Naval Today": {
+    "candidates": 7,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "SavunmaSanayiST": {
+    "candidates": 3,
+    "scored": 2,
+    "skipped_text": 0,
+    "published": 2,
+    "avg_score": 4.5
+   },
+   "Soldier Systems Daily": {
+    "candidates": 5,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "The Economist: Science and technology": {
+    "candidates": 3,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "The GitHub Blog": {
+    "candidates": 1,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "The Practical Developer": {
+    "candidates": 12,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": 3.0
+   },
+   "The War Zone": {
+    "candidates": 9,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": 3.0
+   },
+   "UAS Vision": {
+    "candidates": 7,
+    "scored": 2,
+    "skipped_text": 0,
+    "published": 2,
+    "avg_score": 4.0
+   },
+   "UAS Weekly": {
+    "candidates": 6,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "Visual Studio Blog": {
+    "candidates": 1,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "Webrazzi": {
+    "candidates": 6,
+    "scored": 3,
+    "skipped_text": 0,
+    "published": 3,
+    "avg_score": 3.33
+   },
+   "Webtekno": {
+    "candidates": 5,
+    "scored": 0,
+    "skipped_text": 0,
+    "published": 0,
+    "avg_score": null
+   },
+   "Yapay Bülten": {
+    "candidates": 1,
+    "scored": 1,
+    "skipped_text": 0,
+    "published": 1,
+    "avg_score": 3.0
+   }
+  }
  }
 }
