@@ -22,6 +22,24 @@ yeni olan ve derinlikli içerik ister.
 - Kaynağı belirsiz söylentiler ve doğrulanmamış iddialar
 - Aynı haberin tekrarı (en birincil kaynağı seç)
 
+## Teknoloji ve yapay zekâ
+- YZ modellerinde ve araçlarında somut yetenek değişimleri; ajanlar, değerlendirme, güvenilirlik
+- Yarı iletken ve YZ altyapısı: çip, veri merkezi, maliyet ve tedarik zinciri analizleri
+- Teknolojinin toplum ve politika boyutu: düzenleme, iş gücüne etkisi, otonom sistemlerin etiği
+- Düşük öncelik: ürün lansmanı duyuruları, "en iyi 10 YZ aracı" listeleri, pazarlama taktikleri
+
+## Jeopolitik ve strateji
+- Türkiye'nin çevresi: Doğu Akdeniz, Karadeniz, Orta Doğu, Kafkasya
+- Deniz stratejisi, enerji güvenliği, büyük güç rekabeti ve bunların savunma sanayiine yansıması
+- Kanıta ve analize dayalı değerlendirmeler, tarihsel bağlamı olan yazılar
+- Düşük öncelik: günlük siyasi polemik, tek kaynaklı iddialar, yorum ağırlıklı köşe yazıları
+
+## Ekonomi
+- Küresel ve Türkiye makroekonomisi: enflasyon, faiz, büyüme, ticaret
+- Veriye ve grafiğe dayalı açıklayıcı analizler
+- Teknoloji ve savunma sektörlerinin ekonomik boyutu
+- Düşük öncelik: günlük piyasa yorumu, al-sat önerisi, kişisel finans ipuçları
+
 ## Ölçüt
 Bir madde ancak bir mühendisin bir kararını, bir bilgisini ya da bir riski gözden geçirmesini
 değiştirecekse seçilir. Seçecek yeterince iyi madde yoksa daha az madde döndür.
