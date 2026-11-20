@@ -79,8 +79,10 @@ def _view(issue: dict, cfg: dict, tz: ZoneInfo) -> dict:
     for key, tcfg in cfg["topics"].items():
         items = sorted((i for i in issue["items"] if i["topic"] == key and i is not repo),
                        key=lambda i: -i["score"])
-        if items:
-            groups.append({"key": key, "title": tcfg["title"], "entries": items})
+        # O gün çalışan alanlar boş kalsa da başlığıyla görünür (eski sayılarda yalnızca dolu alanlar).
+        if items or key in issue.get("topics", []):
+            groups.append({"key": key, "title": tcfg["title"], "entries": items,
+                           "max": tcfg.get("max_items")})
     return {
         "date": date, "date_tr": tr_date(date), "weekday": tr_weekday(date),
         "issue_no": issue["issue_no"], "generated": _local(issue["generated_at"], tz),

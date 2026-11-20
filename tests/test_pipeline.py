@@ -393,7 +393,7 @@ def test_site_has_search_and_compact(tmp_path):
                                                     "top_ids": ["abcdef00"], "items": items, "stats": {}}), encoding="utf-8")
     out = tmp_path / "site"; render_all(cfg, d, out)
     html = (out / "index.html").read_text(encoding="utf-8")
-    assert '<span class="count">(5)</span>' in html
+    assert '<span class="count">(5/10)</span>' in html
     assert html.count('<details class="item compact"') == 4 and "Ilk cümle." in html
     rows = json.loads((out / "search.json").read_text(encoding="utf-8"))
     assert len(rows) == 5 and rows[0]["tags"] == ["AI"]
@@ -426,7 +426,7 @@ def test_repo_box_is_separate_and_top_stays_full(tmp_path):
     html = (out / "index.html").read_text(encoding="utf-8")
     assert "Bugünün deposu" in html and html.count("Başlık 0") == 1
     assert html.split("Önce bunlar")[1].split("</section>")[0].count("<article") == 3
-    assert '<span class="count">(5)</span>' in html
+    assert '<span class="count">(5/10)</span>' in html
 
 
 def test_parse_kume_routes_by_title_and_type():
@@ -468,3 +468,15 @@ def test_source_stats_counts_per_feed():
     st = source_stats(cands, items, {"a1": 4, "a2": 2, "b1": 5}, {"a2"})
     assert st["A"] == {"candidates": 2, "scored": 2, "skipped_text": 1, "published": 1, "avg_score": 3.0}
     assert st["Morning Dew"]["published"] == 1 and st["C"]["avg_score"] is None
+
+
+def test_empty_topic_shown_with_max(tmp_path):
+    import json, yaml
+    from src.render import render_all, ROOT
+    cfg = yaml.safe_load((ROOT / "config" / "config.yaml").read_text(encoding="utf-8"))
+    d = tmp_path / "data"; d.mkdir()
+    (d / "2026-11-20.json").write_text(json.dumps({"date": "2026-11-20", "issue_no": 3, "generated_at": "2026-11-20T03:00:00+00:00",
+        "top_ids": [], "items": [], "topics": ["liderlik"], "stats": {}}), encoding="utf-8")
+    out = tmp_path / "site"; render_all(cfg, d, out)
+    html = (out / "index.html").read_text(encoding="utf-8")
+    assert "İş ve liderlik" in html and "(0/1)" in html and "eşiği geçen yazı çıkmadı" in html

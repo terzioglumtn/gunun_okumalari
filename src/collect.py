@@ -63,6 +63,17 @@ def _read(url: str) -> bytes:
             return r.content
         except Exception as e:  # noqa: BLE001 - son hata aşağıda yeniden fırlatılır
             last = e
+    # 403: bazı siteler (ör. *.substack.com) bağlantının TLS parmak izine bakar; tarayıcı taklidiyle son deneme.
+    status = getattr(getattr(last, "response", None), "status_code", None)
+    if status == 403:
+        try:
+            from curl_cffi import requests as creq
+        except ImportError:
+            raise last  # type: ignore[misc]
+        r = creq.get(url, impersonate="chrome", timeout=20)
+        if r.status_code < 400:
+            return r.content
+        raise ValueError(f"{status} (tarayıcı taklidiyle de {r.status_code}) {url}")
     raise last  # type: ignore[misc]
 
 

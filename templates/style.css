@@ -59,3 +59,4 @@ details.compact[open] .teaser{display:none}
 h2 .count{font:600 16px system-ui,sans-serif;color:var(--muted);margin-left:4px}
 .repo-box{background:var(--panel);border-radius:14px;padding:6px 24px 14px;margin-top:32px}
 .repo-box h2{margin-top:20px}
+.empty{color:var(--muted);font-style:italic;margin:6px 0 0}

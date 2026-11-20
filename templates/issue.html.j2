@@ -51,7 +51,8 @@
 
 {% for g in v.groups %}
 <section>
-  <h2>{{ g.title }} <span class="count">({{ g.entries|length }})</span></h2>
+  <h2>{{ g.title }} <span class="count">({{ g.entries|length }}{% if g.max %}/{{ g.max }}{% endif %})</span></h2>
+  {% if not g.entries %}<p class="empty">Bugün bu alanda eşiği geçen yazı çıkmadı.</p>{% endif %}
   {% for it in g.entries %}{% if it.id not in v.top_ids %}{{ compact(it) }}{% endif %}{% endfor %}
 </section>
 {% endfor %}

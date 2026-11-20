@@ -126,7 +126,7 @@ def main() -> int:
     issue = {
         "date": str(today), "issue_no": next_issue_no(data_dir, today),
         "generated_at": now.isoformat(), "backend": backend,
-        "items": items, "top_ids": top_ids,
+        "items": items, "top_ids": top_ids, "topics": list(cfg["topics"]),
         "stats": {"feeds": n_feeds, "feed_errors": errors,
                   "candidates": {k: len(v) for k, v in candidates.items()},
                   "selected": len(items),
