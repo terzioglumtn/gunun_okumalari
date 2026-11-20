@@ -6,6 +6,9 @@ on:
     # Actions zamanlayıcısı best-effort: tam saat başlarında (dakika 0) çalıştırmaları geciktirir/atlar,
     # bu yüzden dakika 23 seçildi ve sayfanın 08:00'de hazır olması için 1,5 saatlik pay bırakıldı.
     - cron: "23 3 * * *"
+    # Yedek tetikleyiciler: ilki atlanırsa devreye girer. Bugünün sayısı varsa "Bugünün sayısı var mı?" adımı hepsini atlar.
+    - cron: "47 4 * * *"
+    - cron: "17 6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -26,29 +29,44 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Zamanlanmış çalışma bugünün sayısı zaten üretildiyse (yedek tetikleyiciler) hiçbir şey yapmaz.
+      # Elle başlatılan (workflow_dispatch) çalışmalar her zaman yeniden üretir.
+      - name: Bugünün sayısı var mı?
+        id: guard
+        run: |
+          today=$(TZ=Europe/Istanbul date +%F)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ -f "data/$today.json" ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "data/$today.json zaten var; atlanıyor."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - uses: actions/setup-python@v5
+        if: ${{ steps.guard.outputs.skip != 'true' }}
         with:
           python-version: "3.12"
           cache: pip
 
       - name: Bağımlılıklar
+        if: ${{ steps.guard.outputs.skip != 'true' }}
         run: pip install -r requirements.txt
 
       # Varsayılan backend: Claude Code CLI (abonelik token'ı).
       # API'ye geçmek için: Settings > Variables > LLM_BACKEND = anthropic_api
       # Sınama için: LLM_BACKEND = mock
       - name: Node (claude_cli için)
-        if: ${{ vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock' }}
+        if: ${{ steps.guard.outputs.skip != 'true' && (vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock') }}
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - name: Claude Code CLI
-        if: ${{ vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock' }}
+        if: ${{ steps.guard.outputs.skip != 'true' && (vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock') }}
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Sayıyı üret (API)
-        if: ${{ vars.LLM_BACKEND == 'anthropic_api' }}
+        if: ${{ steps.guard.outputs.skip != 'true' && (vars.LLM_BACKEND == 'anthropic_api') }}
         env:
           LLM_BACKEND: anthropic_api
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -56,13 +74,14 @@ jobs:
 
       # Bu adımda ANTHROPIC_API_KEY bilerek tanımlı değil: tanımlı olsaydı CLI aboneliğiniz yerine API anahtarını kullanırdı.
       - name: Sayıyı üret (abonelik veya mock)
-        if: ${{ vars.LLM_BACKEND != 'anthropic_api' }}
+        if: ${{ steps.guard.outputs.skip != 'true' && (vars.LLM_BACKEND != 'anthropic_api') }}
         env:
           LLM_BACKEND: ${{ vars.LLM_BACKEND }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: python -m src.run
 
       - name: Veriyi depoya işle
+        if: ${{ steps.guard.outputs.skip != 'true' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -78,8 +97,11 @@ jobs:
           fi
 
       - uses: actions/configure-pages@v5
+        if: ${{ steps.guard.outputs.skip != 'true' }}
       - uses: actions/upload-pages-artifact@v3
+        if: ${{ steps.guard.outputs.skip != 'true' }}
         with:
           path: site
       - id: deployment
+        if: ${{ steps.guard.outputs.skip != 'true' }}
         uses: actions/deploy-pages@v4
