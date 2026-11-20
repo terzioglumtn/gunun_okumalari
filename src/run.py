@@ -12,6 +12,7 @@ import yaml
 
 from .collect import collect
 from .llm import LLM
+from . import pipeline
 from .pipeline import run_topic
 from .render import render_all
 from .util import canon_url
@@ -56,6 +57,34 @@ def next_issue_no(data_dir: Path, today: dt.date) -> int:
     return max(nums, default=0) + 1
 
 
+def feed_key(source: str, via: str | None) -> str:
+    """Derleme akışlarında (Morning Dew vb.) madde kaynağı alan adıdır; istatistik akış adına göre tutulur."""
+    return via or source
+
+
+def source_stats(candidates: dict, items: list[dict], scored: dict, skipped: set) -> dict:
+    """Akış başına: aday, LLM'in puanladığı, metni yetersiz atlanan, yayımlanan sayısı ve ortalama puan."""
+    rows: dict[str, dict] = {}
+    for cands in candidates.values():
+        for c in cands:
+            r = rows.setdefault(feed_key(c.source, c.via),
+                                {"candidates": 0, "scored": 0, "skipped_text": 0, "published": 0, "_sum": 0})
+            r["candidates"] += 1
+            if c.id in scored:
+                r["scored"] += 1
+                r["_sum"] += scored[c.id]
+            if c.id in skipped:
+                r["skipped_text"] += 1
+    for it in items:
+        r = rows.setdefault(feed_key(it["source"], it.get("via")),
+                            {"candidates": 0, "scored": 0, "skipped_text": 0, "published": 0, "_sum": 0})
+        r["published"] += 1
+    for r in rows.values():
+        s = r.pop("_sum")
+        r["avg_score"] = round(s / r["scored"], 2) if r["scored"] else None
+    return dict(sorted(rows.items()))
+
+
 def main() -> int:
     cfg = yaml.safe_load((ROOT / "config" / "config.yaml").read_text(encoding="utf-8"))
     interests = (ROOT / "config" / "interests.md").read_text(encoding="utf-8")
@@ -76,6 +105,8 @@ def main() -> int:
     backend = os.environ.get("LLM_BACKEND") or cfg["llm"]["backend"]
     llm = LLM(backend, cfg["llm"]["select_model"], cfg["llm"]["summarize_model"])
 
+    pipeline.SCORED.clear()
+    pipeline.SKIPPED.clear()
     recent = load_recent_titles(data_dir, today, run["seen_days"])
     items: list[dict] = []
     for key, tcfg in cfg["topics"].items():
@@ -98,7 +129,8 @@ def main() -> int:
         "items": items, "top_ids": top_ids,
         "stats": {"feeds": n_feeds, "feed_errors": errors,
                   "candidates": {k: len(v) for k, v in candidates.items()},
-                  "selected": len(items)},
+                  "selected": len(items),
+                  "sources": source_stats(candidates, items, pipeline.SCORED, pipeline.SKIPPED)},
     }
     (data_dir / f"{today}.json").write_text(
         json.dumps(issue, ensure_ascii=False, indent=1), encoding="utf-8")

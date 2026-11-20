@@ -25,6 +25,9 @@ REPO_RULES = (
 
 
 MIN_SCORE = 3        # bu puanın altındaki maddeler (repo hariç) yayımlanmaz; konu bazında min_score ile ezilir
+# Kaynak istatistiği için çalışma boyunca toplanan izler (run.py okur ve sıfırlar)
+SCORED: dict[str, int] = {}   # LLM'in puan verdiği aday id -> puan (taban uygulanmadan önce)
+SKIPPED: set[str] = set()     # metni yetersiz bulunup atlanan aday id'leri
 SPARE = 3            # metni yetersiz çıkan maddelerin yerini almak için seçimden ek adaylar
 MIN_TEXT = 500       # makale için yeterli sayfa metni (karakter)
 MIN_TEXT_SHORT = 200 # depo ve soru-cevap türü için
@@ -55,6 +58,8 @@ def keep_with_full_text(items: list[Item], texts: dict[str, str], n: int) -> lis
     """İlk n yeterli-metinli maddeyi sırayla alır. Hiçbirinin metni yoksa (ağ sorunu olabilir) ilk n'i döndürür."""
     good = [i for i in items if has_full_text(i, texts.get(i.id, ""))]
     skipped = [i for i in items if i not in good]
+    if good:
+        SKIPPED.update(i.id for i in skipped)
     if skipped and good:
         print(f"metni yetersiz {len(skipped)} madde atlandı: "
               + "; ".join(f"{i.source}: {i.title[:50]}" for i in skipped), file=sys.stderr)
@@ -105,6 +110,8 @@ def select(llm: LLM, topic_cfg: dict, items: list[Item], interests: str,
             seen.add(pid)
             out.append({"id": pid, "score": int(p.get("score", 3)),
                         "neden": str(p.get("neden", ""))})
+    for o in out:
+        SCORED[o["id"]] = max(o["score"], SCORED.get(o["id"], 0))
     if not must:  # kalite tabanı: zayıf maddeler sayıyı doldurmak için alınmaz
         floor = int(topic_cfg.get("min_score", MIN_SCORE))
         out = [o for o in out if o["score"] >= floor]

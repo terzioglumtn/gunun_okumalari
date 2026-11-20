@@ -456,3 +456,15 @@ def test_per_feed_lookback_hours(tmp_path):
     assert collect(base, NOW, set())[0].get("t", []) == []
     base["feeds"][0]["lookback_hours"] = 168
     assert [i.title for i in collect(base, NOW, set())[0]["t"]] == ["Haftalık yazı"]
+
+
+def test_source_stats_counts_per_feed():
+    from src.run import source_stats
+    from src.collect import Item
+    mk = lambda i, src, via=None: Item(id=i, topic="t", source=src, kind="article", url="https://x/" + i,
+                                       title=i, snippet="", published=NOW, via=via)
+    cands = {"t": [mk("a1", "A"), mk("a2", "A"), mk("b1", "b.com", via="Morning Dew"), mk("c1", "C")]}
+    items = [{"id": "a1", "source": "A", "via": None}, {"id": "b1", "source": "b.com", "via": "Morning Dew"}]
+    st = source_stats(cands, items, {"a1": 4, "a2": 2, "b1": 5}, {"a2"})
+    assert st["A"] == {"candidates": 2, "scored": 2, "skipped_text": 1, "published": 1, "avg_score": 3.0}
+    assert st["Morning Dew"]["published"] == 1 and st["C"]["avg_score"] is None
