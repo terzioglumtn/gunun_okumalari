@@ -424,8 +424,8 @@ def test_repo_box_is_separate_and_top_stays_full(tmp_path):
                                                     "top_ids": ["abcdef00", "abcdef01", "abcdef02"], "items": items, "stats": {}}), encoding="utf-8")
     out = tmp_path / "site"; render_all(cfg, d, out)
     html = (out / "index.html").read_text(encoding="utf-8")
-    assert "Bugünün deposu" in html and html.count("Başlık 0") == 1
-    assert html.split("Önce bunlar")[1].split("</section>")[0].count("<article") == 3
+    assert "Bugünün Deposu" in html and html.count("Başlık 0") == 1
+    assert html.split("Önce Bunlar")[1].split("</section>")[0].count("<article") == 3
     assert '<span class="count">(5/10)</span>' in html
 
 
@@ -479,4 +479,4 @@ def test_empty_topic_shown_with_max(tmp_path):
         "top_ids": [], "items": [], "topics": ["liderlik"], "stats": {}}), encoding="utf-8")
     out = tmp_path / "site"; render_all(cfg, d, out)
     html = (out / "index.html").read_text(encoding="utf-8")
-    assert "İş ve liderlik" in html and "(0/1)" in html and "eşiği geçen yazı çıkmadı" in html
+    assert "İş ve Liderlik" in html and "(0/1)" in html and "eşiği geçen yazı çıkmadı" in html

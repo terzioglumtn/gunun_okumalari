@@ -42,27 +42,26 @@ topics:
     repo_slots: 1   # GitHub Trending (haftalık) listesinden her gün 1 depo ZORUNLU seçilir (makale kontenjanına ek)
     desc: "Yazılım geliştirme: .NET, C#, WPF/WinForms, Avalonia, Visual Studio, web ve bulut, Python, mobil ve oyun, DevOps ve metodoloji, yazılım mimarisi, Git, geliştirici araçları ve yapay zekâ destekli geliştirme"
     max_items: 10
-  savunma:
-    title: "Savunma, İHA ve insansız sistemler"
-    desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"
-    max_items: 10
-  liderlik:
-    title: "İş ve liderlik"
-    desc: "Liderlik, ekip yönetimi, strateji, kurumsal kültür, karar verme, girişimcilik ve inovasyon yönetimi; somut örnek, araştırma veya uygulanabilir çerçeve içeren yazılar"
-    max_items: 1
   teknoloji:
-    title: "Teknoloji ve yapay zekâ"
+    title: "Teknoloji ve Yapay Zeka"
     desc: "Yapay zekâ modelleri ve sektörü, yarı iletken ve YZ altyapısı, teknolojinin toplum ve politika boyutu; uygulamalı yazılım mühendisliği bu alana değil Yazılım'a girer"
     max_items: 5
+  savunma:
+    title: "Savunma"
+    desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"
+    max_items: 10
   jeopolitik:
-    title: "Jeopolitik ve strateji"
+    title: "Jeopolitik ve Strateji"
     desc: "Bölgesel güvenlik, deniz stratejisi, Orta Doğu, enerji güvenliği, büyük güç rekabeti ve uluslararası ilişkiler; platform ve sanayi haberleri Savunma'ya girer"
     max_items: 3
+  liderlik:
+    title: "İş ve Liderlik"
+    desc: "Liderlik, ekip yönetimi, strateji, kurumsal kültür, karar verme, girişimcilik ve inovasyon yönetimi; somut örnek, araştırma veya uygulanabilir çerçeve içeren yazılar"
+    max_items: 1
   ekonomi:
     title: "Ekonomi"
     desc: "Makroekonomi, küresel ve Türkiye ekonomisi, veriye dayalı ekonomik analiz"
     max_items: 2
-
 feeds:
   # --- Substack (RSS: <yayın>/feed). Haftalık yayınlar: 7 günlük pencere (lookback_hours: 168). Ücretli ağırlıklı olanlar kind: preview (ön izlemeye dayalı kısa özet) ---
   - {name: "ByteByteGo", lookback_hours: 168, topic: dotnet, url: "https://blog.bytebytego.com/feed"}

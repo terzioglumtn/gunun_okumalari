@@ -35,7 +35,7 @@
 {% block content %}
 {% if v.top %}
 <section class="brief">
-  <h2>Önce bunlar</h2>
+  <h2>Önce Bunlar</h2>
   <p class="lede">Vaktiniz kısaysa yalnızca bu {{ v.top|length }} maddeyi okuyun.</p>
   {% for it in v.top %}{{ card(it) }}{% endfor %}
 </section>
@@ -43,7 +43,7 @@
 
 {% if v.repo %}
 <section class="repo-box">
-  <h2>Bugünün deposu</h2>
+  <h2>Bugünün Deposu</h2>
   <p class="lede">GitHub Trending (haftalık) listesinden günün seçimi.</p>
   {{ card(v.repo) }}
 </section>
