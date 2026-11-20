@@ -47,7 +47,7 @@ topics:
     desc: "Yapay zekâ modelleri ve sektörü, yarı iletken ve YZ altyapısı, teknolojinin toplum ve politika boyutu; uygulamalı yazılım mühendisliği bu alana değil Yazılım'a girer"
     max_items: 5
   savunma:
-    title: "Savunma"
+    title: "Savunma ve İnsansız Sistemler"
     desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"
     max_items: 10
   jeopolitik:
