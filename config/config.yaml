@@ -53,7 +53,7 @@ topics:
   teknoloji:
     title: "Teknoloji ve yapay zekâ"
     desc: "Yapay zekâ modelleri ve sektörü, yarı iletken ve YZ altyapısı, teknolojinin toplum ve politika boyutu; uygulamalı yazılım mühendisliği bu alana değil Yazılım'a girer"
-    max_items: 3
+    max_items: 5
   jeopolitik:
     title: "Jeopolitik ve strateji"
     desc: "Bölgesel güvenlik, deniz stratejisi, Orta Doğu, enerji güvenliği, büyük güç rekabeti ve uluslararası ilişkiler; platform ve sanayi haberleri Savunma'ya girer"
@@ -67,6 +67,12 @@ feeds:
   # --- Substack (RSS: <yayın>/feed). Haftalık yayınlar: 7 günlük pencere (lookback_hours: 168). Ücretli ağırlıklı olanlar kind: preview (ön izlemeye dayalı kısa özet) ---
   - {name: "ByteByteGo", lookback_hours: 168, topic: dotnet, url: "https://blog.bytebytego.com/feed"}
   - {name: "SemiAnalysis", lookback_hours: 168, topic: teknoloji, kind: preview, url: "https://newsletter.semianalysis.com/feed"}
+  # --- Türkçe teknoloji haberleri (Inoreader): yüksek hacim, aday sınırı düşük ---
+  - {name: "Webrazzi", topic: teknoloji, cap: 6, url: "https://feeds.feedburner.com/webrazzi"}
+  - {name: "LOG", topic: teknoloji, cap: 5, url: "https://www.log.com.tr/feed/"}
+  - {name: "Hardware Plus", topic: teknoloji, cap: 5, url: "https://hwp.com.tr/feed"}
+  - {name: "Webtekno", topic: teknoloji, cap: 5, url: "https://www.webtekno.com/rss.xml"}
+  - {name: "The Economist: Science and technology", topic: teknoloji, kind: preview, cap: 5, url: "https://www.economist.com/science-and-technology/rss.xml"}
   - {name: "Yapay Bülten", lookback_hours: 168, topic: teknoloji, url: "https://bulten.yapaybulten.com/feed"}
   - {name: "Anafikir", lookback_hours: 168, topic: teknoloji, url: "https://anafikir.substack.com/feed"}
   - {name: "Dünya Trendleri", lookback_hours: 168, topic: teknoloji, url: "https://dunyatrendleri.substack.com/feed"}
