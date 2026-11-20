@@ -10,6 +10,11 @@ on:
     - cron: "47 4 * * *"
     - cron: "17 6 * * *"
   workflow_dispatch:
+    inputs:
+      render_only:
+        description: "Yalnızca siteyi mevcut veriden yeniden üret (LLM çalışmaz, limit harcanmaz)"
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -35,7 +40,10 @@ jobs:
         id: guard
         run: |
           today=$(TZ=Europe/Istanbul date +%F)
-          if [ "${{ github.event_name }}" = "schedule" ] && [ -f "data/$today.json" ]; then
+          if [ "${{ inputs.render_only }}" = "true" ]; then
+            echo "skip=false" >> "$GITHUB_OUTPUT"; echo "render=true" >> "$GITHUB_OUTPUT"
+            echo "Yalnızca site yeniden üretilecek."
+          elif [ "${{ github.event_name }}" = "schedule" ] && [ -f "data/$today.json" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "data/$today.json zaten var; atlanıyor."
           else
@@ -56,17 +64,17 @@ jobs:
       # API'ye geçmek için: Settings > Variables > LLM_BACKEND = anthropic_api
       # Sınama için: LLM_BACKEND = mock
       - name: Node (claude_cli için)
-        if: ${{ steps.guard.outputs.skip != 'true' && (vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock') }}
+        if: ${{ steps.guard.outputs.skip != 'true' && steps.guard.outputs.render != 'true' && (vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock') }}
         uses: actions/setup-node@v4
         with:
           node-version: "22"
 
       - name: Claude Code CLI
-        if: ${{ steps.guard.outputs.skip != 'true' && (vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock') }}
+        if: ${{ steps.guard.outputs.skip != 'true' && steps.guard.outputs.render != 'true' && (vars.LLM_BACKEND != 'anthropic_api' && vars.LLM_BACKEND != 'mock') }}
         run: npm install -g @anthropic-ai/claude-code
 
       - name: Sayıyı üret (API)
-        if: ${{ steps.guard.outputs.skip != 'true' && (vars.LLM_BACKEND == 'anthropic_api') }}
+        if: ${{ steps.guard.outputs.skip != 'true' && steps.guard.outputs.render != 'true' && (vars.LLM_BACKEND == 'anthropic_api') }}
         env:
           LLM_BACKEND: anthropic_api
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
@@ -74,11 +82,15 @@ jobs:
 
       # Bu adımda ANTHROPIC_API_KEY bilerek tanımlı değil: tanımlı olsaydı CLI aboneliğiniz yerine API anahtarını kullanırdı.
       - name: Sayıyı üret (abonelik veya mock)
-        if: ${{ steps.guard.outputs.skip != 'true' && (vars.LLM_BACKEND != 'anthropic_api') }}
+        if: ${{ steps.guard.outputs.skip != 'true' && steps.guard.outputs.render != 'true' && (vars.LLM_BACKEND != 'anthropic_api') }}
         env:
           LLM_BACKEND: ${{ vars.LLM_BACKEND }}
           CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
         run: python -m src.run
+
+      - name: Siteyi yeniden üret (LLM yok)
+        if: ${{ steps.guard.outputs.render == 'true' }}
+        run: python -m src.render
 
       - name: Veriyi depoya işle
         if: ${{ steps.guard.outputs.skip != 'true' }}

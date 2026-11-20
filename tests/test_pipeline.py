@@ -393,8 +393,8 @@ def test_site_has_search_and_compact(tmp_path):
                                                     "top_ids": ["abcdef00"], "items": items, "stats": {}}), encoding="utf-8")
     out = tmp_path / "site"; render_all(cfg, d, out)
     html = (out / "index.html").read_text(encoding="utf-8")
-    assert '<span class="count">(5/10)</span>' in html
-    assert html.count('<details class="item compact"') == 4 and "Ilk cümle." in html
+    assert '<span class="count">5<small>/10</small></span>' in html
+    assert html.count('<details class="item"') == 4 and "Ilk cümle." in html
     rows = json.loads((out / "search.json").read_text(encoding="utf-8"))
     assert len(rows) == 5 and rows[0]["tags"] == ["AI"]
     assert "search.json" in (out / "arama.html").read_text(encoding="utf-8")
@@ -425,8 +425,8 @@ def test_repo_box_is_separate_and_top_stays_full(tmp_path):
     out = tmp_path / "site"; render_all(cfg, d, out)
     html = (out / "index.html").read_text(encoding="utf-8")
     assert "Bugünün Deposu" in html and html.count("Başlık 0") == 1
-    assert html.split("Önce Bunlar")[1].split("</section>")[0].count("<article") == 3
-    assert '<span class="count">(5/10)</span>' in html
+    assert html.split('id="once-bunlar"')[1].split("</section>")[0].count("<article") == 3
+    assert '<span class="count">5<small>/10</small></span>' in html
 
 
 def test_parse_kume_routes_by_title_and_type():
@@ -479,4 +479,4 @@ def test_empty_topic_shown_with_max(tmp_path):
         "top_ids": [], "items": [], "topics": ["liderlik"], "stats": {}}), encoding="utf-8")
     out = tmp_path / "site"; render_all(cfg, d, out)
     html = (out / "index.html").read_text(encoding="utf-8")
-    assert "İş ve Liderlik" in html and "(0/1)" in html and "eşiği geçen yazı çıkmadı" in html
+    assert "İş ve Liderlik" in html and "0<small>/1</small>" in html and "eşiği geçen yazı çıkmadı" in html

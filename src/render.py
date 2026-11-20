@@ -81,11 +81,12 @@ def _view(issue: dict, cfg: dict, tz: ZoneInfo) -> dict:
                        key=lambda i: -i["score"])
         # O gün çalışan alanlar boş kalsa da başlığıyla görünür (eski sayılarda yalnızca dolu alanlar).
         if items or key in issue.get("topics", []):
-            groups.append({"key": key, "title": tcfg["title"], "entries": items,
-                           "max": tcfg.get("max_items")})
+            groups.append({"key": key, "title": tcfg["title"], "short": tcfg.get("short", tcfg["title"]),
+                           "entries": items, "max": tcfg.get("max_items")})
     return {
         "date": date, "date_tr": tr_date(date), "weekday": tr_weekday(date),
         "issue_no": issue["issue_no"], "generated": _local(issue["generated_at"], tz),
+        "filled": sum(1 for g in groups if g["entries"]),
         "top": top, "top_ids": top_ids, "repo": repo, "groups": groups, "count": len(issue["items"]),
         "feed_errors": len(issue.get("stats", {}).get("feed_errors", [])),
         "raw": issue,

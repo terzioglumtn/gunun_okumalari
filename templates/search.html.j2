@@ -2,9 +2,11 @@
 {% block title %}Ara · {{ site.title }}{% endblock %}
 {% block desc %}Geçmiş sayılarda başlık, özet ve etikete göre arama.{% endblock %}
 {% block header %}
+<div class="page-head">
 <p class="label">Bilgi birikimi</p>
 <h1>Ara</h1>
 <p class="sub">Tüm sayılardaki başlık, özet ve etiketlerde arayın.</p>
+</div>
 {% endblock %}
 {% block content %}
 <form class="search" onsubmit="return false">
@@ -33,7 +35,7 @@
     out.textContent="";
     cnt.textContent=res.length+" sonuç"+(res.length===100?" (ilk 100)":"");
     res.forEach(function(r){
-      var a=el("article",null,"item"), h=el("h3"), l=el("a",r.t);
+      var a=el("article",null,"item"), h=el("h3"); a.setAttribute("data-topic",r.k), l=el("a",r.t);
       l.href=safe(r.u); l.target="_blank"; l.rel="noopener"; h.appendChild(l); a.appendChild(h);
       var m=el("p",null,"meta"); m.appendChild(document.createTextNode(r.d+" · "+r.src+" · "+r.kt));
       r.tags.forEach(function(t){m.appendChild(document.createTextNode(" · "));m.appendChild(el("span",t,"tag"));});

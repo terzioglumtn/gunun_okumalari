@@ -30,6 +30,7 @@ llm:
 topics:
   dotnet:
     title: "Yazılım"
+    short: "Yazılım"          # menüdeki kısa ad
     tags:   # her maddeye bunlardan 1-2 etiket verilir (LLM), uymazsa "Diğer"
       - Web and Cloud Development
       - Windows Development
@@ -44,22 +45,27 @@ topics:
     max_items: 10
   teknoloji:
     title: "Teknoloji ve Yapay Zeka"
+    short: "Teknoloji"          # menüdeki kısa ad
     desc: "Yapay zekâ modelleri ve sektörü, yarı iletken ve YZ altyapısı, teknolojinin toplum ve politika boyutu; uygulamalı yazılım mühendisliği bu alana değil Yazılım'a girer"
     max_items: 5
   savunma:
     title: "Savunma ve İnsansız Sistemler"
+    short: "Savunma"          # menüdeki kısa ad
     desc: "İHA/SİHA, insansız sistemler, otonomi, İHA karşıtı sistemler, savunma sanayii programları ve ihracat gelişmeleri"
     max_items: 10
   jeopolitik:
     title: "Jeopolitik ve Strateji"
+    short: "Jeopolitik"          # menüdeki kısa ad
     desc: "Bölgesel güvenlik, deniz stratejisi, Orta Doğu, enerji güvenliği, büyük güç rekabeti ve uluslararası ilişkiler; platform ve sanayi haberleri Savunma'ya girer"
     max_items: 3
   liderlik:
     title: "İş ve Liderlik"
+    short: "Liderlik"          # menüdeki kısa ad
     desc: "Liderlik, ekip yönetimi, strateji, kurumsal kültür, karar verme, girişimcilik ve inovasyon yönetimi; somut örnek, araştırma veya uygulanabilir çerçeve içeren yazılar"
     max_items: 1
   ekonomi:
     title: "Ekonomi"
+    short: "Ekonomi"          # menüdeki kısa ad
     desc: "Makroekonomi, küresel ve Türkiye ekonomisi, veriye dayalı ekonomik analiz"
     max_items: 2
 feeds:
