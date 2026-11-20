@@ -64,20 +64,21 @@ topics:
     max_items: 2
 
 feeds:
-  # --- Substack (RSS: <yayın>/feed). Ücretli ağırlıklı olanlar kind: preview (ön izlemeye dayalı kısa özet) ---
-  - {name: "ByteByteGo", topic: dotnet, url: "https://blog.bytebytego.com/feed"}
-  - {name: "SemiAnalysis", topic: teknoloji, kind: preview, url: "https://newsletter.semianalysis.com/feed"}
-  - {name: "Yapay Bülten", topic: teknoloji, url: "https://bulten.yapaybulten.com/feed"}
-  - {name: "Anafikir", topic: teknoloji, url: "https://anafikir.substack.com/feed"}
-  - {name: "Dünya Trendleri", topic: teknoloji, url: "https://dunyatrendleri.substack.com/feed"}
-  - {name: "Cem Gürdeniz", topic: jeopolitik, url: "https://cemgurdenz.substack.com/feed"}
-  - {name: "Middle East Politics", topic: jeopolitik, url: "https://mideastpolitics.substack.com/feed"}
-  - {name: "M. Serdar Kuzuloğlu Bülteni", topic: jeopolitik, url: "https://bulten.mserdark.com/feed"}
-  - {name: "The Economist: Off the Charts", topic: ekonomi, kind: preview, url: "https://theeconomistoffthecharts.substack.com/feed"}
+  # --- Substack (RSS: <yayın>/feed). Haftalık yayınlar: 7 günlük pencere (lookback_hours: 168). Ücretli ağırlıklı olanlar kind: preview (ön izlemeye dayalı kısa özet) ---
+  - {name: "ByteByteGo", lookback_hours: 168, topic: dotnet, url: "https://blog.bytebytego.com/feed"}
+  - {name: "SemiAnalysis", lookback_hours: 168, topic: teknoloji, kind: preview, url: "https://newsletter.semianalysis.com/feed"}
+  - {name: "Yapay Bülten", lookback_hours: 168, topic: teknoloji, url: "https://bulten.yapaybulten.com/feed"}
+  - {name: "Anafikir", lookback_hours: 168, topic: teknoloji, url: "https://anafikir.substack.com/feed"}
+  - {name: "Dünya Trendleri", lookback_hours: 168, topic: teknoloji, url: "https://dunyatrendleri.substack.com/feed"}
+  - {name: "Cem Gürdeniz", lookback_hours: 168, topic: jeopolitik, url: "https://cemgurdenz.substack.com/feed"}
+  - {name: "Middle East Politics", lookback_hours: 168, topic: jeopolitik, url: "https://mideastpolitics.substack.com/feed"}
+  - {name: "M. Serdar Kuzuloğlu Bülteni", lookback_hours: 168, topic: jeopolitik, url: "https://bulten.mserdark.com/feed"}
+  - {name: "The Economist: Off the Charts", lookback_hours: 168, topic: ekonomi, kind: preview, url: "https://theeconomistoffthecharts.substack.com/feed"}
   # Küme Vakfı: RSS yok, Substack pasif -> arşiv sayfası ayrıştırılır. Yayınlar başlık/türe göre alana dağıtılır.
   - name: "Küme Vakfı"
     topic: teknoloji
     html: kume
+    lookback_hours: 168
     url: "https://kumevakfi.org/yayinlar"
     cap: 6
     routes:

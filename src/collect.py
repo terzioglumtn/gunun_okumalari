@@ -318,20 +318,21 @@ def _is_seen(url: str, seen, days: int) -> bool:
 def collect(cfg: dict, now: dt.datetime, seen_urls):
     """Konu -> aday listesi ve hata listesini döndürür."""
     run = cfg["run"]
-    since = now - dt.timedelta(hours=run["lookback_hours"])
     per_topic: dict[str, list[list[Item]]] = {}
     errors: list[str] = []
     feeds = [f for f in cfg["feeds"] if f.get("enabled", True)]
 
     for feed in feeds:
+        # Haftalık yayınlar için akış bazında daha uzun pencere (lookback_hours); tekrar, seen kontrolüyle engellenir.
+        f_since = now - dt.timedelta(hours=feed.get("lookback_hours", run["lookback_hours"]))
         try:
-            items = fetch_feed({**feed, "_since": since})
+            items = fetch_feed({**feed, "_since": f_since})
         except Exception as exc:  # tek akışın hatası tüm hattı durdurmasın
             errors.append(f'{feed["name"]}: {exc}')
             continue
         days = feed.get("seen_days", run["seen_days"])
         fresh = [i for i in items
-                 if (i.published is None or i.published >= since)
+                 if (i.published is None or i.published >= f_since)
                  and not _is_seen(i.url, seen_urls, days)]
         fresh.sort(key=lambda i: i.published or now, reverse=True)
         if feed.get("roundup"):

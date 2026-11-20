@@ -443,3 +443,17 @@ def test_parse_kume_routes_by_title_and_type():
                    "Orta Doğu'da Çift Kullanım Sorunsalı": "jeopolitik", "Gri Bölge #57": "jeopolitik"}
     assert items[1].url == "https://kumevakfi.org/toplum-ve-teknoloji-86-2"
     assert items[0].published.day == 16 and items[0].published.month == 11
+
+
+def test_per_feed_lookback_hours(tmp_path):
+    import datetime as dt
+    from src.collect import collect
+    xml = tmp_path / "w.xml"
+    old = (NOW - dt.timedelta(days=4)).strftime("%a, %d %b %Y %H:%M:%S +0000")
+    xml.write_text(f'<?xml version="1.0"?><rss version="2.0"><channel><title>w</title><item><title>Haftalık yazı</title>'
+                   f'<link>https://w.example/a</link><pubDate>{old}</pubDate></item></channel></rss>', encoding="utf-8")
+    base = {"run": {"lookback_hours": 48, "seen_days": 7, "per_feed_cap": 20, "candidates_per_topic": 50},
+            "feeds": [{"name": "W", "topic": "t", "url": f"file://{xml}"}]}
+    assert collect(base, NOW, set())[0].get("t", []) == []
+    base["feeds"][0]["lookback_hours"] = 168
+    assert [i.title for i in collect(base, NOW, set())[0]["t"]] == ["Haftalık yazı"]
