@@ -74,7 +74,18 @@ feeds:
   - {name: "Middle East Politics", topic: jeopolitik, url: "https://mideastpolitics.substack.com/feed"}
   - {name: "M. Serdar Kuzuloğlu Bülteni", topic: jeopolitik, url: "https://bulten.mserdark.com/feed"}
   - {name: "The Economist: Off the Charts", topic: ekonomi, kind: preview, url: "https://theeconomistoffthecharts.substack.com/feed"}
-  # Küme Vakfı (kumevakfi.org/yayinlar): RSS yok, Substack pasif. Ayrıştırıcı ikinci adımda eklenecek.
+  # Küme Vakfı: RSS yok, Substack pasif -> arşiv sayfası ayrıştırılır. Yayınlar başlık/türe göre alana dağıtılır.
+  - name: "Küme Vakfı"
+    topic: teknoloji
+    html: kume
+    url: "https://kumevakfi.org/yayinlar"
+    cap: 6
+    routes:
+      - {match: "^Toplum ve Teknoloji", topic: teknoloji}
+      - {match: "^Gri Bölge", topic: jeopolitik}
+      - {type: "Rapor", topic: jeopolitik}
+      - {type: "Blog", topic: teknoloji}
+      - {topic: null}          # Dosya, sanat, etkinlik, duyuru: alınmaz
 
   # --- İş ve liderlik (günde 1 madde) ---
   # Inc. Türkiye (abonelikli): RSS adresi sayfa kaynağından bulundu; ön izlemeye dayalı kısa özet (kind: preview).

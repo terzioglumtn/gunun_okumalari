@@ -202,7 +202,78 @@ def parse_trending(feed: dict, html: str) -> list[Item]:
     return out
 
 
+TR_MONTHS = {m: i for i, m in enumerate(
+    ["ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos",
+     "eylül", "ekim", "kasım", "aralık"], 1)}
+TR_DATE = re.compile(r"(\d{1,2})\s+(" + "|".join(TR_MONTHS) + r")\s+(\d{4})", re.I)
+KUME_TYPES = ("Bülten", "Blog", "Rapor", "Dosya", "Sanat destekleri", "Etkinlik", "Duyurular", "Tasarım")
+
+
+def _tr_date(text: str) -> dt.datetime | None:
+    m = TR_DATE.search(text)
+    if not m:
+        return None
+    month = TR_MONTHS[m.group(2).lower().replace("I", "ı")]
+    return dt.datetime(int(m.group(3)), month, int(m.group(1)), 12, tzinfo=dt.timezone.utc)
+
+
+def route_topic(feed: dict, title: str, kind_label: str) -> str | None:
+    """routes: [{match: <regex başlık>, type: <tür>, topic: <konu>}] — ilk eşleşen kazanır; topic null ise atla."""
+    for r in feed.get("routes", []):
+        if "match" in r and not re.search(r["match"], title, re.I):
+            continue
+        if "type" in r and r["type"] != kind_label:
+            continue
+        return r.get("topic")
+    return feed["topic"]
+
+
+def parse_kume(feed: dict, html: str) -> list[Item]:
+    """kumevakfi.org/yayinlar arşiv sayfası (RSS yok). Kart: başlık bağlantısı + tür etiketi + Türkçe tarih.
+    Kalıp: https://kumevakfi.org/<slug>; menü/alt bilgi bağlantıları tarih taşımadığı için elenir."""
+    base = feed.get("base", "https://kumevakfi.org")
+    soup = BeautifulSoup(html, "html.parser")
+    out: list[Item] = []
+    seen: set[str] = set()
+    for a in soup.find_all("a", href=True):
+        href = a["href"].strip()
+        if href.startswith("/"):
+            href = base + href
+        if not re.fullmatch(re.escape(base) + r"/[a-z0-9-]+/?", href) or href in seen:
+            continue
+        # Kartı bul: tarih içeren en yakın üst öğe (en fazla 5 seviye)
+        card, published = a, None
+        for _ in range(5):
+            card = card.parent
+            if card is None:
+                break
+            published = _tr_date(card.get_text(" ", strip=True))
+            if published:
+                break
+        if not published or card is None:
+            continue
+        head = card.find(["h1", "h2", "h3", "h4"])
+        title = re.sub(r"\s+", " ", (head or a).get_text(" ", strip=True))
+        if len(title) < 6:
+            continue
+        text = re.sub(r"\s+", " ", card.get_text(" ", strip=True))
+        label = next((t for t in KUME_TYPES if re.search(r"(^|\s)" + t + r"(\s|$)", text)), "")
+        topic = route_topic(feed, title, label)
+        if not topic:
+            continue
+        seen.add(href)
+        out.append(Item(id=item_id(href), topic=topic, source=feed["name"], kind=feed.get("kind", "article"),
+                        url=href, title=title, snippet=f"Tür: {label}." if label else "", published=published))
+    print(f'kume "{feed["name"]}": {len(out)} yayın', file=sys.stderr)
+    if len(out) < feed.get("min_links", 3):
+        raise ValueError(f"Küme arşivi ayrıştırılamadı ({len(out)} yayın, sayfa {len(html)} karakter); "
+                         "sayfa yapısı değişmiş olabilir")
+    return out
+
+
 def fetch_feed(feed: dict) -> list[Item]:
+    if feed.get("html") == "kume":
+        return parse_kume(feed, _read(feed["url"]).decode("utf-8", errors="replace"))
     if feed.get("html") == "trending":
         return parse_trending(feed, _read(feed["url"]).decode("utf-8", errors="replace"))
     parsed = feedparser.parse(_read(feed["url"]))
@@ -266,7 +337,9 @@ def collect(cfg: dict, now: dt.datetime, seen_urls):
         if feed.get("roundup"):
             fresh = spread_by_section(fresh)
         cap = feed.get("cap", run["per_feed_cap"])  # derleme akışları için daha yüksek olabilir
-        per_topic.setdefault(feed["topic"], []).append(fresh[:cap])
+        # Bir akış birden çok konuya dağıtabilir (routes); her konu kendi listesini alır.
+        for topic in dict.fromkeys(i.topic for i in fresh) or [feed["topic"]]:
+            per_topic.setdefault(topic, []).append([i for i in fresh if i.topic == topic][:cap])
 
     candidates: dict[str, list[Item]] = {}
     for topic, lists in per_topic.items():

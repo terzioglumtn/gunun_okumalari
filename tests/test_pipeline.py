@@ -427,3 +427,19 @@ def test_repo_box_is_separate_and_top_stays_full(tmp_path):
     assert "Bugünün deposu" in html and html.count("Başlık 0") == 1
     assert html.split("Önce bunlar")[1].split("</section>")[0].count("<article") == 3
     assert '<span class="count">(5)</span>' in html
+
+
+def test_parse_kume_routes_by_title_and_type():
+    from pathlib import Path
+    from src.collect import parse_kume
+    feed = {"name": "Küme Vakfı", "topic": "teknoloji", "routes": [
+        {"match": "^Toplum ve Teknoloji", "topic": "teknoloji"}, {"match": "^Gri Bölge", "topic": "jeopolitik"},
+        {"type": "Rapor", "topic": "jeopolitik"}, {"type": "Blog", "topic": "teknoloji"},
+        {"topic": None}]}
+    html = (Path(__file__).parent / "fixtures" / "kume.html").read_text(encoding="utf-8")
+    items = parse_kume(feed, html)
+    got = {i.title.split(":")[0]: i.topic for i in items}
+    assert got == {"Otomatiklik, Karar ve Siyasal Olan": "teknoloji", "Toplum ve Teknoloji #87": "teknoloji",
+                   "Orta Doğu'da Çift Kullanım Sorunsalı": "jeopolitik", "Gri Bölge #57": "jeopolitik"}
+    assert items[1].url == "https://kumevakfi.org/toplum-ve-teknoloji-86-2"
+    assert items[0].published.day == 16 and items[0].published.month == 11
