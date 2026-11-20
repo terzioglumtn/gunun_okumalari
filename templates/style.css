@@ -6,7 +6,13 @@
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root{
+/* Tema: elle seçim (data-theme) sistem ayarından önce gelir */
+:root[data-theme="dark"]{
+  --bg:#0e1013;--surface:#16191e;--ink:#eceef1;--muted:#9aa2ab;--line:#262b32;--panel:#1b1f25;--accent:#8ab4f2;
+  --shadow:0 1px 2px rgba(0,0,0,.3);
+  --c-dotnet:#6d9cf0;--c-teknoloji:#a588ef;--c-savunma:#5fbf8b;--c-jeopolitik:#e69560;--c-liderlik:#e879a8;--c-ekonomi:#d9b545;
+  color-scheme:dark}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0e1013;--surface:#16191e;--ink:#eceef1;--muted:#9aa2ab;--line:#262b32;--panel:#1b1f25;--accent:#8ab4f2;
   --shadow:0 1px 2px rgba(0,0,0,.3);
   --c-dotnet:#6d9cf0;--c-teknoloji:#a588ef;--c-savunma:#5fbf8b;--c-jeopolitik:#e69560;--c-liderlik:#e879a8;--c-ekonomi:#d9b545;
@@ -124,3 +130,16 @@ footer p{margin:4px 0}
 .page-head{padding:34px 0 8px}
 .page-head .sub{margin-top:-4px}
 #count{margin-top:16px}
+.top nav{display:flex;align-items:center}
+.icon-btn{margin-left:14px;display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;
+  border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;padding:0}
+.icon-btn:hover{border-color:var(--muted)}
+.icon-btn svg{width:16px;height:16px}
+.icon-btn .sun{display:none}
+:root[data-theme="dark"] .icon-btn .sun{display:block}:root[data-theme="dark"] .icon-btn .moon{display:none}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .icon-btn .sun{display:block}
+  :root:not([data-theme="light"]) .icon-btn .moon{display:none}}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;transition:.2s;z-index:20}
+.toast.show{opacity:1;transform:translateX(-50%)}
+@media (max-width:480px){.brand{white-space:nowrap;font-size:16px}.top nav a{margin-left:10px;font-size:12px;letter-spacing:.05em}.icon-btn{margin-left:8px;width:30px;height:30px}}
