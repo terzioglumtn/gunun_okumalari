@@ -432,10 +432,9 @@ def test_repo_box_is_separate_and_top_stays_full(tmp_path):
 def test_parse_kume_routes_by_title_and_type():
     from pathlib import Path
     from src.collect import parse_kume
-    feed = {"name": "Küme Vakfı", "topic": "teknoloji", "routes": [
-        {"match": "^Toplum ve Teknoloji", "topic": "teknoloji"}, {"match": "^Gri Bölge", "topic": "jeopolitik"},
-        {"type": "Rapor", "topic": "jeopolitik"}, {"type": "Blog", "topic": "teknoloji"},
-        {"topic": None}]}
+    feed = {"name": "Küme Vakfı", "topic": "teknoloji", "types": ["Blog", "Bülten", "Rapor"], "routes": [
+        {"program": "Güvenlik ve Strateji", "topic": "jeopolitik"},
+        {"program": "Teknoloji ve Yapay Zeka", "topic": "teknoloji"}, {"topic": None}]}
     html = (Path(__file__).parent / "fixtures" / "kume.html").read_text(encoding="utf-8")
     items = parse_kume(feed, html)
     got = {i.title.split(":")[0]: i.topic for i in items}

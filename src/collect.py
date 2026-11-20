@@ -206,7 +206,6 @@ TR_MONTHS = {m: i for i, m in enumerate(
     ["ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos",
      "eylül", "ekim", "kasım", "aralık"], 1)}
 TR_DATE = re.compile(r"(\d{1,2})\s+(" + "|".join(TR_MONTHS) + r")\s+(\d{4})", re.I)
-KUME_TYPES = ("Bülten", "Blog", "Rapor", "Dosya", "Sanat destekleri", "Etkinlik", "Duyurular", "Tasarım")
 
 
 def _tr_date(text: str) -> dt.datetime | None:
@@ -217,53 +216,52 @@ def _tr_date(text: str) -> dt.datetime | None:
     return dt.datetime(int(m.group(3)), month, int(m.group(1)), 12, tzinfo=dt.timezone.utc)
 
 
-def route_topic(feed: dict, title: str, kind_label: str) -> str | None:
-    """routes: [{match: <regex başlık>, type: <tür>, topic: <konu>}] — ilk eşleşen kazanır; topic null ise atla."""
+def route_topic(feed: dict, title: str, kind_label: str, program: str = "") -> str | None:
+    """routes: [{match: <başlık regex>, type: <tür>, program: <program regex>, topic: <konu|null>}] — ilk eşleşen kazanır."""
     for r in feed.get("routes", []):
         if "match" in r and not re.search(r["match"], title, re.I):
             continue
-        if "type" in r and r["type"] != kind_label:
+        if "type" in r and r["type"].lower() != kind_label.lower():
+            continue
+        if "program" in r and not re.search(r["program"], program, re.I):
             continue
         return r.get("topic")
     return feed["topic"]
 
 
 def parse_kume(feed: dict, html: str) -> list[Item]:
-    """kumevakfi.org/yayinlar arşiv sayfası (RSS yok). Kart: başlık bağlantısı + tür etiketi + Türkçe tarih.
-    Kalıp: https://kumevakfi.org/<slug>; menü/alt bilgi bağlantıları tarih taşımadığı için elenir."""
+    """kumevakfi.org/yayinlar arşiv sayfası (RSS yok). Her yayın bir kart bağlantısıdır:
+    <a href="/slug" data-badge="Bülten" class="card2"> … .label2-prog (program) … h3.card2-title …
+    p.card2-excerpt … span.card2-date ("13 Kasım 2026")."""
     base = feed.get("base", "https://kumevakfi.org")
+    allowed = {t.lower() for t in feed.get("types", [])}
     soup = BeautifulSoup(html, "html.parser")
     out: list[Item] = []
     seen: set[str] = set()
-    for a in soup.find_all("a", href=True):
-        href = a["href"].strip()
+    for card in soup.select("a.card2[href]"):
+        href = card["href"].strip()
         if href.startswith("/"):
             href = base + href
         if not re.fullmatch(re.escape(base) + r"/[a-z0-9-]+/?", href) or href in seen:
             continue
-        # Kartı bul: tarih içeren en yakın üst öğe (en fazla 5 seviye)
-        card, published = a, None
-        for _ in range(5):
-            card = card.parent
-            if card is None:
-                break
-            published = _tr_date(card.get_text(" ", strip=True))
-            if published:
-                break
-        if not published or card is None:
+        get = lambda sel: re.sub(r"\s+", " ", t.get_text(" ", strip=True)) if (t := card.select_one(sel)) else ""
+        title, date_txt = get(".card2-title"), get(".card2-date")
+        published = _tr_date(date_txt)
+        if not title or not published:
             continue
-        head = card.find(["h1", "h2", "h3", "h4"])
-        title = re.sub(r"\s+", " ", (head or a).get_text(" ", strip=True))
-        if len(title) < 6:
+        label = (card.get("data-badge") or get(".label2-badge")).strip()
+        if allowed and label.lower() not in allowed:
             continue
-        text = re.sub(r"\s+", " ", card.get_text(" ", strip=True))
-        label = next((t for t in KUME_TYPES if re.search(r"(^|\s)" + t + r"(\s|$)", text)), "")
-        topic = route_topic(feed, title, label)
+        program = get(".label2-prog")
+        topic = route_topic(feed, title, label, program)
         if not topic:
             continue
         seen.add(href)
+        excerpt = get(".card2-excerpt")
+        snippet = " ".join(x for x in [f"Tür: {label}." if label else "", f"Program: {program}." if program else "",
+                                       excerpt] if x)
         out.append(Item(id=item_id(href), topic=topic, source=feed["name"], kind=feed.get("kind", "article"),
-                        url=href, title=title, snippet=f"Tür: {label}." if label else "", published=published))
+                        url=href, title=title, snippet=snippet, published=published))
     print(f'kume "{feed["name"]}": {len(out)} yayın', file=sys.stderr)
     if len(out) < feed.get("min_links", 3):
         raise ValueError(f"Küme arşivi ayrıştırılamadı ({len(out)} yayın, sayfa {len(html)} karakter); "

@@ -81,12 +81,11 @@ feeds:
     lookback_hours: 168
     url: "https://kumevakfi.org/yayinlar"
     cap: 6
-    routes:
-      - {match: "^Toplum ve Teknoloji", topic: teknoloji}
-      - {match: "^Gri Bölge", topic: jeopolitik}
-      - {type: "Rapor", topic: jeopolitik}
-      - {type: "Blog", topic: teknoloji}
-      - {topic: null}          # Dosya, sanat, etkinlik, duyuru: alınmaz
+    types: [Blog, Bülten, Rapor]   # Dosya, sanat, etkinlik, duyuru alınmaz
+    routes:                        # alan, kartın program etiketine göre
+      - {program: "Güvenlik ve Strateji", topic: jeopolitik}
+      - {program: "Teknoloji ve Yapay Zeka", topic: teknoloji}
+      - {topic: null}              # diğer programlar (ODAK, ArtıKÜME vb.) alınmaz
 
   # --- İş ve liderlik (günde 1 madde) ---
   # Inc. Türkiye (abonelikli): RSS adresi sayfa kaynağından bulundu; ön izlemeye dayalı kısa özet (kind: preview).
