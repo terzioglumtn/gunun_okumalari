@@ -11,6 +11,10 @@ on:
     - cron: "17 6 * * *"
   workflow_dispatch:
     inputs:
+      if_missing:
+        description: "Bugünün sayısı zaten varsa hiçbir şey yapma (dış zamanlayıcı için)"
+        type: boolean
+        default: false
       render_only:
         description: "Yalnızca siteyi mevcut veriden yeniden üret (LLM çalışmaz, limit harcanmaz)"
         type: boolean
@@ -43,7 +47,7 @@ jobs:
           if [ "${{ inputs.render_only }}" = "true" ]; then
             echo "skip=false" >> "$GITHUB_OUTPUT"; echo "render=true" >> "$GITHUB_OUTPUT"
             echo "Yalnızca site yeniden üretilecek."
-          elif [ "${{ github.event_name }}" = "schedule" ] && [ -f "data/$today.json" ]; then
+          elif { [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.if_missing }}" = "true" ]; } && [ -f "data/$today.json" ]; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "data/$today.json zaten var; atlanıyor."
           else
